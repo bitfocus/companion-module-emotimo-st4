@@ -112,7 +112,7 @@ instance.prototype.init_tcp = function() {
 		});
 
 		self.tcp.on('data', function (data) {
-			console.log("Data from PTZoptics VISCA: ", data);
+			console.log("Data from eMotimo VISCA: ", data);
 		});
 
 		debug(self.tcp.host + ':' + self.config.port);
@@ -160,7 +160,7 @@ instance.prototype.config_fields = function () {
 			id: 'info',
 			width: 12,
 			label: 'Information',
-			value: 'This module controls PTZ cameras with VISCA over IP protocol'
+			value: 'This module controls eMotimo ST4 Playhead with VISCA over IP protocol'
 		},
 		{
 			type: 'textinput',

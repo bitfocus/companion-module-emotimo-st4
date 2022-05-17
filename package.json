@@ -1,11 +1,27 @@
 {
   "name": "companion-module-emotimo-st4",
   "version": "1.0.0",
+  "keywords": [
+		"Protocol",
+		"ST4",
+    	"MoCo"
+	],
+	"manufacturer": "eMotimo",
+	"product": "ST4",
+	"shortname": "ST4",
   "description": "Module to Control your eMotimo Motion Control Head",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Jacob Warcholik",
+  "license": "ISC",
+  "homepage": "https://github.com/bitfocus/companion-module-emotimo-st4#readme",
+	"bugs": {
+		"url": "https://github.com/bitfocus/companion-module-emotimo-st4/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-emotimo-st4.git"
+	}
 }
