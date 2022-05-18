@@ -124,9 +124,9 @@ instance.prototype.init = function() {
 
 	debug = self.debug;
 	log = self.log;
-	self.ptSpeed = '0C';
-	self.ptSpeedIndex = 12;
 	self.stVar = 50;
+	self.stSlide = 50;
+	self.stFIZ = 50;
 
 	self.status(self.STATUS_UNKNOWN);
 
@@ -176,7 +176,7 @@ instance.prototype.config_fields = function () {
 			id: 'port',
 			label: 'VISCA TCP port',
 			width: 6,
-			default: 5678,
+			default: 5000,
 			regex: self.REGEX_PORT
 		}
 	]
@@ -407,7 +407,7 @@ instance.prototype.init_presets = function () {
 			},
 			actions: [
 				{
-					action: 'ptSpeedU',
+					action: 'st4SpeedU',
 				}
 			]
 		},
@@ -423,7 +423,7 @@ instance.prototype.init_presets = function () {
 			},
 			actions: [
 				{
-					action: 'ptSpeedD',
+					action: 'st4SpeedD',
 				}
 			]
 		},
@@ -824,33 +824,13 @@ instance.prototype.actions = function(system) {
 		'downLeft':       { label: 'Down Left' },
 		'downRight':      { label: 'Down Right' },
 		'stop':           { label: 'P/T Stop' },
-		'home':           { label: 'P/T Home' },
-		'ptSpeedS':       {
-			label: 'P/T Speed',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'speed setting',
-					id: 'speed',
-					choices: SPEED
-				}
-			]
-		},
-		'ptSpeedU':       { label: 'P/T Speed Up'},
-		'ptSpeedD':       { label: 'P/T Speed Down'},
-		'ptSlow':         {
-			label: 'P/T Slow Mode',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Slow Mode On/Off',
-					id: 'bol',
-					choices: [ { id: '1', label: 'Off' }, { id: '0', label: 'On' } ]
-				}
-			]
-		 },
-		'st4SpeedU':	  { label: 'ST4 Var Up'},
-		'st4SpeedD':	  { label: 'ST4 Var Down'},
+		'home':           { label: 'P/T Home' },		
+		'st4SpeedU':	  { label: 'P/T Speed Up'},
+		'st4SpeedD':	  { label: 'P/T Speed Down'},
+		'st4SlideSpeedU': { label: 'Slide Speed Up'},
+		'st4SlideSpeedD': { label: 'Slide Speed Down'},
+		'st4FIZSpeedU':	  { label: 'FIZ Speed Up'},
+		'st4FIZSpeedD':	  { label: 'FIZ Speed Down'},
 		'm3left':         { label: 'M3 Left' },
 		'm3right':        { label: 'M3 Right' },
 		'm4left':         { label: 'M4 Left' },
@@ -1056,7 +1036,7 @@ instance.prototype.action = function(action) {
 	var cmd = ''
 
 	// var tempSpeed = self.stVar;
-	var panspeed = String.fromCharCode(parseInt(self.ptSpeed, 16) & 0xFF);
+	var panspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
 	var tiltspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
 	switch (action.action) {
 
@@ -1110,54 +1090,52 @@ instance.prototype.action = function(action) {
 			self.sendVISCACommand(cmd);
 			break;
 
-		case 'ptSpeedS':
-			self.ptSpeed = opt.speed;
-
-			var idx = -1;
-			for (var i = 0; i < SPEED.length; ++i) {
-				if (SPEED[i].id == self.ptSpeed) {
-					idx = i;
-					break;
-				}
-			}
-			if (idx > -1) {
-				self.ptSpeedIndex = idx;
-			}
-			debug(self.ptSpeed + ' == ' + self.ptSpeedIndex)
-			break;
-
-		case 'ptSpeedD':
-			if (self.ptSpeedIndex == 23) {
-				self.ptSpeedIndex = 23;
-			}
-			else if (self.ptSpeedIndex < 23) {
-				self.ptSpeedIndex ++;
-			}
-			self.ptSpeed = SPEED[self.ptSpeedIndex].id
-			break;
-
-		case 'ptSpeedU':
-			if (self.ptSpeedIndex == 0) {
-				self.ptSpeedIndex = 0;
-			}
-			else if (self.ptSpeedIndex > 0) {
-				self.ptSpeedIndex--;
-			}
-			self.ptSpeed = SPEED[self.ptSpeedIndex].id
-			break;
-
 		case 'st4SpeedU':
-			if (self.stVar < 127) {
-				self.stVar+=10;
-				this.setVariable('PTS_var', self.stVar.toString());
+			self.stVar+=10;
+			if (self.stVar > 127) {
+				self.stVar = 127;
 			}
+			this.setVariable('PTS_var', self.stVar.toString());
 			break;
 
 		case 'st4SpeedD':
-			if (self.stVar > 1) {
-				self.stVar--;
-				this.setVariable('PTS_var', self.stVar.toString());
+			self.stVar-=5;
+			if (self.stVar < 1) {
+				self.stVar = 1;
 			}
+			this.setVariable('PTS_var', self.stVar.toString());
+			break;
+
+		case 'st4SlideSpeedU':
+			self.stSlide+=10;
+			if (self.stSlide > 127) {
+				self.stSlide = 127;
+			}
+			this.setVariable('SS_var', self.stSlide.toString());
+			break;
+
+		case 'st4SlideSpeedD': 
+			self.stSlide-=5;
+			if (self.stSlide < 1) {
+				self.stSlide = 1;
+			}
+			this.setVariable('SS_var', self.stSlide.toString());
+			break;
+
+		case 'st4FIZSpeedU':
+			self.stFIZ+=10;
+			if (self.stFIZ > 127) {
+				self.stFIZ = 127;
+			}
+			this.setVariable('ZS_var', self.stFIZ.toString());
+			break;
+
+		case 'st4FIZSpeedD':
+			self.stFIZ-=5;
+			if (self.stFIZ < 1) {
+				self.stFIZ = 1;
+			}
+			this.setVariable('ZS_var', self.stFIZ.toString());
 			break;
 
 		case 'm3left':
