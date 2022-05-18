@@ -126,12 +126,14 @@ instance.prototype.init = function() {
 	log = self.log;
 	self.ptSpeed = '0C';
 	self.ptSpeedIndex = 12;
+	self.stVar = 50;
 
 	self.status(self.STATUS_UNKNOWN);
 
 	self.init_tcp();
 	self.actions(); // export actions
 	self.init_presets();
+	self.init_variables();
 };
 
 instance.prototype.updateConfig = function(config) {
@@ -847,6 +849,13 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		 },
+		'st4SpeedU':	  { label: 'ST4 Var Up'},
+		'st4SpeedD':	  { label: 'ST4 Var Down'},
+		'm3left':         { label: 'M3 Left' },
+		'm3right':        { label: 'M3 Right' },
+		'm4left':         { label: 'M4 Left' },
+		'm4right':        { label: 'M4 Right' },
+		'm3m4stop':        { label: 'M3/M4 Stop' },
 		'zoomI':          { label: 'Zoom In' },
 		'zoomO':          { label: 'Zoom Out' },
 		'zoomS':          { label: 'Zoom Stop' },
@@ -1009,6 +1018,29 @@ instance.prototype.actions = function(system) {
 	});
 }
 
+instance.prototype.init_variables = function() {
+	this.setVariableDefinitions([
+		{
+			label: 'Pan/Tilt Speed',
+			name: 'PTS_var',
+
+		},
+		{
+			label: 'Zoom Speed',
+			name: 'ZS_var',
+		},
+		{
+			label: 'Slider Speed',
+			name: 'SS_var',
+		},
+	])
+
+	this.setVariable('PTS_var', '50');
+	this.setVariable('ZS_var', '50');
+	this.setVariable('SS_var', '50');
+	
+}
+
 instance.prototype.sendVISCACommand = function(str) {
 	var self = this;
 
@@ -1023,9 +1055,9 @@ instance.prototype.action = function(action) {
 	var opt = action.options;
 	var cmd = ''
 
+	// var tempSpeed = self.stVar;
 	var panspeed = String.fromCharCode(parseInt(self.ptSpeed, 16) & 0xFF);
-	var tiltspeed = String.fromCharCode(Math.min(parseInt(self.ptSpeed, 16), 0x14) & 0xFF);
-
+	var tiltspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
 	switch (action.action) {
 
 		case 'left':
@@ -1114,6 +1146,45 @@ instance.prototype.action = function(action) {
 			self.ptSpeed = SPEED[self.ptSpeedIndex].id
 			break;
 
+		case 'st4SpeedU':
+			if (self.stVar < 127) {
+				self.stVar+=10;
+				this.setVariable('PTS_var', self.stVar.toString());
+			}
+			break;
+
+		case 'st4SpeedD':
+			if (self.stVar > 1) {
+				self.stVar--;
+				this.setVariable('PTS_var', self.stVar.toString());
+			}
+			break;
+
+		case 'm3left':
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x01\x03\xFF';
+			self.sendVISCACommand(cmd);	
+			break;
+		
+		case 'm3right':
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x02\x03\xFF';
+			self.sendVISCACommand(cmd);	
+			break;
+		
+		case 'm4left':
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x01\xFF';
+			self.sendVISCACommand(cmd);	
+			break;
+		
+		case 'm4right':
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x02\xFF';
+			self.sendVISCACommand(cmd);	
+			break;
+			
+		case 'm3m4stop':
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x03\xFF';
+			self.sendVISCACommand(cmd);	
+			break;
+
 		case 'zoomI':
 			cmd = '\x81\x01\x04\x07\x02\xFF';
 			self.sendVISCACommand(cmd);
@@ -1130,17 +1201,17 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'focusN':
-			cmd = '\x81\x01\x04\x08\x03\xFF';
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x02\xFF'; //810108017F7F0302FF
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusF':
-			cmd = '\x81\x01\x04\x08\x02\xFF';
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x01\xFF'; //810108017F7F0301FF
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusS':
-			cmd = '\x81\x01\x04\x08\x00\xFF';
+			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x03\xFF'; //810108010C0C0303FF
 			self.sendVISCACommand(cmd);
 			break;
 
