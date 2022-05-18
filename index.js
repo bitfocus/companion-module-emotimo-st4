@@ -1038,6 +1038,8 @@ instance.prototype.action = function(action) {
 	// var tempSpeed = self.stVar;
 	var panspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
 	var tiltspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
+	var slidespeed = String.fromCharCode(parseInt(self.stSlide, 10) & 0xFF);
+	var fizspeed = String.fromCharCode(parseInt(self.stFIZ, 10) & 0xFF);
 	switch (action.action) {
 
 		case 'left':
@@ -1139,22 +1141,22 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'm3left':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x01\x03\xFF';
+			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x01\x03\xFF';
 			self.sendVISCACommand(cmd);	
 			break;
 		
 		case 'm3right':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x02\x03\xFF';
+			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x02\x03\xFF';
 			self.sendVISCACommand(cmd);	
 			break;
 		
 		case 'm4left':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x01\xFF';
+			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x03\x01\xFF';
 			self.sendVISCACommand(cmd);	
 			break;
 		
 		case 'm4right':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x02\xFF';
+			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x03\x02\xFF';
 			self.sendVISCACommand(cmd);	
 			break;
 			
@@ -1164,32 +1166,32 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'zoomI':
-			cmd = '\x81\x01\x04\x07\x02\xFF';
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x03\x02\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'zoomO':
-			cmd = '\x81\x01\x04\x07\x03\xFF';
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x03\x01\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'zoomS':
-			cmd = '\x81\x01\x04\x07\x00\xFF';
+			cmd = '\x81\x01\x10\x01\x7F\x7F\x03\x03\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusN':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x02\xFF'; //810108017F7F0302FF
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x02\x03\xFF'; 
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusF':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x01\xFF'; //810108017F7F0301FF
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x01\x03\xFF'; 
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusS':
-			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x03\xFF'; //810108010C0C0303FF
+			cmd = '\x81\x01\x10\x01\x7F\x7F\x03\x03\xFF'; 
 			self.sendVISCACommand(cmd);
 			break;
 
