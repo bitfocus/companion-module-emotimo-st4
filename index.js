@@ -112,7 +112,10 @@ instance.prototype.init_tcp = function() {
 		});
 
 		self.tcp.on('data', function (data) {
-			console.log("Data from eMotimo VISCA: ", data);
+			console.log("Data from eMotimo VISCA: %d", data.length, data);
+			self.stVar = parseInt(data);
+			self.setVariable('PTS_var', self.stVar.toString());
+			console.log('stVar: ', self.stVar);
 		});
 
 		debug(self.tcp.host + ':' + self.config.port);
@@ -127,13 +130,15 @@ instance.prototype.init = function() {
 	self.stVar = 50;
 	self.stSlide = 50;
 	self.stFIZ = 50;
+	self.asset = "";
 
 	self.status(self.STATUS_UNKNOWN);
 
-	self.init_tcp();
+	
 	self.actions(); // export actions
 	self.init_presets();
 	self.init_variables();
+	self.init_tcp();
 };
 
 instance.prototype.updateConfig = function(config) {
