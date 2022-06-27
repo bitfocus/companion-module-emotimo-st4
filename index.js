@@ -1,5 +1,5 @@
 var instance_skel = require('../../instance_skel');
-var tcp           = require('../../tcp');
+var tcp = require('../../tcp');
 var debug;
 var log;
 
@@ -41,8 +41,8 @@ var SHUTTER = [
 
 var PRESET = [];
 for (var i = 0; i < 255; ++i) {
-	if (i<90 || i>99){
-		PRESET.push({ id: ('0' + i.toString(16)).substr(-2,2), label: i });
+	if (i < 90 || i > 99) {
+		PRESET.push({ id: ('0' + i.toString(16)).substr(-2, 2), label: i });
 	}
 }
 
@@ -75,12 +75,12 @@ var SPEED = [
 
 
 function hex2str(hexdata) {
-		var result = '';
-		for (var i = 0; i < hexdata.length; i += 2) {
-				result += String.fromCharCode( parseInt(hexdata.substr(i,2), 16) );
-		}
+	var result = '';
+	for (var i = 0; i < hexdata.length; i += 2) {
+		result += String.fromCharCode(parseInt(hexdata.substr(i, 2), 16));
+	}
 
-		return result;
+	return result;
 };
 
 function instance(system, id, config) {
@@ -92,7 +92,7 @@ function instance(system, id, config) {
 	return self;
 }
 
-instance.prototype.init_tcp = function() {
+instance.prototype.init_tcp = function () {
 	var self = this;
 
 	if (self.tcp !== undefined) {
@@ -113,16 +113,36 @@ instance.prototype.init_tcp = function() {
 
 		self.tcp.on('data', function (data) {
 			console.log("Data from eMotimo VISCA: %d", data.length, data);
-			self.stVar = parseInt(data);
-			self.setVariable('PTS_var', self.stVar.toString());
-			console.log('stVar: ', self.stVar);
+			// self.stVar = parseInt(data);
+			// self.setVariable('PTS_var', self.stVar.toString());
+			// console.log('stVar: ', self.stVar);
+			for (let i = 0; i < data.length; i++) {
+				console.log('Data: ', data[i]);
+			}
+			if (data[0] == 0x81 && data[1] == 0x02) {
+				if (data[2] == 0x01 || data[2] == 0x02) {
+					self.stVar = parseInt(data[3]);
+					self.setVariable('PTS_var', self.stVar.toString());
+					console.log('stVar: ', self.stVar);
+				} else if (data[2] == 0x03) {
+					self.stSlide = parseInt(data[3]);
+					self.setVariable('SS_var', self.stSlide.toString());
+					// console.log('stSlide: ', self.stSlide);
+				} else if (data[2] == 0x04) {
+					self.stFIZ = parseInt(data[3]);
+					self.setVariable('ZS_var', self.stFIZ.toString());
+					// console.log('stFIZ: ', self.stFIZ);
+				} else {
+					console.log('Unknown Command Format');
+				}
+			}
 		});
 
 		debug(self.tcp.host + ':' + self.config.port);
 	}
 };
 
-instance.prototype.init = function() {
+instance.prototype.init = function () {
 	var self = this;
 
 	debug = self.debug;
@@ -134,14 +154,14 @@ instance.prototype.init = function() {
 
 	self.status(self.STATUS_UNKNOWN);
 
-	
+
 	self.actions(); // export actions
 	self.init_presets();
 	self.init_variables();
 	self.init_tcp();
 };
 
-instance.prototype.updateConfig = function(config) {
+instance.prototype.updateConfig = function (config) {
 	var self = this;
 	self.config = config;
 
@@ -188,7 +208,7 @@ instance.prototype.config_fields = function () {
 };
 
 // When module gets deleted
-instance.prototype.destroy = function() {
+instance.prototype.destroy = function () {
 	var self = this;
 
 	if (self.tcp !== undefined) {
@@ -210,7 +230,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,255)
+				bgcolor: self.rgb(0, 0, 255)
 			},
 			actions: [
 				{
@@ -233,7 +253,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -256,7 +276,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -279,7 +299,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -302,7 +322,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -325,7 +345,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -348,7 +368,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -371,7 +391,7 @@ instance.prototype.init_presets = function () {
 				pngalignment: 'center:center',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -392,7 +412,7 @@ instance.prototype.init_presets = function () {
 				text: 'HOME',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -408,7 +428,7 @@ instance.prototype.init_presets = function () {
 				text: 'SPEED\\nUP',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -424,11 +444,103 @@ instance.prototype.init_presets = function () {
 				text: 'SPEED\\nDOWN',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
 					action: 'st4SpeedD',
+				}
+			]
+		},
+		{
+			category: 'M3/M4',
+			label: 'UP',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_up,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 255)
+			},
+			actions: [
+				{
+					action: 'm3left',
+				}
+			],
+			release_actions: [
+				{
+					action: 'm3m4stop',
+				}
+			]
+		},
+		{
+			category: 'M3/M4',
+			label: 'DOWN',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_down,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'm3right',
+				}
+			],
+			release_actions: [
+				{
+					action: 'm3m4stop',
+				}
+			]
+		},
+		{
+			category: 'M3/M4',
+			label: 'LEFT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_left,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'm4left',
+				}
+			],
+			release_actions: [
+				{
+					action: 'm3m4stop',
+				}
+			]
+		},
+		{
+			category: 'M3/M4',
+			label: 'RIGHT',
+			bank: {
+				style: 'png',
+				text: '',
+				png64: image_right,
+				pngalignment: 'center:center',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 0)
+			},
+			actions: [
+				{
+					action: 'm4right',
+				}
+			],
+			release_actions: [
+				{
+					action: 'm3m4stop',
 				}
 			]
 		},
@@ -440,7 +552,7 @@ instance.prototype.init_presets = function () {
 				text: 'ZOOM\\nIN',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -461,7 +573,7 @@ instance.prototype.init_presets = function () {
 				text: 'ZOOM\\nOUT',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0)
+				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
@@ -482,7 +594,7 @@ instance.prototype.init_presets = function () {
 				text: 'FOCUS\\nNEAR',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -503,7 +615,7 @@ instance.prototype.init_presets = function () {
 				text: 'FOCUS\\nFAR',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -524,7 +636,7 @@ instance.prototype.init_presets = function () {
 				text: 'AUTO\\nFOCUS',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 				latch: true
 			},
 			actions: [
@@ -552,7 +664,7 @@ instance.prototype.init_presets = function () {
 				text: 'FOCUS\\nLOCK',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -568,7 +680,7 @@ instance.prototype.init_presets = function () {
 				text: 'FOCUS\\nUNLOCK',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -584,7 +696,7 @@ instance.prototype.init_presets = function () {
 				text: 'EXP\\nMODE',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 				latch: true
 			},
 			actions: [
@@ -612,7 +724,7 @@ instance.prototype.init_presets = function () {
 				text: 'IRIS\\nUP',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -628,7 +740,7 @@ instance.prototype.init_presets = function () {
 				text: 'IRIS\\nDOWN',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -644,7 +756,7 @@ instance.prototype.init_presets = function () {
 				text: 'Shut\\nUP',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -660,7 +772,7 @@ instance.prototype.init_presets = function () {
 				text: 'Shut\\nDOWN',
 				size: '18',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -676,7 +788,7 @@ instance.prototype.init_presets = function () {
 				text: 'WB\\nAUTO',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -695,7 +807,7 @@ instance.prototype.init_presets = function () {
 				text: 'WB\\nINDOOR',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -714,7 +826,7 @@ instance.prototype.init_presets = function () {
 				text: 'WB\\nOUT\\nDOOR',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -733,7 +845,7 @@ instance.prototype.init_presets = function () {
 				text: 'WB\\nONE PUSH',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -752,7 +864,7 @@ instance.prototype.init_presets = function () {
 				text: 'WB\\nTRIGGER\\nONE PUSH',
 				size: '14',
 				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
+				bgcolor: self.rgb(0, 0, 0),
 			},
 			actions: [
 				{
@@ -762,105 +874,105 @@ instance.prototype.init_presets = function () {
 		}
 	];
 
-var save;
-for (save = 0; save < 255; save++) {
-	if (save<90 || save>99){
-		presets.push({
-			category: 'Save Preset',
-			label: 'Save Preset '+ parseInt(save) ,
-			bank: {
-				style: 'text',
-				text: 'SAVE\\nPSET\\n' + parseInt(save) ,
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
-			},
-			actions: [
-				{
-					action: 'savePset',
-					options: {
-					val: ('0' + save.toString(16)).substr(-2,2),
+	var save;
+	for (save = 0; save < 255; save++) {
+		if (save < 90 || save > 99) {
+			presets.push({
+				category: 'Save Preset',
+				label: 'Save Preset ' + parseInt(save),
+				bank: {
+					style: 'text',
+					text: 'SAVE\\nPSET\\n' + parseInt(save),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'savePset',
+						options: {
+							val: ('0' + save.toString(16)).substr(-2, 2),
+						}
 					}
-				}
-			]
-		});
+				]
+			});
+		}
 	}
-}
 
-var recall;
-for (recall = 0; recall < 255; recall++) {
-	if (recall<90 || recall>99){
-		presets.push({
-			category: 'Recall Preset',
-			label: 'Recall Preset '+ parseInt(recall) ,
-			bank: {
-				style: 'text',
-				text: 'Recall\\nPSET\\n' + parseInt(recall) ,
-				size: '14',
-				color: '16777215',
-				bgcolor: self.rgb(0,0,0),
-			},
-			actions: [
-				{
-					action: 'recallPset',
-					options: {
-					val: ('0' + recall.toString(16)).substr(-2,2),
+	var recall;
+	for (recall = 0; recall < 255; recall++) {
+		if (recall < 90 || recall > 99) {
+			presets.push({
+				category: 'Recall Preset',
+				label: 'Recall Preset ' + parseInt(recall),
+				bank: {
+					style: 'text',
+					text: 'Recall\\nPSET\\n' + parseInt(recall),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'recallPset',
+						options: {
+							val: ('0' + recall.toString(16)).substr(-2, 2),
+						}
 					}
-				}
-			]
-		});
+				]
+			});
+		}
 	}
-}
 
 	self.setPresetDefinitions(presets);
 };
 
 
-instance.prototype.actions = function(system) {
+instance.prototype.actions = function (system) {
 	var self = this;
 
 	self.system.emit('instance_actions', self.id, {
-		'left':           { label: 'Pan Left' },
-		'right':          { label: 'Pan Right' },
-		'up':             { label: 'Tilt Up' },
-		'down':           { label: 'Tilt Down' },
-		'upLeft':         { label: 'Up Left' },
-		'upRight':        { label: 'Up Right' },
-		'downLeft':       { label: 'Down Left' },
-		'downRight':      { label: 'Down Right' },
-		'stop':           { label: 'P/T Stop' },
-		'home':           { label: 'P/T Home' },		
-		'st4SpeedU':	  { label: 'P/T Speed Up'},
-		'st4SpeedD':	  { label: 'P/T Speed Down'},
-		'st4SlideSpeedU': { label: 'Slide Speed Up'},
-		'st4SlideSpeedD': { label: 'Slide Speed Down'},
-		'st4FIZSpeedU':	  { label: 'FIZ Speed Up'},
-		'st4FIZSpeedD':	  { label: 'FIZ Speed Down'},
-		'm3left':         { label: 'M3 Left' },
-		'm3right':        { label: 'M3 Right' },
-		'm4left':         { label: 'M4 Left' },
-		'm4right':        { label: 'M4 Right' },
-		'm3m4stop':        { label: 'M3/M4 Stop' },
-		'zoomI':          { label: 'Zoom In' },
-		'zoomO':          { label: 'Zoom Out' },
-		'zoomS':          { label: 'Zoom Stop' },
-		'focusN':         { label: 'Focus Near' },
-		'focusF':         { label: 'Focus Far' },
-		'focusS':         { label: 'Focus Stop' },
-		'focusM':         {
+		'left': { label: 'Pan Left' },
+		'right': { label: 'Pan Right' },
+		'up': { label: 'Tilt Up' },
+		'down': { label: 'Tilt Down' },
+		'upLeft': { label: 'Up Left' },
+		'upRight': { label: 'Up Right' },
+		'downLeft': { label: 'Down Left' },
+		'downRight': { label: 'Down Right' },
+		'stop': { label: 'P/T Stop' },
+		'home': { label: 'P/T Home' },
+		'st4SpeedU': { label: 'P/T Speed Up' },
+		'st4SpeedD': { label: 'P/T Speed Down' },
+		'st4SlideSpeedU': { label: 'Slide Speed Up' },
+		'st4SlideSpeedD': { label: 'Slide Speed Down' },
+		'st4FIZSpeedU': { label: 'FIZ Speed Up' },
+		'st4FIZSpeedD': { label: 'FIZ Speed Down' },
+		'm3left': { label: 'M3 Left' },
+		'm3right': { label: 'M3 Right' },
+		'm4left': { label: 'M4 Left' },
+		'm4right': { label: 'M4 Right' },
+		'm3m4stop': { label: 'M3/M4 Stop' },
+		'zoomI': { label: 'Zoom In' },
+		'zoomO': { label: 'Zoom Out' },
+		'zoomS': { label: 'Zoom Stop' },
+		'focusN': { label: 'Focus Near' },
+		'focusF': { label: 'Focus Far' },
+		'focusS': { label: 'Focus Stop' },
+		'focusM': {
 			label: 'Focus Mode',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Auto / Manual Focus',
 					id: 'bol',
-					choices: [ { id: '0', label: 'Auto Focus' }, { id: '1', label: 'Manual Focus' } ]
+					choices: [{ id: '0', label: 'Auto Focus' }, { id: '1', label: 'Manual Focus' }]
 				}
 			]
 		},
-		'focusL':         { label: 'Focus Lock' },
-		'focusU':         { label: 'Focus Unlock' },
-		'expM':           {
+		'focusL': { label: 'Focus Lock' },
+		'focusU': { label: 'Focus Unlock' },
+		'expM': {
 			label: 'Exposure Mode',
 			options: [
 				{
@@ -877,9 +989,9 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'irisU':          { label: 'Iris Up' },
-		'irisD':          { label: 'Iris Down' },
-		'irisS':          {
+		'irisU': { label: 'Iris Up' },
+		'irisD': { label: 'Iris Down' },
+		'irisS': {
 			label: 'Set Iris',
 			options: [
 				{
@@ -890,9 +1002,9 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'shutU':          { label: 'Shutter Up' },
-		'shutD':          { label: 'Shutter Down' },
-		'shutS':          {
+		'shutU': { label: 'Shutter Up' },
+		'shutD': { label: 'Shutter Down' },
+		'shutS': {
 			label: 'Set Shutter',
 			options: [
 				{
@@ -903,7 +1015,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'savePset':       {
+		'savePset': {
 			label: 'Save Preset',
 			options: [
 				{
@@ -915,7 +1027,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'recallPset':     {
+		'recallPset': {
 			label: 'Recall Preset',
 			options: [
 				{
@@ -927,7 +1039,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'speedPset':      {
+		'speedPset': {
 			label: 'Preset Drive Speed',
 			options: [
 				{
@@ -953,7 +1065,7 @@ instance.prototype.actions = function(system) {
 					type: 'dropdown',
 					label: 'power on/off',
 					id: 'bool',
-					choices: [{ id: 'off', label:'off'},{ id: 'on', label:'on'}]
+					choices: [{ id: 'off', label: 'off' }, { id: 'on', label: 'on' }]
 				}
 			]
 		},
@@ -965,11 +1077,11 @@ instance.prototype.actions = function(system) {
 					label: 'Mode',
 					id: 'val',
 					choices: [
-						{ id: 'automatic', label:'Automatic' },
-						{ id: 'indoor', label:'Indoor' },
-						{ id: 'outdoor', label:'Outdoor' },
-						{ id: 'onepush', label:'One Push' },
-						{ id: 'manual', label:'Manual' }
+						{ id: 'automatic', label: 'Automatic' },
+						{ id: 'indoor', label: 'Indoor' },
+						{ id: 'outdoor', label: 'Outdoor' },
+						{ id: 'onepush', label: 'One Push' },
+						{ id: 'manual', label: 'Manual' }
 					]
 				}
 			]
@@ -977,18 +1089,18 @@ instance.prototype.actions = function(system) {
 		'wbOPT': {
 			label: 'White balance one push trigger',
 		},
-		'awbS':           {
+		'awbS': {
 			label: 'Auto white balance sensitivity',
 			options: [
 				{
 					type: 'dropdown',
 					label: 'Sensitivity',
 					id: 'val',
-					choices: [{ id: 0, label:'High'},{ id: 1, label:'Normal'},{ id: 2, label:'Low'}]
+					choices: [{ id: 0, label: 'High' }, { id: 1, label: 'Normal' }, { id: 2, label: 'Low' }]
 				}
 			]
 		},
-		'custom':           {
+		'custom': {
 			label: 'Custom command',
 			options: [
 				{
@@ -1003,7 +1115,7 @@ instance.prototype.actions = function(system) {
 	});
 }
 
-instance.prototype.init_variables = function() {
+instance.prototype.init_variables = function () {
 	this.setVariableDefinitions([
 		{
 			label: 'Pan/Tilt Speed',
@@ -1023,10 +1135,10 @@ instance.prototype.init_variables = function() {
 	this.setVariable('PTS_var', '50');
 	this.setVariable('ZS_var', '50');
 	this.setVariable('SS_var', '50');
-	
+
 }
 
-instance.prototype.sendVISCACommand = function(str) {
+instance.prototype.sendVISCACommand = function (str) {
 	var self = this;
 
 	if (self.tcp !== undefined) {
@@ -1035,7 +1147,7 @@ instance.prototype.sendVISCACommand = function(str) {
 	}
 };
 
-instance.prototype.action = function(action) {
+instance.prototype.action = function (action) {
 	var self = this;
 	var opt = action.options;
 	var cmd = ''
@@ -1098,7 +1210,7 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'st4SpeedU':
-			self.stVar+=10;
+			self.stVar += 10;
 			if (self.stVar > 127) {
 				self.stVar = 127;
 			}
@@ -1106,7 +1218,7 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'st4SpeedD':
-			self.stVar-=5;
+			self.stVar -= 5;
 			if (self.stVar < 1) {
 				self.stVar = 1;
 			}
@@ -1114,15 +1226,15 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'st4SlideSpeedU':
-			self.stSlide+=10;
+			self.stSlide += 10;
 			if (self.stSlide > 127) {
 				self.stSlide = 127;
 			}
 			this.setVariable('SS_var', self.stSlide.toString());
 			break;
 
-		case 'st4SlideSpeedD': 
-			self.stSlide-=5;
+		case 'st4SlideSpeedD':
+			self.stSlide -= 5;
 			if (self.stSlide < 1) {
 				self.stSlide = 1;
 			}
@@ -1130,7 +1242,7 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'st4FIZSpeedU':
-			self.stFIZ+=10;
+			self.stFIZ += 10;
 			if (self.stFIZ > 127) {
 				self.stFIZ = 127;
 			}
@@ -1138,7 +1250,7 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'st4FIZSpeedD':
-			self.stFIZ-=5;
+			self.stFIZ -= 5;
 			if (self.stFIZ < 1) {
 				self.stFIZ = 1;
 			}
@@ -1147,27 +1259,27 @@ instance.prototype.action = function(action) {
 
 		case 'm3left':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x01\x03\xFF';
-			self.sendVISCACommand(cmd);	
+			self.sendVISCACommand(cmd);
 			break;
-		
+
 		case 'm3right':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x02\x03\xFF';
-			self.sendVISCACommand(cmd);	
+			self.sendVISCACommand(cmd);
 			break;
-		
+
 		case 'm4left':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x03\x01\xFF';
-			self.sendVISCACommand(cmd);	
+			self.sendVISCACommand(cmd);
 			break;
-		
+
 		case 'm4right':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x03\x02\xFF';
-			self.sendVISCACommand(cmd);	
+			self.sendVISCACommand(cmd);
 			break;
-			
+
 		case 'm3m4stop':
 			cmd = '\x81\x01\x08\x01\x7F\x7F\x03\x03\xFF';
-			self.sendVISCACommand(cmd);	
+			self.sendVISCACommand(cmd);
 			break;
 
 		case 'zoomI':
@@ -1186,25 +1298,25 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'focusN':
-			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x02\x03\xFF'; 
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x02\x03\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusF':
-			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x01\x03\xFF'; 
+			cmd = '\x81\x01\x10\x01' + fizspeed + fizspeed + '\x01\x03\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusS':
-			cmd = '\x81\x01\x10\x01\x7F\x7F\x03\x03\xFF'; 
+			cmd = '\x81\x01\x10\x01\x7F\x7F\x03\x03\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'focusM':
-			if (opt.bol == 0){
+			if (opt.bol == 0) {
 				cmd = '\x81\x01\x04\x38\x02\xFF';
 			}
-			if (opt.bol == 1){
+			if (opt.bol == 1) {
 				cmd = '\x81\x01\x04\x38\x03\xFF';
 			}
 			self.sendVISCACommand(cmd);
@@ -1221,19 +1333,19 @@ instance.prototype.action = function(action) {
 			break;
 
 		case 'expM':
-			if (opt.val == 0){
+			if (opt.val == 0) {
 				cmd = '\x81\x01\x04\x39\x00\xFF';
 			}
-			if (opt.val == 1){
+			if (opt.val == 1) {
 				cmd = '\x81\x01\x04\x39\x03\xFF';
 			}
-			if (opt.val == 2){
+			if (opt.val == 2) {
 				cmd = '\x81\x01\x04\x39\x0A\xFF';
 			}
-			if (opt.val == 3){
+			if (opt.val == 3) {
 				cmd = '\x81\x01\x04\x39\x0B\xFF';
 			}
-			if (opt.val == 4){
+			if (opt.val == 4) {
 				cmd = '\x81\x01\x04\x39\x0D\xFF';
 			}
 			self.sendVISCACommand(cmd);
@@ -1251,10 +1363,10 @@ instance.prototype.action = function(action) {
 
 		case 'irisS':
 			var cmd = Buffer.from('\x81\x01\x04\x4B\x00\x00\x00\x00\xFF', 'binary');
-			cmd.writeUInt8((parseInt(opt.val,16) & 0xF0) >> 4, 6);
-			cmd.writeUInt8(parseInt(opt.val,16) & 0x0F, 7);
+			cmd.writeUInt8((parseInt(opt.val, 16) & 0xF0) >> 4, 6);
+			cmd.writeUInt8(parseInt(opt.val, 16) & 0x0F, 7);
 			self.sendVISCACommand(cmd);
-			debug('cmd=',cmd);
+			debug('cmd=', cmd);
 			break;
 
 		case 'shutU':
@@ -1269,29 +1381,29 @@ instance.prototype.action = function(action) {
 
 		case 'shutS':
 			var cmd = Buffer.from('\x81\x01\x04\x4A\x00\x00\x00\x00\xFF', 'binary');
-			cmd.writeUInt8((parseInt(opt.val,16) & 0xF0) >> 4, 6);
-			cmd.writeUInt8(parseInt(opt.val,16) & 0x0F, 7);
+			cmd.writeUInt8((parseInt(opt.val, 16) & 0xF0) >> 4, 6);
+			cmd.writeUInt8(parseInt(opt.val, 16) & 0x0F, 7);
 			self.sendVISCACommand(cmd);
-			debug('cmd=',cmd);
+			debug('cmd=', cmd);
 			break;
 
 		case 'savePset':
-			cmd ='\x81\x01\x04\x3F\x01' + String.fromCharCode(parseInt(opt.val,16) & 0xFF) + '\xFF';
+			cmd = '\x81\x01\x04\x3F\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + '\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'recallPset':
-			cmd ='\x81\x01\x04\x3F\x02' + String.fromCharCode(parseInt(opt.val,16) & 0xFF) + '\xFF';
+			cmd = '\x81\x01\x04\x3F\x02' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + '\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
 		case 'speedPset':
-			cmd ='\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val,16) & 0xFF) + String.fromCharCode(parseInt(opt.speed,16) & 0xFF) + '\xFF';
+			cmd = '\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + String.fromCharCode(parseInt(opt.speed, 16) & 0xFF) + '\xFF';
 			self.sendVISCACommand(cmd);
 			break;
-		
+
 		case 'power':
-			if(opt.bool == 'off') {
+			if (opt.bool == 'off') {
 				cmd = '\x81\x01\x04\x00\x03\xFF';
 			} else {
 				cmd = '\x81\x01\x04\x00\x02\xFF';
@@ -1359,7 +1471,7 @@ instance.prototype.action = function(action) {
 
 instance_skel.extendedBy(instance);
 
- // Variables for Base64 image data do not edit
+// Variables for Base64 image data do not edit
 var image_up = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIFJREFUKM+90EEKgzAQRmFDFy49ghcp5FquVPBighcRegHBjWDJ68D8U6F7m00+EnhkUlW3ru6rdyCV0INQzSg1zFLLKmU2aeCQQMEEJXIQORRsTLNyKJhNm3IoaPBg4mQorp2Mh1+00kKN307o/bZrpt5O/FlPU/c75X91/fPd6wPRD1eHyHEL4wAAAABJRU5ErkJggg==';
 
 var image_down = 'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6AQMAAAApyY3OAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAIlJREFUKM/F0DEOwyAMBVAjDxk5Qo7CtdiClIv1KJF6gUpZIhXxY2zTDJ2benoS8LFN9MsKbYjxF2XRS1UZ4bCeGFztFmNqphURpidm146kpwFvLDYJpPQtLSLNoySyP2bRpoqih2oSFW8K3lYAxmJGXA88XMnjeuDmih7XA8vXvNeeqX6U6aY6AacbWAQNWOPUAAAAAElFTkSuQmCC';
