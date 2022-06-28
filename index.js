@@ -135,6 +135,14 @@ instance.prototype.init_tcp = function () {
 				} else {
 					console.log('Unknown Command Format');
 				}
+			} else if (data.length >= 11) { //Hardcoded Example of Reading in 4 Presets Timing
+				var str = data.toString();
+				self.presetRunTimes = str.split(`,`).map(x => parseInt(x, 10));
+				console.log('Preset Run Times:', self.presetRunTimes);
+				self.setVariable('P0_runTime', self.presetRunTimes[0]);
+				self.setVariable('P1_runTime', self.presetRunTimes[1]);
+				self.setVariable('P2_runTime', self.presetRunTimes[2]);
+				self.setVariable('P3_runTime', self.presetRunTimes[3]);
 			}
 		});
 
@@ -150,6 +158,7 @@ instance.prototype.init = function () {
 	self.stVar = 50;
 	self.stSlide = 50;
 	self.stFIZ = 50;
+	self.presetRunTimes = [0, 0, 0, 0];
 	self.asset = "";
 
 	self.status(self.STATUS_UNKNOWN);
@@ -409,14 +418,14 @@ instance.prototype.init_presets = function () {
 			label: 'Home',
 			bank: {
 				style: 'text',
-				text: 'HOME',
+				text: 'P/T HOME',
 				size: '18',
 				color: '16777215',
 				bgcolor: self.rgb(0, 0, 0)
 			},
 			actions: [
 				{
-					action: 'home',
+					action: 'pthome',
 				}
 			]
 		},
@@ -541,6 +550,22 @@ instance.prototype.init_presets = function () {
 			release_actions: [
 				{
 					action: 'm3m4stop',
+				}
+			]
+		},
+		{
+			category: 'Startup',
+			label: 'Home All',
+			bank: {
+				style: 'text',
+				text: 'HOME ALL',
+				size: '18',
+				color: '16777215',
+				bgcolor: self.rgb(25, 25, 25)
+			},
+			actions: [
+				{
+					action: 'home',
 				}
 			]
 		},
@@ -871,6 +896,38 @@ instance.prototype.init_presets = function () {
 					action: 'wbOPT',
 				}
 			]
+		},
+		{
+			category: 'SD Card',
+			label: 'Load Preset',
+			bank: {
+				style: 'text',
+				text: 'Load\\nPresets',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 255)
+			},
+			actions: [
+				{
+					action: 'sdLoadPset',
+				}
+			]
+		},
+		{
+			category: 'SD Card',
+			label: 'Save Presets',
+			bank: {
+				style: 'text',
+				text: 'Save\\nPresets',
+				size: '14',
+				color: '16777215',
+				bgcolor: self.rgb(0, 0, 255)
+			},
+			actions: [
+				{
+					action: 'sdSavePset',
+				}
+			]
 		}
 	];
 
@@ -924,6 +981,56 @@ instance.prototype.init_presets = function () {
 		}
 	}
 
+	var increaseRunTime;
+	for (increaseRunTime = 0; increaseRunTime < 255; increaseRunTime++) {
+		if (increaseRunTime < 90 || increaseRunTime > 99) {
+			presets.push({
+				category: 'Preset Timing',
+				label: 'Increase RunTime Preset ' + parseInt(increaseRunTime),
+				bank: {
+					style: 'text',
+					text: 'Increase Run Time\\n' + parseInt(increaseRunTime),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'presetRunTimeU',
+						options: {
+							val: ('0' + increaseRunTime.toString(16)).substr(-2, 2),
+						}
+					}
+				]
+			});
+		}
+	}
+
+	var decreaseRunTime;
+	for (decreaseRunTime = 0; decreaseRunTime < 255; decreaseRunTime++) {
+		if (decreaseRunTime < 90 || decreaseRunTime > 99) {
+			presets.push({
+				category: 'Preset Timing',
+				label: 'Decrease RunTime Preset ' + parseInt(decreaseRunTime),
+				bank: {
+					style: 'text',
+					text: 'Decrease Run Time\\n' + parseInt(decreaseRunTime),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'presetRunTimeD',
+						options: {
+							val: ('0' + decreaseRunTime.toString(16)).substr(-2, 2),
+						}
+					}
+				]
+			});
+		}
+	}
+
 	self.setPresetDefinitions(presets);
 };
 
@@ -941,7 +1048,8 @@ instance.prototype.actions = function (system) {
 		'downLeft': { label: 'Down Left' },
 		'downRight': { label: 'Down Right' },
 		'stop': { label: 'P/T Stop' },
-		'home': { label: 'P/T Home' },
+		'pthome': { label: 'P/T Home' },
+		'home': { label: 'Home All' },
 		'st4SpeedU': { label: 'P/T Speed Up' },
 		'st4SpeedD': { label: 'P/T Speed Down' },
 		'st4SlideSpeedU': { label: 'Slide Speed Up' },
@@ -1015,6 +1123,32 @@ instance.prototype.actions = function (system) {
 				}
 			]
 		},
+		'sdLoadPset': { label: 'Load Presets' },
+		'sdSavePset': { label: 'Save Presets' },
+		'presetRunTimeU': {
+			label: 'Increase Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET,
+					minChoicesForSearch: 1
+				}
+			]
+		},
+		'presetRunTimeD': {
+			label: 'Decrease Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET,
+					minChoicesForSearch: 1
+				}
+			]
+		},
 		'savePset': {
 			label: 'Save Preset',
 			options: [
@@ -1040,7 +1174,7 @@ instance.prototype.actions = function (system) {
 			]
 		},
 		'speedPset': {
-			label: 'Preset Drive Speed',
+			label: 'Preset Run Time',
 			options: [
 				{
 					type: 'dropdown',
@@ -1049,13 +1183,13 @@ instance.prototype.actions = function (system) {
 					choices: PRESET,
 					minChoicesForSearch: 1
 				},
-				{
-					type: 'dropdown',
-					label: 'speed setting',
-					id: 'speed',
-					choices: SPEED,
-					minChoicesForSearch: 1
-				}
+				// {
+				// 	type: 'dropdown',
+				// 	label: 'speed setting',
+				// 	id: 'speed',
+				// 	choices: SPEED,
+				// 	minChoicesForSearch: 1
+				// }
 			]
 		},
 		'power': {
@@ -1130,11 +1264,31 @@ instance.prototype.init_variables = function () {
 			label: 'Slider Speed',
 			name: 'SS_var',
 		},
+		{
+			label: 'Preset 0 Run Time',
+			name: 'P0_runTime',
+		},
+		{
+			label: 'Preset 1 Run Time',
+			name: 'P1_runTime',
+		},
+		{
+			label: 'Preset 2 Run Time',
+			name: 'P2_runTime',
+		},
+		{
+			label: 'Preset 3 Run Time',
+			name: 'P3_runTime',
+		},
 	])
 
 	this.setVariable('PTS_var', '50');
 	this.setVariable('ZS_var', '50');
 	this.setVariable('SS_var', '50');
+	this.setVariable('P0_runTime', '0');
+	this.setVariable('P1_runTime', '0');
+	this.setVariable('P2_runTime', '0');
+	this.setVariable('P3_runTime', '0');
 
 }
 
@@ -1150,7 +1304,7 @@ instance.prototype.sendVISCACommand = function (str) {
 instance.prototype.action = function (action) {
 	var self = this;
 	var opt = action.options;
-	var cmd = ''
+	var cmd = '';
 
 	// var tempSpeed = self.stVar;
 	var panspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
@@ -1204,8 +1358,13 @@ instance.prototype.action = function (action) {
 			self.sendVISCACommand(cmd);
 			break;
 
-		case 'home':
+		case 'pthome':
 			cmd = '\x81\x01\x06\x04\xFF';
+			self.sendVISCACommand(cmd);
+			break;
+
+		case 'home':
+			cmd = '\x81\x01\x14\x04\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
@@ -1256,6 +1415,29 @@ instance.prototype.action = function (action) {
 			}
 			this.setVariable('ZS_var', self.stFIZ.toString());
 			break;
+
+		case 'presetRunTimeU':
+			var temp = parseInt(opt.val, 10);
+			// console.log("Modifying Run Time for Preset: ", temp);
+			self.presetRunTimes[temp] += 2;
+			if (self.presetRunTimes[temp] > 510) {
+				self.presetRunTimes[temp] = 510;
+			}
+			var str = "P" + temp.toString() + "_runTime";
+			this.setVariable(str, self.presetRunTimes[temp].toString());
+			break;
+
+		case 'presetRunTimeD':
+			var temp = parseInt(opt.val, 10);
+			// console.log("Modifying Run Time for Preset: ", temp);
+			self.presetRunTimes[temp] -= 2;
+			if (self.presetRunTimes[temp] < 10) {
+				self.presetRunTimes[temp] = 10;
+			}
+			var str = "P" + temp.toString() + "_runTime";
+			this.setVariable(str, self.presetRunTimes[temp].toString());
+			break;
+
 
 		case 'm3left':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x01\x03\xFF';
@@ -1387,9 +1569,20 @@ instance.prototype.action = function (action) {
 			debug('cmd=', cmd);
 			break;
 
+		case 'sdLoadPset':
+			cmd = '\x81\x16\x22\xFF';
+			self.sendVISCACommand(cmd);
+			break;
+
+		case 'sdSavePset':
+			cmd = '\x81\x16\x11\xFF';
+			self.sendVISCACommand(cmd);
+			break;
+
 		case 'savePset':
 			cmd = '\x81\x01\x04\x3F\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + '\xFF';
 			self.sendVISCACommand(cmd);
+			// self.setVariable('b_text_4_4', "Success");
 			break;
 
 		case 'recallPset':
@@ -1398,7 +1591,17 @@ instance.prototype.action = function (action) {
 			break;
 
 		case 'speedPset':
-			cmd = '\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + String.fromCharCode(parseInt(opt.speed, 16) & 0xFF) + '\xFF';
+			var runTime = self.presetRunTimes[parseInt(opt.val, 10)] / 2; //Divide by 2 to put in range 0-255
+			var runTimeHigh = runTime >> 4;
+			var runTimeLow = runTime & 0x0F;
+			// console.log('Run Time: ', self.presetRunTimes[parseInt(opt.val,10)])
+			// console.log('Original: ', runTime.toString(16));
+			// console.log('Manipulated: ', runTimeHigh.toString(16), runTimeLow.toString(16));
+			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
+			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
+			// console.log('Manipulated: ', temp, runTimeLow.toString(16));
+			// cmd = '\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + runTime + '\xFF';
+			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
 			self.sendVISCACommand(cmd);
 			break;
 
