@@ -158,7 +158,7 @@ instance.prototype.init = function () {
 	self.stVar = 50;
 	self.stSlide = 50;
 	self.stFIZ = 50;
-	self.presetRunTimes = [0, 0, 0, 0];
+	self.presetRunTimes = [50, 50, 50, 50];
 	self.asset = "";
 
 	self.status(self.STATUS_UNKNOWN);
@@ -951,6 +951,13 @@ instance.prototype.init_presets = function () {
 							val: ('0' + save.toString(16)).substr(-2, 2),
 						}
 					}
+					// {
+					// 	action: 'speedPset',
+					// 	delay: 20,
+					// 	options: {
+					// 		val: ('0' + save.toString(16)).substr(-2, 2),
+					// 	}
+					// }
 				]
 			});
 		}
@@ -1173,25 +1180,25 @@ instance.prototype.actions = function (system) {
 				}
 			]
 		},
-		'speedPset': {
-			label: 'Preset Run Time',
-			options: [
-				{
-					type: 'dropdown',
-					label: 'Preset Nr.',
-					id: 'val',
-					choices: PRESET,
-					minChoicesForSearch: 1
-				},
-				// {
-				// 	type: 'dropdown',
-				// 	label: 'speed setting',
-				// 	id: 'speed',
-				// 	choices: SPEED,
-				// 	minChoicesForSearch: 1
-				// }
-			]
-		},
+		// 'speedPset': {
+		// 	label: 'Preset Run Time',
+		// 	options: [
+		// 		{
+		// 			type: 'dropdown',
+		// 			label: 'Preset Nr.',
+		// 			id: 'val',
+		// 			choices: PRESET,
+		// 			minChoicesForSearch: 1
+		// 		},
+		// 		// {
+		// 		// 	type: 'dropdown',
+		// 		// 	label: 'speed setting',
+		// 		// 	id: 'speed',
+		// 		// 	choices: SPEED,
+		// 		// 	minChoicesForSearch: 1
+		// 		// }
+		// 	]
+		// },
 		'power': {
 			label: 'power camera',
 			options: [
@@ -1425,6 +1432,17 @@ instance.prototype.action = function (action) {
 			}
 			var str = "P" + temp.toString() + "_runTime";
 			this.setVariable(str, self.presetRunTimes[temp].toString());
+
+			var runTime = self.presetRunTimes[temp] / 2; //Divide by 2 to put in range 0-255
+			var runTimeHigh = runTime >> 4;
+			var runTimeLow = runTime & 0x0F;
+			
+			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
+			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
+			
+			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
+			self.sendVISCACommand(cmd);
+
 			break;
 
 		case 'presetRunTimeD':
@@ -1436,6 +1454,17 @@ instance.prototype.action = function (action) {
 			}
 			var str = "P" + temp.toString() + "_runTime";
 			this.setVariable(str, self.presetRunTimes[temp].toString());
+
+			var runTime = self.presetRunTimes[temp] / 2; //Divide by 2 to put in range 0-255
+			var runTimeHigh = runTime >> 4;
+			var runTimeLow = runTime & 0x0F;
+			
+			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
+			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
+			
+			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
+			self.sendVISCACommand(cmd);
+
 			break;
 
 
@@ -1590,20 +1619,20 @@ instance.prototype.action = function (action) {
 			self.sendVISCACommand(cmd);
 			break;
 
-		case 'speedPset':
-			var runTime = self.presetRunTimes[parseInt(opt.val, 10)] / 2; //Divide by 2 to put in range 0-255
-			var runTimeHigh = runTime >> 4;
-			var runTimeLow = runTime & 0x0F;
-			// console.log('Run Time: ', self.presetRunTimes[parseInt(opt.val,10)])
-			// console.log('Original: ', runTime.toString(16));
-			// console.log('Manipulated: ', runTimeHigh.toString(16), runTimeLow.toString(16));
-			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
-			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
-			// console.log('Manipulated: ', temp, runTimeLow.toString(16));
-			// cmd = '\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + runTime + '\xFF';
-			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
-			self.sendVISCACommand(cmd);
-			break;
+		// case 'speedPset':
+		// 	var runTime = self.presetRunTimes[parseInt(opt.val, 10)] / 2; //Divide by 2 to put in range 0-255
+		// 	var runTimeHigh = runTime >> 4;
+		// 	var runTimeLow = runTime & 0x0F;
+		// 	// console.log('Run Time: ', self.presetRunTimes[parseInt(opt.val,10)])
+		// 	// console.log('Original: ', runTime.toString(16));
+		// 	// console.log('Manipulated: ', runTimeHigh.toString(16), runTimeLow.toString(16));
+		// 	var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
+		// 	var temp2 = String.fromCharCode(runTimeLow & 0xFF);
+		// 	// console.log('Manipulated: ', temp, runTimeLow.toString(16));
+		// 	// cmd = '\x81\x01\x06\x01' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + runTime + '\xFF';
+		// 	cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
+		// 	self.sendVISCACommand(cmd);
+		// 	break;
 
 		case 'power':
 			if (opt.bool == 'off') {
