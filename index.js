@@ -96,6 +96,7 @@ instance.prototype.init_tcp = function () {
 	var self = this;
 
 	if (self.tcp !== undefined) {
+		clearInterval(self.heartbeatInterval);
 		self.tcp.destroy();
 		delete self.tcp;
 	}
@@ -145,6 +146,11 @@ instance.prototype.init_tcp = function () {
 				self.setVariable('P3_runTime', self.presetRunTimes[3]);
 			}
 		});
+
+		self.heartbeatInterval = setInterval(() => {
+			var cmd = '\x01\xFF';
+			self.sendVISCACommand(cmd);
+		}, 3000)
 
 		debug(self.tcp.host + ':' + self.config.port);
 	}
