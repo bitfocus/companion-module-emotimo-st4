@@ -114,17 +114,18 @@ instance.prototype.init_tcp = function () {
 
 		self.tcp.on('data', function (data) {
 			console.log("Data from eMotimo VISCA: %d", data.length, data);
-			// self.stVar = parseInt(data);
-			// self.setVariable('PTS_var', self.stVar.toString());
-			// console.log('stVar: ', self.stVar);
+			console.log('Data Type: ', data.type);
+			// self.stPanTilt = parseInt(data);
+			// self.setVariable('PTS_var', self.stPanTilt.toString());
+			// console.log('stPanTilt: ', self.stPanTilt);
 			for (let i = 0; i < data.length; i++) {
 				console.log('Data: ', data[i]);
 			}
 			if (data[0] == 0x81 && data[1] == 0x02) {
 				if (data[2] == 0x01 || data[2] == 0x02) {
-					self.stVar = parseInt(data[3]);
-					self.setVariable('PTS_var', self.stVar.toString());
-					console.log('stVar: ', self.stVar);
+					self.stPanTilt = parseInt(data[3]);
+					self.setVariable('PTS_var', self.stPanTilt.toString());
+					console.log('stPanTilt: ', self.stPanTilt); P0_runTime
 				} else if (data[2] == 0x03) {
 					self.stSlide = parseInt(data[3]);
 					self.setVariable('SS_var', self.stSlide.toString());
@@ -138,12 +139,48 @@ instance.prototype.init_tcp = function () {
 				}
 			} else if (data.length >= 11) { //Hardcoded Example of Reading in 4 Presets Timing
 				var str = data.toString();
-				self.presetRunTimes = str.split(`,`).map(x => parseInt(x, 10));
+				// self.presetRunTimes = str.split(`,`).map(x => parseInt(x, 10));
+				var firstSplit = str.split(`.`);
+				console.log('First Split:', firstSplit);
+				self.presetRunTimes = firstSplit[0].split(`,`).map(x => parseInt(x, 10));
+				self.presetRampTimes = firstSplit[1].split(`,`).map(x => parseInt(x, 10));
+				self.presetStatus = firstSplit[2].split(`,`).map(x => parseInt(x, 10));
 				console.log('Preset Run Times:', self.presetRunTimes);
 				self.setVariable('P0_runTime', self.presetRunTimes[0]);
 				self.setVariable('P1_runTime', self.presetRunTimes[1]);
 				self.setVariable('P2_runTime', self.presetRunTimes[2]);
 				self.setVariable('P3_runTime', self.presetRunTimes[3]);
+				self.setVariable('P4_runTime', self.presetRunTimes[4]);
+				self.setVariable('P5_runTime', self.presetRunTimes[5]);
+				self.setVariable('P6_runTime', self.presetRunTimes[6]);
+				self.setVariable('P7_runTime', self.presetRunTimes[7]);
+				self.setVariable('P8_runTime', self.presetRunTimes[8]);
+				self.setVariable('P9_runTime', self.presetRunTimes[9]);
+				self.setVariable('P10_runTime', self.presetRunTimes[10]);
+				self.setVariable('P0_RampTime', self.presetRampTimes[0]);
+				self.setVariable('P1_RampTime', self.presetRampTimes[1]);
+				self.setVariable('P2_RampTime', self.presetRampTimes[2]);
+				self.setVariable('P3_RampTime', self.presetRampTimes[3]);
+				self.setVariable('P4_RampTime', self.presetRampTimes[4]);
+				self.setVariable('P5_RampTime', self.presetRampTimes[5]);
+				self.setVariable('P6_RampTime', self.presetRampTimes[6]);
+				self.setVariable('P7_RampTime', self.presetRampTimes[7]);
+				self.setVariable('P8_RampTime', self.presetRampTimes[8]);
+				self.setVariable('P9_RampTime', self.presetRampTimes[9]);
+				self.setVariable('P10_RampTime', self.presetRampTimes[10]);
+				self.setVariable('P0_Status', self.presetStatus[0]);
+				self.setVariable('P1_Status', self.presetStatus[1]);
+				self.setVariable('P2_Status', self.presetStatus[2]);
+				self.setVariable('P3_Status', self.presetStatus[3]);
+				self.setVariable('P4_Status', self.presetStatus[4]);
+				self.setVariable('P5_Status', self.presetStatus[5]);
+				self.setVariable('P6_Status', self.presetStatus[6]);
+				self.setVariable('P7_Status', self.presetStatus[7]);
+				self.setVariable('P8_Status', self.presetStatus[8]);
+				self.setVariable('P9_Status', self.presetStatus[9]);
+				self.setVariable('P10_Status', self.presetStatus[10]);
+
+				self.checkFeedbacks('preset_status');
 			}
 		});
 
@@ -161,16 +198,20 @@ instance.prototype.init = function () {
 
 	debug = self.debug;
 	log = self.log;
-	self.stVar = 50;
+	self.stPanTilt = 120;
 	self.stSlide = 50;
 	self.stFIZ = 50;
-	self.presetRunTimes = [50, 50, 50, 50];
+	self.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+	self.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+	self.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	self.asset = "";
 
 	self.status(self.STATUS_UNKNOWN);
 
 
 	self.actions(); // export actions
+	self.feedbacks();
+	self.init_feedbacks();
 	self.init_presets();
 	self.init_variables();
 	self.init_tcp();
@@ -989,6 +1030,14 @@ instance.prototype.init_presets = function () {
 							val: ('0' + recall.toString(16)).substr(-2, 2),
 						}
 					}
+				],
+				feedbacks: [
+					{
+						feedback: 'preset_status',
+						options: {
+							val: ('0' + recall.toString(16)).substr(-2, 2),
+						}
+					}
 				]
 			});
 		}
@@ -1037,6 +1086,56 @@ instance.prototype.init_presets = function () {
 						action: 'presetRunTimeD',
 						options: {
 							val: ('0' + decreaseRunTime.toString(16)).substr(-2, 2),
+						}
+					}
+				]
+			});
+		}
+	}
+
+	var increaseRampTime;
+	for (increaseRampTime = 0; increaseRampTime < 255; increaseRampTime++) {
+		if (increaseRampTime < 90 || increaseRampTime > 99) {
+			presets.push({
+				category: 'Preset Timing',
+				label: 'Increase RampTime Preset ' + parseInt(increaseRampTime),
+				bank: {
+					style: 'text',
+					text: 'Increase Ramp Time\\n' + parseInt(increaseRampTime),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'presetRampTimeU',
+						options: {
+							val: ('0' + increaseRampTime.toString(16)).substr(-2, 2),
+						}
+					}
+				]
+			});
+		}
+	}
+
+	var decreaseRampTime;
+	for (decreaseRampTime = 0; decreaseRampTime < 255; decreaseRampTime++) {
+		if (decreaseRampTime < 90 || decreaseRampTime > 99) {
+			presets.push({
+				category: 'Preset Timing',
+				label: 'Decrease RampTime Preset ' + parseInt(decreaseRampTime),
+				bank: {
+					style: 'text',
+					text: 'Decrease Ramp Time\\n' + parseInt(decreaseRampTime),
+					size: '14',
+					color: '16777215',
+					bgcolor: self.rgb(0, 0, 0),
+				},
+				actions: [
+					{
+						action: 'presetRampTimeD',
+						options: {
+							val: ('0' + decreaseRampTime.toString(16)).substr(-2, 2),
 						}
 					}
 				]
@@ -1162,6 +1261,30 @@ instance.prototype.actions = function (system) {
 				}
 			]
 		},
+		'presetRampTimeU': {
+			label: 'Increase Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET,
+					minChoicesForSearch: 1
+				}
+			]
+		},
+		'presetRampTimeD': {
+			label: 'Decrease Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Preset Nr.',
+					id: 'val',
+					choices: PRESET,
+					minChoicesForSearch: 1
+				}
+			]
+		},
 		'savePset': {
 			label: 'Save Preset',
 			options: [
@@ -1262,6 +1385,14 @@ instance.prototype.actions = function (system) {
 	});
 }
 
+instance.prototype.feedbacks = function (system) {
+	var self = this;
+
+	self.system.emit('instance_feedbacks', self.id, {
+		'preset_status': { label: 'Preset Status' },
+	});
+}
+
 instance.prototype.init_variables = function () {
 	this.setVariableDefinitions([
 		{
@@ -1293,15 +1424,162 @@ instance.prototype.init_variables = function () {
 			label: 'Preset 3 Run Time',
 			name: 'P3_runTime',
 		},
+		{
+			label: 'Preset 4 Run Time',
+			name: 'P4_runTime',
+		},
+		{
+			label: 'Preset 5 Run Time',
+			name: 'P5_runTime',
+		},
+		{
+			label: 'Preset 6 Run Time',
+			name: 'P6_runTime',
+		},
+		{
+			label: 'Preset 7 Run Time',
+			name: 'P7_runTime',
+		},
+		{
+			label: 'Preset 8 Run Time',
+			name: 'P8_runTime',
+		},
+		{
+			label: 'Preset 9 Run Time',
+			name: 'P9_runTime',
+		},
+		{
+			label: 'Preset 10 Run Time',
+			name: 'P10_runTime',
+		},
+		{
+			label: 'Preset 0 Ramp Time',
+			name: 'P0_RampTime',
+		},
+		{
+			label: 'Preset 1 Ramp Time',
+			name: 'P1_RampTime',
+		},
+		{
+			label: 'Preset 2 Ramp Time',
+			name: 'P2_RampTime',
+		},
+		{
+			label: 'Preset 3 Ramp Time',
+			name: 'P3_RampTime',
+		},
+		{
+			label: 'Preset 4 Ramp Time',
+			name: 'P4_RampTime',
+		},
+		{
+			label: 'Preset 5 Ramp Time',
+			name: 'P5_RampTime',
+		},
+		{
+			label: 'Preset 6 Ramp Time',
+			name: 'P6_RampTime',
+		},
+		{
+			label: 'Preset 7 Ramp Time',
+			name: 'P7_RampTime',
+		},
+		{
+			label: 'Preset 8 Ramp Time',
+			name: 'P8_RampTime',
+		},
+		{
+			label: 'Preset 9 Ramp Time',
+			name: 'P9_RampTime',
+		},
+		{
+			label: 'Preset 10 Ramp Time',
+			name: 'P10_RampTime',
+		},
+		{
+			label: 'Preset 0 Status',
+			name: 'P0_Status',
+		},
+		{
+			label: 'Preset 1 Status',
+			name: 'P1_Status',
+		},
+		{
+			label: 'Preset 2 Status',
+			name: 'P2_Status',
+		},
+		{
+			label: 'Preset 3 Status',
+			name: 'P3_Status',
+		},
+		{
+			label: 'Preset 4 Status',
+			name: 'P4_Status',
+		},
+		{
+			label: 'Preset 5 Status',
+			name: 'P5_Status',
+		},
+		{
+			label: 'Preset 6 Status',
+			name: 'P6_Status',
+		},
+		{
+			label: 'Preset 7 Status',
+			name: 'P7_Status',
+		},
+		{
+			label: 'Preset 8 Status',
+			name: 'P8_Status',
+		},
+		{
+			label: 'Preset 9 Status',
+			name: 'P9_Status',
+		},
+		{
+			label: 'Preset 10 Status',
+			name: 'P10_Status',
+		},
+
 	])
 
-	this.setVariable('PTS_var', '50');
+	this.setVariable('PTS_var', '120');
 	this.setVariable('ZS_var', '50');
 	this.setVariable('SS_var', '50');
-	this.setVariable('P0_runTime', '0');
-	this.setVariable('P1_runTime', '0');
-	this.setVariable('P2_runTime', '0');
-	this.setVariable('P3_runTime', '0');
+	this.setVariable('P0_runTime', '50');
+	this.setVariable('P1_runTime', '50');
+	this.setVariable('P2_runTime', '50');
+	this.setVariable('P3_runTime', '50');
+	this.setVariable('P4_runTime', '50');
+	this.setVariable('P5_runTime', '50');
+	this.setVariable('P6_runTime', '50');
+	this.setVariable('P7_runTime', '50');
+	this.setVariable('P8_runTime', '50');
+	this.setVariable('P9_runTime', '50');
+	this.setVariable('P10_runTime', '50');
+	this.setVariable('P0_RampTime', '10');
+	this.setVariable('P1_RampTime', '10');
+	this.setVariable('P2_RampTime', '10');
+	this.setVariable('P3_RampTime', '10');
+	this.setVariable('P4_RampTime', '10');
+	this.setVariable('P5_RampTime', '10');
+	this.setVariable('P6_RampTime', '10');
+	this.setVariable('P7_RampTime', '10');
+	this.setVariable('P8_RampTime', '10');
+	this.setVariable('P9_RampTime', '10');
+	this.setVariable('P10_RampTime', '10');
+	this.setVariable('P0_Status', '0');
+	this.setVariable('P1_Status', '0');
+	this.setVariable('P2_Status', '0');
+	this.setVariable('P3_Status', '0');
+	this.setVariable('P4_Status', '0');
+	this.setVariable('P5_Status', '0');
+	this.setVariable('P6_Status', '0');
+	this.setVariable('P7_Status', '0');
+	this.setVariable('P8_Status', '0');
+	this.setVariable('P9_Status', '0');
+	this.setVariable('P10_Status', '0');
+
 
 }
 
@@ -1319,9 +1597,9 @@ instance.prototype.action = function (action) {
 	var opt = action.options;
 	var cmd = '';
 
-	// var tempSpeed = self.stVar;
-	var panspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
-	var tiltspeed = String.fromCharCode(parseInt(self.stVar, 10) & 0xFF);
+	// var tempSpeed = self.stPanTilt;
+	var panspeed = String.fromCharCode(parseInt(self.stPanTilt, 10) & 0xFF);
+	var tiltspeed = String.fromCharCode(parseInt(self.stPanTilt, 10) & 0xFF);
 	var slidespeed = String.fromCharCode(parseInt(self.stSlide, 10) & 0xFF);
 	var fizspeed = String.fromCharCode(parseInt(self.stFIZ, 10) & 0xFF);
 	switch (action.action) {
@@ -1382,19 +1660,19 @@ instance.prototype.action = function (action) {
 			break;
 
 		case 'st4SpeedU':
-			self.stVar += 10;
-			if (self.stVar > 127) {
-				self.stVar = 127;
+			self.stPanTilt += 10;
+			if (self.stPanTilt > 127) {
+				self.stPanTilt = 127;
 			}
-			this.setVariable('PTS_var', self.stVar.toString());
+			this.setVariable('PTS_var', self.stPanTilt.toString());
 			break;
 
 		case 'st4SpeedD':
-			self.stVar -= 5;
-			if (self.stVar < 1) {
-				self.stVar = 1;
+			self.stPanTilt -= 5;
+			if (self.stPanTilt < 1) {
+				self.stPanTilt = 1;
 			}
-			this.setVariable('PTS_var', self.stVar.toString());
+			this.setVariable('PTS_var', self.stPanTilt.toString());
 			break;
 
 		case 'st4SlideSpeedU':
@@ -1442,10 +1720,10 @@ instance.prototype.action = function (action) {
 			var runTime = self.presetRunTimes[temp] / 2; //Divide by 2 to put in range 0-255
 			var runTimeHigh = runTime >> 4;
 			var runTimeLow = runTime & 0x0F;
-			
+
 			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
 			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
-			
+
 			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
 			self.sendVISCACommand(cmd);
 
@@ -1464,15 +1742,60 @@ instance.prototype.action = function (action) {
 			var runTime = self.presetRunTimes[temp] / 2; //Divide by 2 to put in range 0-255
 			var runTimeHigh = runTime >> 4;
 			var runTimeLow = runTime & 0x0F;
-			
+
 			var temp1 = String.fromCharCode(runTimeHigh & 0xFF);
 			var temp2 = String.fromCharCode(runTimeLow & 0xFF);
-			
+
 			cmd = '\x81\x01\x08\x3F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
 			self.sendVISCACommand(cmd);
 
 			break;
 
+		case 'presetRampTimeU':
+			var temp = parseInt(opt.val, 10);
+			// console.log("Modifying Ramp Time for Preset: ", temp);
+			self.presetRampTimes[temp] += 1;
+			if (self.presetRampTimes[temp] > 255) {
+				self.presetRampTimes[temp] = 255;
+			} else if (self.presetRampTimes[temp] > self.presetRunTimes[temp] * .49) {
+				self.presetRampTimes[temp] = self.presetRunTimes[temp] * .49;
+			}
+			var str = "P" + temp.toString() + "_RampTime";
+			this.setVariable(str, self.presetRampTimes[temp].toString());
+
+			var RampTime = self.presetRampTimes[temp];
+			var RampTimeHigh = RampTime >> 4;
+			var RampTimeLow = RampTime & 0x0F;
+
+			var temp1 = String.fromCharCode(RampTimeHigh & 0xFF);
+			var temp2 = String.fromCharCode(RampTimeLow & 0xFF);
+
+			cmd = '\x81\x01\x08\x4F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
+			self.sendVISCACommand(cmd);
+
+			break;
+
+		case 'presetRampTimeD':
+			var temp = parseInt(opt.val, 10);
+			// console.log("Modifying Ramp Time for Preset: ", temp);
+			self.presetRampTimes[temp] -= 1;
+			if (self.presetRampTimes[temp] < 0) {
+				self.presetRampTimes[temp] = 0;
+			}
+			var str = "P" + temp.toString() + "_RampTime";
+			this.setVariable(str, self.presetRampTimes[temp].toString());
+
+			var RampTime = self.presetRampTimes[temp];
+			var RampTimeHigh = RampTime >> 4;
+			var RampTimeLow = RampTime & 0x0F;
+
+			var temp1 = String.fromCharCode(RampTimeHigh & 0xFF);
+			var temp2 = String.fromCharCode(RampTimeLow & 0xFF);
+
+			cmd = '\x81\x01\x08\x4F' + String.fromCharCode(parseInt(opt.val, 16) & 0xFF) + temp1 + temp2 + '\xFF';
+			self.sendVISCACommand(cmd);
+
+			break;
 
 		case 'm3left':
 			cmd = '\x81\x01\x08\x01' + slidespeed + slidespeed + '\x01\x03\xFF';
@@ -1706,6 +2029,62 @@ instance.prototype.action = function (action) {
 
 	}
 };
+
+
+
+instance.prototype.init_feedbacks = function () {
+	let self = this;
+
+	// feedbacks
+	let feedbacks = {};
+
+	feedbacks['preset_status'] = {
+		label: 'Change Button Color If Preset is Set',
+		description: 'If Preset Valid, set the button to this color.',
+		options: [
+			{
+				type: 'colorpicker',
+				label: 'Foreground color',
+				id: 'fg',
+				default: self.rgb(255, 255, 255)
+			},
+			{
+				type: 'colorpicker',
+				label: 'Background color',
+				id: 'bg',
+				default: self.rgb(0, 255, 0)
+			},
+			{
+				type: 'dropdown',
+				label: 'Preset Nr.',
+				id: 'val',
+				choices: PRESET,
+				minChoicesForSearch: 1
+			}
+		]
+	};
+
+	self.setFeedbackDefinitions(feedbacks);
+}
+
+instance.prototype.feedback = function (feedback) {
+	let self = this;
+	var opt = feedback.options;
+	var presetNum = parseInt(opt.val, 10);
+
+	if (feedback.type === 'preset_status') {
+		// console.log('Preset Num: ', presetNum);
+		if (self.presetStatus[presetNum] === 1) {
+			// console.log("Preset is Set");
+			return { color: feedback.options.fg, bgcolor: feedback.options.bg };
+		} else {
+			// console.log("Preset is Not Set");
+		}
+	}
+
+	return {};
+}
+
 
 instance_skel.extendedBy(instance);
 
