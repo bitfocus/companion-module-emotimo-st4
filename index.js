@@ -118,9 +118,9 @@ instance.prototype.init_tcp = function () {
 			// self.stPanTilt = parseInt(data);
 			// self.setVariable('PTS_var', self.stPanTilt.toString());
 			// console.log('stPanTilt: ', self.stPanTilt);
-			for (let i = 0; i < data.length; i++) {
-				console.log('Data: ', data[i]);
-			}
+			// for (let i = 0; i < data.length; i++) {
+			// 	console.log('Data: ', data[i]);
+			// }
 			if (data[0] == 0x81 && data[1] == 0x02) {
 				if (data[2] == 0x01 || data[2] == 0x02) {
 					self.stPanTilt = parseInt(data[3]);
