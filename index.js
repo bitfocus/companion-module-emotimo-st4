@@ -1073,7 +1073,7 @@ instance.prototype.init_presets = function () {
 				label: 'Increase RunTime Preset ' + parseInt(increaseRunTime),
 				bank: {
 					style: 'text',
-					text: 'Increase Run Time\\n' + parseInt(increaseRunTime),
+					text: 'Increase Run\\nT' + parseInt(increaseRunTime),
 					size: '14',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
@@ -1098,7 +1098,7 @@ instance.prototype.init_presets = function () {
 				label: 'Decrease RunTime Preset ' + parseInt(decreaseRunTime),
 				bank: {
 					style: 'text',
-					text: 'Decrease Run Time\\n' + parseInt(decreaseRunTime),
+					text: 'Decrease Run\\nT' + parseInt(decreaseRunTime),
 					size: '14',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
@@ -1123,7 +1123,7 @@ instance.prototype.init_presets = function () {
 				label: 'Increase RampTime Preset ' + parseInt(increaseRampTime),
 				bank: {
 					style: 'text',
-					text: 'Increase Ramp Time\\n' + parseInt(increaseRampTime),
+					text: 'Increase Ramp\\nT' + parseInt(increaseRampTime),
 					size: '14',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
@@ -1148,7 +1148,7 @@ instance.prototype.init_presets = function () {
 				label: 'Decrease RampTime Preset ' + parseInt(decreaseRampTime),
 				bank: {
 					style: 'text',
-					text: 'Decrease Ramp Time\\n' + parseInt(decreaseRampTime),
+					text: 'Decrease Ramp\\nT' + parseInt(decreaseRampTime),
 					size: '14',
 					color: '16777215',
 					bgcolor: self.rgb(0, 0, 0),
