@@ -114,7 +114,7 @@ instance.prototype.init_tcp = function () {
 
 		self.tcp.on('data', function (data) {
 			console.log("Data from eMotimo VISCA: %d", data.length, data);
-			console.log('Data Type: ', data.type);
+			// console.log('Data Type: ', data.type);
 			// self.stPanTilt = parseInt(data);
 			// self.setVariable('PTS_var', self.stPanTilt.toString());
 			// console.log('stPanTilt: ', self.stPanTilt);
@@ -125,7 +125,7 @@ instance.prototype.init_tcp = function () {
 				if (data[2] == 0x01 || data[2] == 0x02) {
 					self.stPanTilt = parseInt(data[3]);
 					self.setVariable('PTS_var', self.stPanTilt.toString());
-					console.log('stPanTilt: ', self.stPanTilt); P0_runTime
+					console.log('stPanTilt: ', self.stPanTilt);
 				} else if (data[2] == 0x03) {
 					self.stSlide = parseInt(data[3]);
 					self.setVariable('SS_var', self.stSlide.toString());
