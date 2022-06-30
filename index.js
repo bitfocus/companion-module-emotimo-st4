@@ -137,7 +137,7 @@ instance.prototype.init_tcp = function () {
 				} else {
 					console.log('Unknown Command Format');
 				}
-			} else if (data.length >= 11) { //Hardcoded Example of Reading in 4 Presets Timing
+			} else if (data.length >= 11) { //Hardcoded Magic Number this is a terrible parsing condition
 				var str = data.toString();
 				// self.presetRunTimes = str.split(`,`).map(x => parseInt(x, 10));
 				var firstSplit = str.split(`.`);
@@ -146,39 +146,60 @@ instance.prototype.init_tcp = function () {
 				self.presetRampTimes = firstSplit[1].split(`,`).map(x => parseInt(x, 10));
 				self.presetStatus = firstSplit[2].split(`,`).map(x => parseInt(x, 10));
 				console.log('Preset Run Times:', self.presetRunTimes);
-				self.setVariable('P0_runTime', self.presetRunTimes[0]);
-				self.setVariable('P1_runTime', self.presetRunTimes[1]);
-				self.setVariable('P2_runTime', self.presetRunTimes[2]);
-				self.setVariable('P3_runTime', self.presetRunTimes[3]);
-				self.setVariable('P4_runTime', self.presetRunTimes[4]);
-				self.setVariable('P5_runTime', self.presetRunTimes[5]);
-				self.setVariable('P6_runTime', self.presetRunTimes[6]);
-				self.setVariable('P7_runTime', self.presetRunTimes[7]);
-				self.setVariable('P8_runTime', self.presetRunTimes[8]);
-				self.setVariable('P9_runTime', self.presetRunTimes[9]);
-				self.setVariable('P10_runTime', self.presetRunTimes[10]);
-				self.setVariable('P0_RampTime', self.presetRampTimes[0]);
-				self.setVariable('P1_RampTime', self.presetRampTimes[1]);
-				self.setVariable('P2_RampTime', self.presetRampTimes[2]);
-				self.setVariable('P3_RampTime', self.presetRampTimes[3]);
-				self.setVariable('P4_RampTime', self.presetRampTimes[4]);
-				self.setVariable('P5_RampTime', self.presetRampTimes[5]);
-				self.setVariable('P6_RampTime', self.presetRampTimes[6]);
-				self.setVariable('P7_RampTime', self.presetRampTimes[7]);
-				self.setVariable('P8_RampTime', self.presetRampTimes[8]);
-				self.setVariable('P9_RampTime', self.presetRampTimes[9]);
-				self.setVariable('P10_RampTime', self.presetRampTimes[10]);
-				self.setVariable('P0_Status', self.presetStatus[0]);
-				self.setVariable('P1_Status', self.presetStatus[1]);
-				self.setVariable('P2_Status', self.presetStatus[2]);
-				self.setVariable('P3_Status', self.presetStatus[3]);
-				self.setVariable('P4_Status', self.presetStatus[4]);
-				self.setVariable('P5_Status', self.presetStatus[5]);
-				self.setVariable('P6_Status', self.presetStatus[6]);
-				self.setVariable('P7_Status', self.presetStatus[7]);
-				self.setVariable('P8_Status', self.presetStatus[8]);
-				self.setVariable('P9_Status', self.presetStatus[9]);
-				self.setVariable('P10_Status', self.presetStatus[10]);
+				// self.setVariable('P0_runTime', self.presetRunTimes[0]);
+				// self.setVariable('P1_runTime', self.presetRunTimes[1]);
+				// self.setVariable('P2_runTime', self.presetRunTimes[2]);
+				// self.setVariable('P3_runTime', self.presetRunTimes[3]);
+				// self.setVariable('P4_runTime', self.presetRunTimes[4]);
+				// self.setVariable('P5_runTime', self.presetRunTimes[5]);
+				// self.setVariable('P6_runTime', self.presetRunTimes[6]);
+				// self.setVariable('P7_runTime', self.presetRunTimes[7]);
+				// self.setVariable('P8_runTime', self.presetRunTimes[8]);
+				// self.setVariable('P9_runTime', self.presetRunTimes[9]);
+				// self.setVariable('P10_runTime', self.presetRunTimes[10]);
+				// self.setVariable('P0_RampTime', self.presetRampTimes[0]);
+				// self.setVariable('P1_RampTime', self.presetRampTimes[1]);
+				// self.setVariable('P2_RampTime', self.presetRampTimes[2]);
+				// self.setVariable('P3_RampTime', self.presetRampTimes[3]);
+				// self.setVariable('P4_RampTime', self.presetRampTimes[4]);
+				// self.setVariable('P5_RampTime', self.presetRampTimes[5]);
+				// self.setVariable('P6_RampTime', self.presetRampTimes[6]);
+				// self.setVariable('P7_RampTime', self.presetRampTimes[7]);
+				// self.setVariable('P8_RampTime', self.presetRampTimes[8]);
+				// self.setVariable('P9_RampTime', self.presetRampTimes[9]);
+				// self.setVariable('P10_RampTime', self.presetRampTimes[10]);
+				// self.setVariable('P0_Status', self.presetStatus[0]);
+				// self.setVariable('P1_Status', self.presetStatus[1]);
+				// self.setVariable('P2_Status', self.presetStatus[2]);
+				// self.setVariable('P3_Status', self.presetStatus[3]);
+				// self.setVariable('P4_Status', self.presetStatus[4]);
+				// self.setVariable('P5_Status', self.presetStatus[5]);
+				// self.setVariable('P6_Status', self.presetStatus[6]);
+				// self.setVariable('P7_Status', self.presetStatus[7]);
+				// self.setVariable('P8_Status', self.presetStatus[8]);
+				// self.setVariable('P9_Status', self.presetStatus[9]);
+				// self.setVariable('P10_Status', self.presetStatus[10]);
+
+				for (let i = 0; i < 10; i++) {
+					if (self.presetRunTimes[i] === undefined) {
+						self.presetRunTimes[i] = 50;
+					}
+					var temp = 'P' + i.toString() + '_runTime';
+					self.setVariable(temp, self.presetRunTimes[i]);
+
+					if (self.presetRampTimes[i] === undefined) {
+						self.presetRampTimes[i] = 10;
+					}
+					var temp = 'P' + i.toString() + '_RampTime';
+					self.setVariable(temp, self.presetRampTimes[i]);
+
+					if (self.presetStatus[i] === undefined) {
+						self.presetStatus[i] = 0;
+					}
+					var temp = 'P' + i.toString() + '_Status';
+					self.setVariable(temp, self.presetStatus[i]);
+					
+				}
 
 				self.checkFeedbacks('preset_status');
 			}
@@ -268,6 +289,7 @@ instance.prototype.destroy = function () {
 	var self = this;
 
 	if (self.tcp !== undefined) {
+		clearInterval(self.heartbeatInterval);
 		self.tcp.destroy();
 	}
 	debug("destroy", self.id);
@@ -1033,7 +1055,7 @@ instance.prototype.init_presets = function () {
 				],
 				feedbacks: [
 					{
-						feedback: 'preset_status',
+						type: 'preset_status',
 						options: {
 							val: ('0' + recall.toString(16)).substr(-2, 2),
 						}
@@ -2052,7 +2074,7 @@ instance.prototype.init_feedbacks = function () {
 				type: 'colorpicker',
 				label: 'Background color',
 				id: 'bg',
-				default: self.rgb(0, 255, 0)
+				default: self.rgb(0, 150, 0)
 			},
 			{
 				type: 'dropdown',
