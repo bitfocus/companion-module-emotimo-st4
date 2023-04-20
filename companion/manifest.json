@@ -1,16 +1,16 @@
 {
-	"id": "your-module-name",
-	"name": "your-module-name",
-	"shortname": "module-shortname",
-	"description": "A short one line description of your module",
+	"id": "Emotimo-ST4-3",
+	"name": "Emotimo-ST4-3",
+	"shortname": "Emotimo",
+	"description": "An module to control your Emotimo product on Companion 3.0",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-your-module-name.git",
-	"bugs": "https://github.com/bitfocus/companion-module-your-module-name/issues",
+	"repository": "git+https://github.com/bitfocus/companion-module-emotimo-st4-3.git",
+	"bugs": "https://github.com/bitfocus/companion-module-emotimo-st4-3/issues",
 	"maintainers": [
 		{
-			"name": "Your name",
-			"email": "Your email"
+			"name": "Jacob",
+			"email": "jacobw@emotimo.com"
 		}
 	],
 	"runtime": {
@@ -20,7 +20,7 @@
 		"entrypoint": "../main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "Your company",
-	"products": ["Your product"],
+	"manufacturer": "eMotimo",
+	"products": ["ST4", "ST4.3", "SA2"],
 	"keywords": []
 }
