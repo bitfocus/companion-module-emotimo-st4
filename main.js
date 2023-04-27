@@ -44,6 +44,10 @@ class eMotimoModuleInstance extends InstanceBase {
 			delete this.socket
 		}
 
+		this.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+		this.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+		this.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 		this.config = config
 
 		this.config.host = this.config.host || ''
