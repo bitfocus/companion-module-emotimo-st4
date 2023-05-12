@@ -32,6 +32,19 @@ const MOTOR_SPEED = [
 	
 ]
 
+const VIRTUAL_BUTTON = [
+	{ id: 0, label: 'Enter' },
+	{ id: 1, label: 'Up' },
+	{ id: 2, label: 'Right' },
+	{ id: 3, label: 'Down' },
+	{ id: 4, label: 'Left' },
+	{ id: 5, label: 'Back' },
+	{ id: 6, label: 'Enter Held' },
+	{ id: 7, label: 'Empty' },
+	{ id: 8, label: 'Empty' },
+	
+]
+
 module.exports = function (self) {
 	self.setActionDefinitions({
 		jogMotor: {
@@ -132,6 +145,33 @@ module.exports = function (self) {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G20 P'
 				const sendBuf = Buffer.from(cmd + recallPreset.options.num + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		virtualInput: {
+			name: 'Virtual Button Input',
+			options: [
+				{
+					id: 'button',
+					type: 'dropdown',
+					label: 'Button Input',
+					default: 0,
+					choices: VIRTUAL_BUTTON,
+				},
+			],
+			callback: async (virtButtonPress) => {
+				// console.log('Hello world!', event.options.num)
+				const cmd = 'G600 C'
+				const sendBuf = Buffer.from(cmd + virtButtonPress.options.button + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
