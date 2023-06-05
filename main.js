@@ -3,6 +3,7 @@ const UpgradeScripts = require('./upgrades')
 const UpdateActions = require('./actions')
 const UpdateFeedbacks = require('./feedbacks')
 const UpdateVariableDefinitions = require('./variables')
+const UpdatePresets = require('./presets')
 
 const config = require('./config')
 const { MODELS } = require('./models.js')
@@ -28,6 +29,7 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
+		this.updatePresets()
 
 		await this.configUpdated(config)
 	}
@@ -44,7 +46,7 @@ class eMotimoModuleInstance extends InstanceBase {
 			delete this.socket
 		}
 
-		this.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+		this.presetRunTimes = [51, 50, 50, 50, 50, 50, 50, 50, 50, 50];
 		this.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 		this.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -61,6 +63,8 @@ class eMotimoModuleInstance extends InstanceBase {
 
 			this.init_tcp_variables()
 		}
+
+		// this.initPresets()
 	}
 
 	// // Return config fields for web config
@@ -168,6 +172,10 @@ class eMotimoModuleInstance extends InstanceBase {
 
 	updateVariableDefinitions() {
 		UpdateVariableDefinitions(this)
+	}
+
+	updatePresets() {
+		UpdatePresets(this)
 	}
 
 	sendEmotimoAPICommand = function (str) {

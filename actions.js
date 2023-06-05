@@ -116,7 +116,7 @@ module.exports = function (self) {
 				const cmd = 'G21 P'
 				
 				
-				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num] + ' A' + self.presetRampTimes[setPreset.options.num] + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num]/10 + ' A' + self.presetRampTimes[setPreset.options.num]/10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -161,7 +161,7 @@ module.exports = function (self) {
 			name: 'Virtual Button Input',
 			options: [
 				{
-					id: 'button',
+					id: 'vbutton',
 					type: 'dropdown',
 					label: 'Button Input',
 					default: 0,
@@ -171,7 +171,7 @@ module.exports = function (self) {
 			callback: async (virtButtonPress) => {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G600 C'
-				const sendBuf = Buffer.from(cmd + virtButtonPress.options.button + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + virtButtonPress.options.vbutton + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
