@@ -3,7 +3,9 @@ const UpgradeScripts = require('./upgrades')
 const UpdateActions = require('./actions')
 const UpdateFeedbacks = require('./feedbacks')
 const UpdateVariableDefinitions = require('./variables')
-const UpdatePresets = require('./presets')
+// const UpdatePresets = require('./presets')
+
+const presets = require('./presets')
 
 const config = require('./config')
 const { MODELS } = require('./models.js')
@@ -13,12 +15,13 @@ class eMotimoModuleInstance extends InstanceBase {
 		super(internal)
 
 		// Assign the methods from the listed files to this class
-		// Object.assign(this, {
+		Object.assign(this, {
 		// 	...config,
 		// 	...UpdateActions,
 		// 	...UpdateFeedbacks,
 		// 	...UpdateVariableDefinitions,
-		// })
+			...presets,
+		})
 	}
 
 	async init(config) {
@@ -29,7 +32,7 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
-		this.updatePresets()
+		// this.updatePresets()
 
 		await this.configUpdated(config)
 	}
@@ -64,7 +67,7 @@ class eMotimoModuleInstance extends InstanceBase {
 			this.init_tcp_variables()
 		}
 
-		// this.initPresets()
+		this.initPresets()
 	}
 
 	// // Return config fields for web config

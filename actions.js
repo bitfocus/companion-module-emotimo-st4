@@ -157,6 +157,34 @@ module.exports = function (self) {
 				}
 			},
 		},
+		presetRunTimeU: {
+			name: 'Recall Preset',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Preset Number',
+					default: 0,
+					min: 0,
+					max: 127,
+				},
+			],
+			callback: async (presetRunTimeU) => {
+				// console.log('Hello world!', event.options.num)
+				const cmd = 'G20 P'
+				const sendBuf = Buffer.from(cmd + presetRunTimeU.options.num + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
 		virtualInput: {
 			name: 'Virtual Button Input',
 			options: [
