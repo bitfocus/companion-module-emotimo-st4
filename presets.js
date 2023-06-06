@@ -1129,16 +1129,30 @@ module.exports = {
                                 }
                             },
                             {
-                                actionId: 'virtualInput',
-                                delay: 2000,
-                                options: {
-                                    vbutton: 6,
-                                }
+                                // actionId: 'virtualInput',
+                                // delay: 2000,
+                                // options: {
+                                //     vbutton: 6,
+                                // }
                             },
                         ],
                         up: [
                             //Abort Delayed Actions Here
                         ],
+                        2000: { //Duration Group Example
+                            options: {
+                                runWhileHeld: true,
+                            },
+                            actions: [
+                                {
+                                    actionId: 'virtualInput',
+                                    options: {
+                                        vbutton: 6,
+                                    },
+                                    delay: 0,
+                                },
+                            ],
+                        },
                     },
                 ],
                 feedbacks: [
@@ -1930,6 +1944,39 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            presets.StopMotors = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Stop All Motors',
+                style: {
+                    text: 'E-Stop\\n',
+                    size: '18',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'stopMotors',
+                            }
+                        ],
+                        up: [
+                            {
+                                actionId: 'stopMotors',
+                            }
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
             }
         // ########################
         // #### Go To  Presets ####
@@ -1984,6 +2031,14 @@ module.exports = {
                 steps: [
                     {
                         down: [
+                            // {
+                            //     actionId: 'recallPset',
+                            //     options: {
+                            //         num: recall
+                            //     }
+                            // }
+                        ],
+                        up: [
                             {
                                 actionId: 'recallPset',
                                 options: {
@@ -1991,9 +2046,43 @@ module.exports = {
                                 }
                             }
                         ],
-                        up: []
+                        2000: {
+                            options: {
+                                runWhileHeld: true,
+                            },
+                            actions: [
+                                {
+                                    actionId: 'savePset',
+                                    options: {
+                                        num: recall
+                                    },
+                                    delay: 0,
+                                },
+                        //         {
+                        //             actionId: 'buttonFeedback',
+                        //             options: { bol: '1' },
+                        //             delay: 0,
+                        //         },
+                            ],
+                        },
+                        // 2001: [
+                        //     {
+                        //         actionId: 'buttonFeedback',
+                        //         options: { bol: '0' },
+                        //     },
+                        // ],
                     },
                 ],
+                // feedbacks: [
+                //     {
+                //         feedbackId: 'heldFeedback',
+                //         options: {},
+                //         style: {
+                //             color: combineRgb(0, 0, 0),//COLORS.BLACK,
+				//             bgcolor: combineRgb(255, 255, 0),//COLORS.YELLOW,
+                //         },
+                //     },
+                // ],
                 feedbacks: [
                     {
                         style: {
@@ -2009,6 +2098,7 @@ module.exports = {
             presets['increaseRunTime' + increaseRunTime] = {
                 category: 'Preset Timing',
                 name: 'Increase RunTime Preset ' + increaseRunTime,
+                type: 'button',
                 style: {
                     text: 'Increase Run\\nT' + increaseRunTime,
                     size: '14',
@@ -2043,6 +2133,7 @@ module.exports = {
             presets['decreaseRunTime' + decreaseRunTime] = {
                 category: 'Preset Timing',
                 name: 'Decrease RunTime Preset ' + decreaseRunTime,
+                type: 'button',
                 style: {
                     text: 'Decrease Run\\nT' + decreaseRunTime,
                     size: '14',
@@ -2077,6 +2168,7 @@ module.exports = {
             presets['increaseRampTime' + increaseRampTime] = {
                 category: 'Preset Timing',
                 name: 'Increase RampTime Preset ' + increaseRampTime,
+                type: 'button',
                 style: {
                     text: 'Increase Ramp\\nT' + increaseRampTime,
                     size: '14',
@@ -2111,6 +2203,7 @@ module.exports = {
             presets['decreaseRampTime' + decreaseRampTime] = {
                 category: 'Preset Timing',
                 name: 'Decrease RampTime Preset ' + decreaseRampTime,
+                type: 'button',
                 style: {
                     text: 'Decrease Ramp\\nT' + decreaseRampTime,
                     size: '14',
@@ -2144,104 +2237,105 @@ module.exports = {
         // ########################
         // #### Loop   Presets ####
         // ########################
-        for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
+       
+        // for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
 
-            presets['saveLoopPresets' + loopPresets] = {
-                category: 'Loops',
-                name: 'Setup Loop ' + loopPresets,
-                style: {
-                    text: 'Setup Loop\\n' + loopPresets,
-                    size: '14',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'setLoop',
-                                options: {
-                                    num: loopPresets
-                                }
-                            }
-                        ],
-                        up: []
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            }
-        }
+        //     presets['saveLoopPresets' + loopPresets] = {
+        //         category: 'Loops',
+        //         name: 'Setup Loop ' + loopPresets,
+        //         style: {
+        //             text: 'Setup Loop\\n' + loopPresets,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'setLoop',
+        //                         options: {
+        //                             num: loopPresets
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
 
-        for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
-            presets['recallLoopPresets' + loopPresets] = {
-                category: 'Loops',
-                name: 'Start Loop ' + loopPresets,
-                style: {
-                    text: 'Start Loop\\n' + loopPresets,
-                    size: '14',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'startLoop',
-                                options: {
-                                    num: loopPresets
-                                }
-                            }
-                        ],
-                        up: []
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            }
+        // for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
+        //     presets['recallLoopPresets' + loopPresets] = {
+        //         category: 'Loops',
+        //         name: 'Start Loop ' + loopPresets,
+        //         style: {
+        //             text: 'Start Loop\\n' + loopPresets,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'startLoop',
+        //                         options: {
+        //                             num: loopPresets
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
 
-        }
+        // }
 
-        presets.StopLoop = {
-            category: 'Loops',
-            name: 'Stop Loop',
-            style: {
-                text: 'Stop Loop\\n',
-                size: '14',
-                color: '16777215',
-                bgcolor: combineRgb(0, 0, 0),
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'stopLoop',
-                        }
-                    ],
-                    up: []
-                },
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        }
+        // presets.StopLoop = {
+        //     category: 'Loops',
+        //     name: 'Stop Loop',
+        //     style: {
+        //         text: 'Stop Loop\\n',
+        //         size: '14',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'stopLoop',
+        //                 }
+        //             ],
+        //             up: []
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // }
 
         this.setPresetDefinitions(presets);
     }

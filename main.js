@@ -49,7 +49,7 @@ class eMotimoModuleInstance extends InstanceBase {
 			delete this.socket
 		}
 
-		this.presetRunTimes = [51, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+		this.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
 		this.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 		this.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -97,7 +97,7 @@ class eMotimoModuleInstance extends InstanceBase {
 				width: 12,
 				label: 'Information',
 				value:
-					"This module controls ST4, ST4.3 and SA2",
+					"This module controls the ST4, ST4.3 and SA2.6",
 			},
 			{
 				type: 'textinput',
@@ -140,21 +140,21 @@ class eMotimoModuleInstance extends InstanceBase {
 				choices: MODELS,
 				minChoicesForSearch: 5,
 			},
-			{
-				type: 'static-text',
-				id: 'intervalInfo',
-				width: 12,
-				label: 'Update Interval',
-				value:
-					'Please enter the amount of time in milliseconds to request new information from the camera. Set to 0 to disable.',
-			},
-			{
-				type: 'textinput',
-				id: 'interval',
-				label: 'Update Interval',
-				width: 3,
-				default: 5000,
-			},
+			// {
+			// 	type: 'static-text',
+			// 	id: 'intervalInfo',
+			// 	width: 12,
+			// 	label: 'Update Interval',
+			// 	value:
+			// 		'Please enter the amount of time in milliseconds to request new information from the camera. Set to 0 to disable.',
+			// },
+			// {
+			// 	type: 'textinput',
+			// 	id: 'interval',
+			// 	label: 'Update Interval',
+			// 	width: 3,
+			// 	default: 5000,
+			// },
 			{
 				type: 'static-text',
 				id: 'dummy2',

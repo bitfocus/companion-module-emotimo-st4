@@ -99,6 +99,29 @@ module.exports = function (self) {
 				}
 			},
 		},
+		stopMotors: {
+			name: 'Stop All Motors',
+			options: [
+				
+			],
+			callback: async (haltMotors) => {
+				// console.log('Hello world!', event.options.num)
+				const cmd = 'G911'
+				
+				
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
 		savePset: {
 			name: 'Save Preset',
 			options: [
@@ -158,7 +181,7 @@ module.exports = function (self) {
 			},
 		},
 		presetRunTimeU: {
-			name: 'Recall Preset',
+			name: 'Preset Run Time Increment',
 			options: [
 				{
 					id: 'num',
@@ -170,9 +193,97 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (presetRunTimeU) => {
-				// console.log('Hello world!', event.options.num)
-				const cmd = 'G20 P'
-				const sendBuf = Buffer.from(cmd + presetRunTimeU.options.num + '\n', 'latin1')
+				self.presetRunTimes[presetRunTimeU.options.num] += 1;
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + presetRunTimeU.options.num + ' T' + self.presetRunTimes[presetRunTimeU.options.num]/10 + ' A' + self.presetRampTimes[presetRunTimeU.options.num]/10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		presetRunTimeD: {
+			name: 'Preset Run Time Decrement',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Preset Number',
+					default: 0,
+					min: 0,
+					max: 127,
+				},
+			],
+			callback: async (presetRunTimeD) => {
+				self.presetRunTimes[presetRunTimeD.options.num] -= 1;
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + presetRunTimeD.options.num + ' T' + self.presetRunTimes[presetRunTimeD.options.num]/10 + ' A' + self.presetRampTimes[presetRunTimeD.options.num]/10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		presetRampTimeU: {
+			name: 'Preset Ramp Time Increment',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Preset Number',
+					default: 0,
+					min: 0,
+					max: 127,
+				},
+			],
+			callback: async (presetRampTimeU) => {
+				self.presetRampTimes[presetRampTimeU.options.num] += 1;
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + presetRampTimeU.options.num + ' T' + self.presetRunTimes[presetRampTimeU.options.num]/10 + ' A' + self.presetRampTimes[presetRampTimeU.options.num]/10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		presetRampTimeD: {
+			name: 'Preset Ramp Time Decrement',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Preset Number',
+					default: 0,
+					min: 0,
+					max: 127,
+				},
+			],
+			callback: async (presetRampTimeD) => {
+				self.presetRampTimes[presetRampTimeD.options.num] -= 1;
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + presetRampTimeD.options.num + ' T' + self.presetRunTimes[presetRampTimeD.options.num]/10 + ' A' + self.presetRampTimes[presetRampTimeD.options.num]/10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -228,6 +339,26 @@ module.exports = function (self) {
 				console.log('Hello world!', event.options.num)
 			},
 		},
+		// buttonFeedback: {
+		// 	name: 'Button Feedback (highlight/clear)',
+		// 	options: [
+		// 		{
+		// 			type: 'dropdown',
+		// 			label: 'highlight/clear',
+		// 			id: 'bol',
+		// 			choices: [
+		// 				{ id: 1, label: 'Highlight' },
+		// 				{ id: 0, label: 'Clear' },
+		// 			],
+		// 			default: '1',
+		// 		},
+		// 	],
+		// 	callback: async (event) => {
+		// 		self.state.heldThresholdReached = event.options.bol
+		// 		self.checkFeedbacks()
+		// 	},
+		// },
+		
 		send: {
 			name: 'Send Command',
 			options: [

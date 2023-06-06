@@ -54,21 +54,21 @@ module.exports = {
 				choices: MODELS,
 				minChoicesForSearch: 5,
 			},
-			{
-				type: 'static-text',
-				id: 'intervalInfo',
-				width: 12,
-				label: 'Update Interval',
-				value:
-					'Please enter the amount of time in milliseconds to request new information from the camera. Set to 0 to disable.',
-			},
-			{
-				type: 'textinput',
-				id: 'interval',
-				label: 'Update Interval',
-				width: 3,
-				default: 5000,
-			},
+			// {
+			// 	type: 'static-text',
+			// 	id: 'intervalInfo',
+			// 	width: 12,
+			// 	label: 'Update Interval',
+			// 	value:
+			// 		'Please enter the amount of time in milliseconds to request new information from the camera. Set to 0 to disable.',
+			// },
+			// {
+			// 	type: 'textinput',
+			// 	id: 'interval',
+			// 	label: 'Update Interval',
+			// 	width: 3,
+			// 	default: 5000,
+			// },
 			{
 				type: 'static-text',
 				id: 'dummy2',
