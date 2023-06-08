@@ -1,12 +1,12 @@
 {
-	"id": "Emotimo-ST4-3",
-	"name": "Emotimo-ST4-3",
+	"id": "Emotimo-ST4",
+	"name": "Emotimo-ST4",
 	"shortname": "Emotimo",
 	"description": "An module to control your Emotimo product on Companion 3.0",
 	"version": "1.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-emotimo-st4-3.git",
-	"bugs": "https://github.com/bitfocus/companion-module-emotimo-st4-3/issues",
+	"repository": "git+https://github.com/bitfocus/companion-module-emotimo-st4.git",
+	"bugs": "https://github.com/bitfocus/companion-module-emotimo-st4/issues",
 	"maintainers": [
 		{
 			"name": "Jacob",
