@@ -19,6 +19,17 @@ const MOTOR_ID = [
 	{ id: 9, label: 'Focus' },
 ]
 
+const TN_MOTOR_ID = [
+	{ id: 5, label: 'TN 1' },
+	{ id: 6, label: 'TN 2' },
+	{ id: 7, label: 'TN 3' },
+]
+
+const DIRECTION_ID = [
+	{ id: 1, label: 'Positive' },
+	{ id: -1, label: 'Negative' },
+]
+
 const MOTOR_SPEED = [
 	{ id: -100000, label: 'Neg Fastest' },
 	{ id: -50000, label: 'Neg Fast' },
@@ -29,7 +40,7 @@ const MOTOR_SPEED = [
 	{ id: 25000, label: 'Medium' },
 	{ id: 50000, label: 'Fast' },
 	{ id: 100000, label: 'Fastest' },
-	
+
 ]
 
 const VIRTUAL_BUTTON = [
@@ -42,7 +53,7 @@ const VIRTUAL_BUTTON = [
 	{ id: 6, label: 'Enter Held' },
 	{ id: 7, label: 'Empty' },
 	{ id: 8, label: 'Empty' },
-	
+
 ]
 
 module.exports = function (self) {
@@ -63,7 +74,7 @@ module.exports = function (self) {
 					label: 'Motor Speed',
 					default: 0,
 					choices: MOTOR_SPEED,
-				}		
+				}
 			],
 			callback: async (actionJog) => {
 				const cmd = 'G300 M'
@@ -99,16 +110,323 @@ module.exports = function (self) {
 				}
 			},
 		},
+		jogMotorSmart: {
+			name: 'Motor Jog Smart',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 2,
+					choices: MOTOR_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (actionJogSmart) => {
+				const cmd = 'G301 M'
+				const cmd2 = ' V'
+				const cmd3 = '\n'
+				var motorSpeed = 0
+				var temp = 0
+
+				if (cmd != '') {
+
+					if (actionJogSmart.options.id_mot == 1) {
+						temp = self.getVariableValue('PanSpeed')
+					} else if (actionJogSmart.options.id_mot == 2) {
+						temp = self.getVariableValue('TiltSpeed')
+					} else if (actionJogSmart.options.id_mot == 3) {
+						temp = self.getVariableValue('M3Speed')
+					} else if (actionJogSmart.options.id_mot == 4) {
+						temp = self.getVariableValue('M4Speed')
+					} else if (actionJogSmart.options.id_mot == 5) {
+						temp = self.getVariableValue('TN1Speed')
+					} else if (actionJogSmart.options.id_mot == 6) {
+						temp = self.getVariableValue('TN2Speed')
+					} else if (actionJogSmart.options.id_mot == 7) {
+						temp = self.getVariableValue('TN3Speed')
+					} else if (actionJogSmart.options.id_mot == 8) {
+						temp = self.getVariableValue('RollSpeed')
+					} else if (actionJogSmart.options.id_mot == 9) {
+						temp = self.getVariableValue('FocusSpeed')
+					}
+					
+					if (actionJogSmart.options.id_mot < 5) {
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
+					} else {
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 25.0
+					}
+					
+					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
+
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + actionJogSmart.options.id_mot + cmd2 + motorSpeed + cmd3, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
+		positionDrive: {
+			name: 'Send Motor Position',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 5,
+					choices: TN_MOTOR_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (setMotorPosition) => {
+				const cmd = 'G302 M'
+				const cmd2 = ' P'
+				const cmd3 = '\n'
+				var temp = 0
+				var increment = 0
+
+				if (cmd != '') {
+					if (setMotorPosition.options.id_mot == 5) {
+						temp = self.getVariableValue('FPos')
+						increment = self.getVariableValue('FStep')
+					} else if (setMotorPosition.options.id_mot == 6) {
+						temp = self.getVariableValue('IPos')
+						increment = self.getVariableValue('IStep')
+					} else if (setMotorPosition.options.id_mot == 7) {
+						temp = self.getVariableValue('ZPos')
+						increment = self.getVariableValue('ZStep')
+					}
+
+					temp += (setMotorPosition.options.direction * increment);
+					// self.log('debug', 'Motor ID' + setMotorPosition.options.id_mot + 'Position' + temp)
+
+					if (temp > 10000) {
+						temp = 10000;
+					} else if (temp < 0) {
+						temp = 0;
+					}
+
+					if (setMotorPosition.options.id_mot == 5) {
+						self.setVariableValues({ FPos: temp })
+					} else if (setMotorPosition.options.id_mot == 6) {
+						self.setVariableValues({ IPos: temp })
+					} else if (setMotorPosition.options.id_mot == 7) {
+						self.setVariableValues({ ZPos: temp })
+					}
+
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + setMotorPosition.options.id_mot + cmd2 + temp + cmd3, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
+		toggleIncrement: {
+			name: 'Toggle Motor Increment',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 5,
+					choices: TN_MOTOR_ID,
+				},
+			],
+			callback: async (toggleIncrement) => {
+				var temp = 0
+
+				if (toggleIncrement.options.id_mot == 5) {
+					temp = self.getVariableValue('FStep')
+				} else if (toggleIncrement.options.id_mot == 6) {
+					temp = self.getVariableValue('IStep')
+				} else if (toggleIncrement.options.id_mot == 7) {
+					temp = self.getVariableValue('ZStep')
+				}
+
+				if (temp == 200) {
+					temp = 50;
+				} else {
+					temp = 200;
+				}
+
+				self.log('debug', 'Motor ID: ' + toggleIncrement.options.id_mot + ' Increment: ' + temp)
+
+				if (toggleIncrement.options.id_mot == 5) {
+					self.setVariableValues({ FStep: temp })
+				} else if (toggleIncrement.options.id_mot == 6) {
+					self.setVariableValues({ IStep: temp })
+				} else if (toggleIncrement.options.id_mot == 7) {
+					self.setVariableValues({ ZStep: temp })
+				}
+
+			}
+		},
+		setJogSpeed: {
+			name: 'Set Motor Jog Speed',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (jogSpeed) => {
+				var temp = 0
+
+				if (jogSpeed.options.id_mot == 1) {
+					temp = self.getVariableValue('PanSpeed')
+				} else if (jogSpeed.options.id_mot == 2) {
+					temp = self.getVariableValue('TiltSpeed')
+				} else if (jogSpeed.options.id_mot == 3) {
+					temp = self.getVariableValue('M3Speed')
+				} else if (jogSpeed.options.id_mot == 4) {
+					temp = self.getVariableValue('M4Speed')
+				} else if (jogSpeed.options.id_mot == 5) {
+					temp = self.getVariableValue('TN1Speed')
+				} else if (jogSpeed.options.id_mot == 6) {
+					temp = self.getVariableValue('TN2Speed')
+				} else if (jogSpeed.options.id_mot == 7) {
+					temp = self.getVariableValue('TN3Speed')
+				} else if (jogSpeed.options.id_mot == 8) {
+					temp = self.getVariableValue('RollSpeed')
+				}
+
+				temp += jogSpeed.options.direction
+
+				if (temp > 100) {
+					temp = 100;
+				} else if (temp < 0) {
+					temp = 0;
+				}
+
+				self.log('debug', 'Motor ID: ' + jogSpeed.options.id_mot + ' Speed: ' + temp)
+
+				if (jogSpeed.options.id_mot == 1) {
+					self.setVariableValues({ PanSpeed: temp })
+				} else if (jogSpeed.options.id_mot == 2) {
+					self.setVariableValues({ TiltSpeed: temp })
+				} else if (jogSpeed.options.id_mot == 3) {
+					self.setVariableValues({ M3Speed: temp })
+				} else if (jogSpeed.options.id_mot == 4) {
+					self.setVariableValues({ M4Speed: temp })
+				} else if (jogSpeed.options.id_mot == 5) {
+					self.setVariableValues({ TN1Speed: temp })
+				} else if (jogSpeed.options.id_mot == 6) {
+					self.setVariableValues({ TN2Speed: temp })
+				} else if (jogSpeed.options.id_mot == 7) {
+					self.setVariableValues({ TN3Speed: temp })
+				} else if (jogSpeed.options.id_mot == 8) {
+					self.setVariableValues({ RollSpeed: temp })
+				}
+
+			}
+		},
+		resetJogSpeed: {
+			name: 'Reset Motor Jog Speed',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (resetSpeed) => {
+
+				if (resetSpeed.options.id_mot == 1) {
+					self.setVariableValues({ PanSpeed: 100 })
+				} else if (resetSpeed.options.id_mot == 2) {
+					self.setVariableValues({ TiltSpeed: 100 })
+				} else if (resetSpeed.options.id_mot == 3) {
+					self.setVariableValues({ M3Speed: 100 })
+				} else if (resetSpeed.options.id_mot == 4) {
+					self.setVariableValues({ M4Speed: 100 })
+				} else if (resetSpeed.options.id_mot == 5) {
+					self.setVariableValues({ TN1Speed: 25 })
+				} else if (resetSpeed.options.id_mot == 6) {
+					self.setVariableValues({ TN2Speed: 25 })
+				} else if (resetSpeed.options.id_mot == 7) {
+					self.setVariableValues({ TN3Speed: 25 })
+				} else if (resetSpeed.options.id_mot == 8) {
+					self.setVariableValues({ RollSpeed: 100 })
+				}
+
+			}
+		},
 		stopMotors: {
 			name: 'Stop All Motors',
 			options: [
-				
+
 			],
 			callback: async (haltMotors) => {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G911'
-				
-				
+
+
 				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
@@ -137,9 +455,9 @@ module.exports = function (self) {
 			callback: async (setPreset) => {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G21 P'
-				
-				
-				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num]/10 + ' A' + self.presetRampTimes[setPreset.options.num]/10 + '\n', 'latin1')
+
+
+				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num] / 10 + ' A' + self.presetRampTimes[setPreset.options.num] / 10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -196,7 +514,7 @@ module.exports = function (self) {
 				self.presetRunTimes[presetRunTimeU.options.num] += 1;
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + presetRunTimeU.options.num + ' T' + self.presetRunTimes[presetRunTimeU.options.num]/10 + ' A' + self.presetRampTimes[presetRunTimeU.options.num]/10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + presetRunTimeU.options.num + ' T' + self.presetRunTimes[presetRunTimeU.options.num] / 10 + ' A' + self.presetRampTimes[presetRunTimeU.options.num] / 10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -225,7 +543,7 @@ module.exports = function (self) {
 				self.presetRunTimes[presetRunTimeD.options.num] -= 1;
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + presetRunTimeD.options.num + ' T' + self.presetRunTimes[presetRunTimeD.options.num]/10 + ' A' + self.presetRampTimes[presetRunTimeD.options.num]/10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + presetRunTimeD.options.num + ' T' + self.presetRunTimes[presetRunTimeD.options.num] / 10 + ' A' + self.presetRampTimes[presetRunTimeD.options.num] / 10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -254,7 +572,7 @@ module.exports = function (self) {
 				self.presetRampTimes[presetRampTimeU.options.num] += 1;
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + presetRampTimeU.options.num + ' T' + self.presetRunTimes[presetRampTimeU.options.num]/10 + ' A' + self.presetRampTimes[presetRampTimeU.options.num]/10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + presetRampTimeU.options.num + ' T' + self.presetRunTimes[presetRampTimeU.options.num] / 10 + ' A' + self.presetRampTimes[presetRampTimeU.options.num] / 10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -283,7 +601,7 @@ module.exports = function (self) {
 				self.presetRampTimes[presetRampTimeD.options.num] -= 1;
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + presetRampTimeD.options.num + ' T' + self.presetRunTimes[presetRampTimeD.options.num]/10 + ' A' + self.presetRampTimes[presetRampTimeD.options.num]/10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + presetRampTimeD.options.num + ' T' + self.presetRunTimes[presetRampTimeD.options.num] / 10 + ' A' + self.presetRampTimes[presetRampTimeD.options.num] / 10 + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -358,7 +676,7 @@ module.exports = function (self) {
 		// 		self.checkFeedbacks()
 		// 	},
 		// },
-		
+
 		send: {
 			name: 'Send Command',
 			options: [
