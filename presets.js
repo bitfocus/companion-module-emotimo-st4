@@ -1211,12 +1211,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 1,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1252,12 +1261,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 1,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1294,12 +1312,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 2,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1335,12 +1362,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 2,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1377,12 +1413,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 3,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 3,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1418,12 +1463,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 3,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 3,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1460,12 +1514,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 4,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 4,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1501,12 +1564,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 4,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 4,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1543,12 +1615,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 5,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 5,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1584,12 +1665,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 5,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 5,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1626,12 +1716,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 6,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 6,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1667,12 +1766,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 6,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 6,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1709,12 +1817,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 7,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 7,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1750,12 +1867,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 7,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 7,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1792,12 +1918,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 8,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 8,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1833,12 +1968,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 8,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 8,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1875,12 +2019,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 9,
+                        //             id_speed: -50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 9,
-                                    id_speed: -50000,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1916,12 +2069,21 @@ module.exports = {
                 },
                 steps: [
                     {
+                        // down: [
+                        //     {
+                        //         actionId: 'jogMotor',
+                        //         options: {
+                        //             id_mot: 9,
+                        //             id_speed: 50000,
+                        //         }
+                        //     }
+                        // ],
                         down: [
                             {
-                                actionId: 'jogMotor',
+                                actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 9,
-                                    id_speed: 50000,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1977,19 +2139,20 @@ module.exports = {
                         }
                     }
                 ]
-            }
-        // ########################
-        // #### Go To  Presets ####
-        // ########################
+            },
 
-        for (let save = 0; save < 128; save++) {
-            presets['savePreset' + save] = {
-                category: 'Save Preset',
+            // ########################
+            // #### Motor  Speeds  ####
+            // ########################
+
+
+            presets.panSpeedLimit = {
+                category: 'Motors',
                 type: 'button',
-                name: 'Save Preset ' + save,
+                name: 'Pan Speed',
                 style: {
-                    text: 'Save\\nPSET\\n' + save,
-                    size: '14',
+                    text: 'Pan\\nSpeed:\\n$(companion-module-emotimo-st4-3:PanSpeed)',
+                    size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
                 },
@@ -1997,13 +2160,253 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'savePset',
+                                actionId: 'resetJogSpeed',
                                 options: {
-                                    num: save
+                                    id_mot: 1
                                 }
                             }
                         ],
-                        up: []
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.tiltSpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Tilt Speed',
+                style: {
+                    text: 'Tilt\\nSpeed:\\n$(companion-module-emotimo-st4-3:TiltSpeed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 2
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.m3SpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'M3 Speed',
+                style: {
+                    text: 'M3\\nSpeed:\\n$(companion-module-emotimo-st4-3:M3Speed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 3
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.m4SpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'M4 Speed',
+                style: {
+                    text: 'M4\\nSpeed:\\n$(companion-module-emotimo-st4-3:M4Speed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 4
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.focusSpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Focus Speed',
+                style: {
+                    text: 'Focus\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN1Speed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 5
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.irisSpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Iris Speed',
+                style: {
+                    text: 'Iris\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN2Speed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 6
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.zoomSpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Zoom Speed',
+                style: {
+                    text: 'Zoom\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN3Speed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 7
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets.rollSpeedLimit = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Roll Speed',
+                style: {
+                    text: 'Roll\\nSpeed:\\n$(companion-module-emotimo-st4-3:RollSpeed)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetJogSpeed',
+                                options: {
+                                    id_mot: 8
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
                     },
                 ],
                 feedbacks: [
@@ -2015,28 +2418,166 @@ module.exports = {
                     }
                 ]
             }
-        }
 
-        for (let recall = 0; recall < 128; recall++) {
-            presets['recallPreset' + recall] = {
-                category: 'Recall Preset',
+        for (let inc = 1; inc < 9; inc++) {
+            presets['motorSpeedInc' + inc] = {
+                category: 'Motors',
                 type: 'button',
-                name: 'Recall Preset ' + recall,
+                name: 'Motor' + inc + ' Increment',
                 style: {
-                    text: 'Recall\\nPSET\\n' + recall,
-                    size: '14',
+                    text: '⬆️ ' + inc,
                     color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
                 },
                 steps: [
                     {
                         down: [
-                            // {
-                            //     actionId: 'recallPset',
-                            //     options: {
-                            //         num: recall
-                            //     }
-                            // }
+                            {
+                                actionId: 'setJogSpeed',
+                                options: {
+                                    id_mot: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+                presets['motorSpeedDec' + inc] = {
+                    category: 'Motors',
+                    type: 'button',
+                    name: 'Motor' + inc + ' Increment',
+                    style: {
+                        text: '⬇️ ' + inc,
+                        color: '16777215',
+                        bgcolor: combineRgb(0, 0, 100),
+                        // show_topbar: 0          //Hides the Top Bar
+                    },
+                    steps: [
+                        {
+                            down: [
+                                {
+                                    actionId: 'setJogSpeed',
+                                    options: {
+                                        id_mot: inc,
+                                        direction: -1
+                                    }
+                                }
+                            ],
+                            up: [
+                            ]
+                        }
+                    ],
+                    feedbacks: [
+                        {
+                            style: {
+                                color: foregroundColor,
+                                bgcolor: backgroundColorRed,
+                            }
+                        }
+                    ]
+                }
+        }
+
+        // presets.motorSpeed = {
+        //     category: 'Temp',
+        //     type: 'button',
+        //     name: 'Increment Speed',
+        //     style: {
+        //         text: 'Test',
+        //         size: 44,
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'setJogSpeed',
+        //                     options: {
+        //                         id_mot: 1,
+        //                         direction: 1
+        //                     }
+        //                 }
+        //             ],
+        //             up: [
+        //             ]
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // }
+
+        // ########################
+        // #### Go To  Presets ####
+        // ########################
+
+        // for (let save = 0; save < 30; save++) {
+        //     presets['savePreset' + save] = {
+        //         category: 'Save Preset',
+        //         type: 'button',
+        //         name: 'Save Preset ' + save,
+        //         style: {
+        //             text: 'Save\\nPSET\\n' + save,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'savePset',
+        //                         options: {
+        //                             num: save
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
+
+        for (let recall = 0; recall < 30; recall++) {
+            presets['recallPreset' + recall] = {
+                category: 'Preset',
+                type: 'button',
+                name: 'Preset ' + recall,
+                style: {
+                    text: 'Pre ' + recall,
+                    color: '16777215',
+                    bgcolor: combineRgb(200, 0, 0),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
                         ],
                         up: [
                             {
@@ -2058,43 +2599,26 @@ module.exports = {
                                     },
                                     delay: 0,
                                 },
-                        //         {
-                        //             actionId: 'buttonFeedback',
-                        //             options: { bol: '1' },
-                        //             delay: 0,
-                        //         },
                             ],
                         },
-                        // 2001: [
-                        //     {
-                        //         actionId: 'buttonFeedback',
-                        //         options: { bol: '0' },
-                        //     },
-                        // ],
                     },
                 ],
-                // feedbacks: [
-                //     {
-                //         feedbackId: 'heldFeedback',
-                //         options: {},
-                //         style: {
-                //             color: combineRgb(0, 0, 0),//COLORS.BLACK,
-				//             bgcolor: combineRgb(255, 255, 0),//COLORS.YELLOW,
-                //         },
-                //     },
-                // ],
                 feedbacks: [
                     {
+                        feedbackId: 'SetPreset',
+                        options: {
+                            presetNum: recall
+                        },
                         style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
+                            bgcolor: combineRgb(0, 127, 0),
+                            color: combineRgb(0, 0, 0),
+                        },
+                    },
                 ]
             }
         }
 
-        for (let increaseRunTime = 0; increaseRunTime < 128; increaseRunTime++) {
+        for (let increaseRunTime = 0; increaseRunTime < 30; increaseRunTime++) {
             presets['increaseRunTime' + increaseRunTime] = {
                 category: 'Preset Timing',
                 name: 'Increase RunTime Preset ' + increaseRunTime,
@@ -2102,6 +2626,7 @@ module.exports = {
                 style: {
                     text: 'Increase Run\\nT' + increaseRunTime,
                     size: '14',
+                    // png64: '\x2B06',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
                 },
@@ -2129,7 +2654,7 @@ module.exports = {
             }
         }
 
-        for (let decreaseRunTime = 0; decreaseRunTime < 128; decreaseRunTime++) {
+        for (let decreaseRunTime = 0; decreaseRunTime < 30; decreaseRunTime++) {
             presets['decreaseRunTime' + decreaseRunTime] = {
                 category: 'Preset Timing',
                 name: 'Decrease RunTime Preset ' + decreaseRunTime,
@@ -2164,7 +2689,7 @@ module.exports = {
             }
         }
 
-        for (let increaseRampTime = 0; increaseRampTime < 128; increaseRampTime++) {
+        for (let increaseRampTime = 0; increaseRampTime < 30; increaseRampTime++) {
             presets['increaseRampTime' + increaseRampTime] = {
                 category: 'Preset Timing',
                 name: 'Increase RampTime Preset ' + increaseRampTime,
@@ -2199,7 +2724,7 @@ module.exports = {
             }
         }
 
-        for (let decreaseRampTime = 0; decreaseRampTime < 128; decreaseRampTime++) {
+        for (let decreaseRampTime = 0; decreaseRampTime < 30; decreaseRampTime++) {
             presets['decreaseRampTime' + decreaseRampTime] = {
                 category: 'Preset Timing',
                 name: 'Decrease RampTime Preset ' + decreaseRampTime,
@@ -2237,7 +2762,7 @@ module.exports = {
         // ########################
         // #### Loop   Presets ####
         // ########################
-       
+
         // for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
 
         //     presets['saveLoopPresets' + loopPresets] = {
