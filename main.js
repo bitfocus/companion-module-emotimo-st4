@@ -16,10 +16,10 @@ class eMotimoModuleInstance extends InstanceBase {
 
 		// Assign the methods from the listed files to this class
 		Object.assign(this, {
-		// 	...config,
-		// 	...UpdateActions,
-		// 	...UpdateFeedbacks,
-		// 	...UpdateVariableDefinitions,
+			// 	...config,
+			// 	...UpdateActions,
+			// 	...UpdateFeedbacks,
+			// ...UpdateVariableDefinitions,
 			...presets,
 		})
 	}
@@ -67,6 +67,7 @@ class eMotimoModuleInstance extends InstanceBase {
 			this.init_tcp_variables()
 		}
 
+		this.init_emotimo_variables() //Moved this all to variables.js
 		this.initPresets()
 	}
 
@@ -204,6 +205,56 @@ class eMotimoModuleInstance extends InstanceBase {
 		}
 	};
 
+	handleTCPResponse = function (dataPacket) {
+		var tokens = dataPacket.toString().split(':')
+
+		this.log('debug', "Parse:" + tokens[0]);
+		switch (tokens[0]) {
+			case 'Preset Set':
+				var data = tokens[1].split(' ')
+				this.log('debug', "ID:" + data[0] + ":" + data[1]); //Data[0] is empty there is a space here
+				switch (data[1]) {
+					case '0':
+						this.setVariableValues({ Pst0Stat: 1 })
+						break
+					case '1':
+						this.setVariableValues({ Pst1Stat: 1 })
+						break
+					case '2':
+						this.setVariableValues({ Pst2Stat: 1 })
+						break
+					case '3':
+						this.setVariableValues({ Pst3Stat: 1 })
+						break
+					case '4':
+						this.setVariableValues({ Pst4Stat: 1 })
+						break
+					case '5':
+						this.setVariableValues({ Pst5Stat: 1 })
+						break
+					case '6':
+						this.setVariableValues({ Pst6Stat: 1 })
+						break
+					case '7':
+						this.setVariableValues({ Pst7Stat: 1 })
+						break
+					case '8':
+						this.setVariableValues({ Pst8Stat: 1 })
+						break
+					case '9':
+						this.setVariableValues({ Pst9Stat: 1 })
+						break
+					case '10':
+						this.setVariableValues({ Pst10Stat: 1 })
+						break
+					default:
+						break
+				}
+				this.checkFeedbacks("SetPreset")
+			default:
+		}
+	}
+
 	init_tcp() {
 		this.log('debug', "Init TCP");
 		if (this.socket) {
@@ -238,7 +289,10 @@ class eMotimoModuleInstance extends InstanceBase {
 					}
 
 					this.setVariableValues({ tcp_response: dataResponse })
+
 				}
+				//Insert TCP Parsing Here
+				this.handleTCPResponse(data)
 			})
 
 			this.log('debug', "Heartbeat Initialized");
@@ -255,9 +309,44 @@ class eMotimoModuleInstance extends InstanceBase {
 	}
 
 	init_tcp_variables() {
-		this.setVariableDefinitions([{ name: 'Last TCP Response', variableId: 'tcp_response' }])
+		// this.setVariableDefinitions([{ name: 'Last TCP Response', variableId: 'tcp_response' }]) //Calling this function overwrites other variables already declared we want to declare them all in variables.js
 
 		this.setVariableValues({ tcp_response: '' })
+	}
+
+	init_emotimo_variables() {
+		// this.setVariableDefinitions([
+		// 	{ name: 'FocusPosition', variableId: 'FPos' },
+		// 	{ name: 'IrisPosition', variableId: 'IPos' },
+		// 	{ name: 'ZoomPosition', variableId: 'ZPos' },
+		// ])
+
+		this.setVariableValues({ FPos: 5000 })
+		this.setVariableValues({ IPos: 5000 })
+		this.setVariableValues({ ZPos: 5000 })
+		this.setVariableValues({ FStep: 50 })
+		this.setVariableValues({ IStep: 50 })
+		this.setVariableValues({ ZStep: 50 })
+		this.setVariableValues({ PanSpeed: 100 })
+		this.setVariableValues({ TiltSpeed: 100 })
+		this.setVariableValues({ M3Speed: 100 })
+		this.setVariableValues({ M4Speed: 100 })
+		this.setVariableValues({ TN1Speed: 25 })
+		this.setVariableValues({ TN2Speed: 25 })
+		this.setVariableValues({ TN3Speed: 25 })
+		this.setVariableValues({ RollSpeed: 100 })
+		this.setVariableValues({ FocusSpeed: 100 })
+		this.setVariableValues({ Pst0Stat: 0 })
+		this.setVariableValues({ Pst1Stat: 0 })
+		this.setVariableValues({ Pst2Stat: 0 })
+		this.setVariableValues({ Pst3Stat: 0 })
+		this.setVariableValues({ Pst4Stat: 0 })
+		this.setVariableValues({ Pst5Stat: 0 })
+		this.setVariableValues({ Pst6Stat: 0 })
+		this.setVariableValues({ Pst7Stat: 0 })
+		this.setVariableValues({ Pst8Stat: 0 })
+		this.setVariableValues({ Pst9Stat: 0 })
+		this.setVariableValues({ Pst10Stat: 0 })
 	}
 }
 
