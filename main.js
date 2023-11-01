@@ -247,6 +247,66 @@ class eMotimoModuleInstance extends InstanceBase {
 					case '10':
 						this.setVariableValues({ Pst10Stat: 1 })
 						break
+					case '11':
+						this.setVariableValues({ Pst11Stat: 1 })
+						break
+					case '12':
+						this.setVariableValues({ Pst12Stat: 1 })
+						break
+					case '13':
+						this.setVariableValues({ Pst13Stat: 1 })
+						break
+					case '14':
+						this.setVariableValues({ Pst14Stat: 1 })
+						break
+					case '15':
+						this.setVariableValues({ Pst15Stat: 1 })
+						break
+					case '16':
+						this.setVariableValues({ Pst16Stat: 1 })
+						break
+					case '17':
+						this.setVariableValues({ Pst17Stat: 1 })
+						break
+					case '18':
+						this.setVariableValues({ Pst18Stat: 1 })
+						break
+					case '19':
+						this.setVariableValues({ Pst19Stat: 1 })
+						break
+					case '20':
+						this.setVariableValues({ Pst20Stat: 1 })
+						break
+					case '21':
+						this.setVariableValues({ Pst21Stat: 1 })
+						break
+					case '22':
+						this.setVariableValues({ Pst22Stat: 1 })
+						break
+					case '23':
+						this.setVariableValues({ Pst23Stat: 1 })
+						break
+					case '24':
+						this.setVariableValues({ Pst24Stat: 1 })
+						break
+					case '25':
+						this.setVariableValues({ Pst25Stat: 1 })
+						break
+					case '26':
+						this.setVariableValues({ Pst26Stat: 1 })
+						break
+					case '27':
+						this.setVariableValues({ Pst27Stat: 1 })
+						break
+					case '28':
+						this.setVariableValues({ Pst28Stat: 1 })
+						break
+					case '29':
+						this.setVariableValues({ Pst29Stat: 1 })
+						break
+					case '30':
+						this.setVariableValues({ Pst30Stat: 1 })
+						break
 					default:
 						break
 				}
@@ -347,6 +407,26 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ Pst8Stat: 0 })
 		this.setVariableValues({ Pst9Stat: 0 })
 		this.setVariableValues({ Pst10Stat: 0 })
+		this.setVariableValues({ Pst11Stat: 0 })
+		this.setVariableValues({ Pst12Stat: 0 })
+		this.setVariableValues({ Pst13Stat: 0 })
+		this.setVariableValues({ Pst14Stat: 0 })
+		this.setVariableValues({ Pst15Stat: 0 })
+		this.setVariableValues({ Pst16Stat: 0 })
+		this.setVariableValues({ Pst17Stat: 0 })
+		this.setVariableValues({ Pst18Stat: 0 })
+		this.setVariableValues({ Pst19Stat: 0 })
+		this.setVariableValues({ Pst20Stat: 0 })
+		this.setVariableValues({ Pst21Stat: 0 })
+		this.setVariableValues({ Pst22Stat: 0 })
+		this.setVariableValues({ Pst23Stat: 0 })
+		this.setVariableValues({ Pst24Stat: 0 })
+		this.setVariableValues({ Pst25Stat: 0 })
+		this.setVariableValues({ Pst26Stat: 0 })
+		this.setVariableValues({ Pst27Stat: 0 })
+		this.setVariableValues({ Pst28Stat: 0 })
+		this.setVariableValues({ Pst29Stat: 0 })
+		this.setVariableValues({ Pst30Stat: 0 })
 	}
 }
 
