@@ -43,6 +43,50 @@ const MOTOR_SPEED = [
 
 ]
 
+const PRESET_ID = [
+	{ id: 0, label: 'Pst0' },
+	{ id: 1, label: 'Pst1' },
+	{ id: 2, label: 'Pst2' },
+	{ id: 3, label: 'Pst3' },
+	{ id: 4, label: 'Pst4' },
+	{ id: 5, label: 'Pst5' },
+	{ id: 6, label: 'Pst6' },
+	{ id: 7, label: 'Pst7' },
+	{ id: 8, label: 'Pst8' },
+	{ id: 9, label: 'Pst9' },
+	{ id: 10, label: 'Pst10' },
+	{ id: 11, label: 'Pst11' },
+	{ id: 12, label: 'Pst12' },
+	{ id: 13, label: 'Pst13' },
+	{ id: 14, label: 'Pst14' },
+	{ id: 15, label: 'Pst15' },
+	{ id: 16, label: 'Pst16' },
+	{ id: 17, label: 'Pst17' },
+	{ id: 18, label: 'Pst18' },
+	{ id: 19, label: 'Pst19' },
+	{ id: 20, label: 'Pst20' },
+	{ id: 21, label: 'Pst21' },
+	{ id: 22, label: 'Pst22' },
+	{ id: 23, label: 'Pst23' },
+	{ id: 24, label: 'Pst24' },
+	{ id: 25, label: 'Pst25' },
+	{ id: 26, label: 'Pst26' },
+	{ id: 27, label: 'Pst27' },
+	{ id: 28, label: 'Pst28' },
+	{ id: 29, label: 'Pst29' },
+]
+
+const LOOP_ID = [
+	{ id: 0, label: 'Lp0' },
+	{ id: 1, label: 'Lp1' },
+	{ id: 2, label: 'Lp2' },
+	{ id: 3, label: 'Lp3' },
+	{ id: 4, label: 'Lp4' },
+	{ id: 5, label: 'Lp5' },
+	{ id: 6, label: 'Lp6' },
+	{ id: 7, label: 'Lp7' },
+]
+
 const VIRTUAL_BUTTON = [
 	{ id: 0, label: 'Enter' },
 	{ id: 1, label: 'Up' },
@@ -497,6 +541,678 @@ module.exports = function (self) {
 					}
 				}
 			},
+		},
+		setPresetRunTime: {
+			name: 'Set Preset Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_pst',
+					label: 'Preset ID',
+					default: 1,
+					choices: PRESET_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var temp = 0
+
+				if (runTime.options.id_pst == 0) {
+					temp = self.getVariableValue('Pst0RunT')
+				} else if (runTime.options.id_pst == 1) {
+					temp = self.getVariableValue('Pst1RunT')
+				} else if (runTime.options.id_pst == 2) {
+					temp = self.getVariableValue('Pst2RunT')
+				} else if (runTime.options.id_pst == 3) {
+					temp = self.getVariableValue('Pst3RunT')
+				} else if (runTime.options.id_pst == 4) {
+					temp = self.getVariableValue('Pst4RunT')
+				} else if (runTime.options.id_pst == 5) {
+					temp = self.getVariableValue('Pst5RunT')
+				} else if (runTime.options.id_pst == 6) {
+					temp = self.getVariableValue('Pst6RunT')
+				} else if (runTime.options.id_pst == 7) {
+					temp = self.getVariableValue('Pst7RunT')
+				} else if (runTime.options.id_pst == 8) {
+					temp = self.getVariableValue('Pst8RunT')
+				} else if (runTime.options.id_pst == 9) {
+					temp = self.getVariableValue('Pst9RunT')
+				} else if (runTime.options.id_pst == 10) {
+					temp = self.getVariableValue('Pst10RunT')
+				} else if (runTime.options.id_pst == 11) {
+					temp = self.getVariableValue('Pst11RunT')
+				} else if (runTime.options.id_pst == 12) {
+					temp = self.getVariableValue('Pst12RunT')
+				} else if (runTime.options.id_pst == 13) {
+					temp = self.getVariableValue('Pst13RunT')
+				} else if (runTime.options.id_pst == 14) {
+					temp = self.getVariableValue('Pst14RunT')
+				} else if (runTime.options.id_pst == 15) {
+					temp = self.getVariableValue('Pst15RunT')
+				} else if (runTime.options.id_pst == 16) {
+					temp = self.getVariableValue('Pst16RunT')
+				} else if (runTime.options.id_pst == 17) {
+					temp = self.getVariableValue('Pst17RunT')
+				} else if (runTime.options.id_pst == 18) {
+					temp = self.getVariableValue('Pst18RunT')
+				} else if (runTime.options.id_pst == 19) {
+					temp = self.getVariableValue('Pst19RunT')
+				} else if (runTime.options.id_pst == 20) {
+					temp = self.getVariableValue('Pst20RunT')
+				} else if (runTime.options.id_pst == 21) {
+					temp = self.getVariableValue('Pst21RunT')
+				} else if (runTime.options.id_pst == 22) {
+					temp = self.getVariableValue('Pst22RunT')
+				} else if (runTime.options.id_pst == 23) {
+					temp = self.getVariableValue('Pst23RunT')
+				} else if (runTime.options.id_pst == 24) {
+					temp = self.getVariableValue('Pst24RunT')
+				} else if (runTime.options.id_pst == 25) {
+					temp = self.getVariableValue('Pst25RunT')
+				} else if (runTime.options.id_pst == 26) {
+					temp = self.getVariableValue('Pst26RunT')
+				} else if (runTime.options.id_pst == 27) {
+					temp = self.getVariableValue('Pst27RunT')
+				} else if (runTime.options.id_pst == 28) {
+					temp = self.getVariableValue('Pst28RunT')
+				} else if (runTime.options.id_pst == 29) {
+					temp = self.getVariableValue('Pst29RunT')
+				}
+
+				temp += runTime.options.direction
+
+				if (temp > 600) {
+					temp = 600;
+				} else if (temp < 10) {
+					temp = 10;
+				}
+
+				self.log('debug', 'Preset ID: ' + runTime.options.id_pst + ' RunT: ' + temp)
+
+				if (runTime.options.id_pst == 0) {
+					self.setVariableValues({ Pst0RunT: temp })
+				} else if (runTime.options.id_pst == 1) {
+					self.setVariableValues({ Pst1RunT: temp })
+				} else if (runTime.options.id_pst == 2) {
+					self.setVariableValues({ Pst2RunT: temp })
+				} else if (runTime.options.id_pst == 3) {
+					self.setVariableValues({ Pst3RunT: temp })
+				} else if (runTime.options.id_pst == 4) {
+					self.setVariableValues({ Pst4RunT: temp })
+				} else if (runTime.options.id_pst == 5) {
+					self.setVariableValues({ Pst5RunT: temp })
+				} else if (runTime.options.id_pst == 6) {
+					self.setVariableValues({ Pst6RunT: temp })
+				} else if (runTime.options.id_pst == 7) {
+					self.setVariableValues({ Pst7RunT: temp })
+				} else if (runTime.options.id_pst == 8) {
+					self.setVariableValues({ Pst8RunT: temp })
+				} else if (runTime.options.id_pst == 9) {
+					self.setVariableValues({ Pst9RunT: temp })
+				} else if (runTime.options.id_pst == 10) {
+					self.setVariableValues({ Pst10RunT: temp })
+				} else if (runTime.options.id_pst == 11) {
+					self.setVariableValues({ Pst11RunT: temp })
+				} else if (runTime.options.id_pst == 12) {
+					self.setVariableValues({ Pst12RunT: temp })
+				} else if (runTime.options.id_pst == 13) {
+					self.setVariableValues({ Pst13RunT: temp })
+				} else if (runTime.options.id_pst == 14) {
+					self.setVariableValues({ Pst14RunT: temp })
+				} else if (runTime.options.id_pst == 15) {
+					self.setVariableValues({ Pst15RunT: temp })
+				} else if (runTime.options.id_pst == 16) {
+					self.setVariableValues({ Pst16RunT: temp })
+				} else if (runTime.options.id_pst == 17) {
+					self.setVariableValues({ Pst17RunT: temp })
+				} else if (runTime.options.id_pst == 18) {
+					self.setVariableValues({ Pst18RunT: temp })
+				} else if (runTime.options.id_pst == 19) {
+					self.setVariableValues({ Pst19RunT: temp })
+				} else if (runTime.options.id_pst == 20) {
+					self.setVariableValues({ Pst20RunT: temp })
+				} else if (runTime.options.id_pst == 21) {
+					self.setVariableValues({ Pst21RunT: temp })
+				} else if (runTime.options.id_pst == 22) {
+					self.setVariableValues({ Pst22RunT: temp })
+				} else if (runTime.options.id_pst == 23) {
+					self.setVariableValues({ Pst23RunT: temp })
+				} else if (runTime.options.id_pst == 24) {
+					self.setVariableValues({ Pst24RunT: temp })
+				} else if (runTime.options.id_pst == 25) {
+					self.setVariableValues({ Pst25RunT: temp })
+				} else if (runTime.options.id_pst == 26) {
+					self.setVariableValues({ Pst26RunT: temp })
+				} else if (runTime.options.id_pst == 27) {
+					self.setVariableValues({ Pst27RunT: temp })
+				} else if (runTime.options.id_pst == 28) {
+					self.setVariableValues({ Pst28RunT: temp })
+				} else if (runTime.options.id_pst == 29) {
+					self.setVariableValues({ Pst29RunT: temp })
+				}
+			}
+		},
+		setPresetRampTime: {
+			name: 'Set Preset Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_pst',
+					label: 'Preset ID',
+					default: 1,
+					choices: PRESET_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (rampTime) => {
+				var temp = 0
+
+				if (rampTime.options.id_pst == 0) {
+					temp = self.getVariableValue('Pst0RampT')
+				} else if (rampTime.options.id_pst == 1) {
+					temp = self.getVariableValue('Pst1RampT')
+				} else if (rampTime.options.id_pst == 2) {
+					temp = self.getVariableValue('Pst2RampT')
+				} else if (rampTime.options.id_pst == 3) {
+					temp = self.getVariableValue('Pst3RampT')
+				} else if (rampTime.options.id_pst == 4) {
+					temp = self.getVariableValue('Pst4RampT')
+				} else if (rampTime.options.id_pst == 5) {
+					temp = self.getVariableValue('Pst5RampT')
+				} else if (rampTime.options.id_pst == 6) {
+					temp = self.getVariableValue('Pst6RampT')
+				} else if (rampTime.options.id_pst == 7) {
+					temp = self.getVariableValue('Pst7RampT')
+				} else if (rampTime.options.id_pst == 8) {
+					temp = self.getVariableValue('Pst8RampT')
+				} else if (rampTime.options.id_pst == 9) {
+					temp = self.getVariableValue('Pst9RampT')
+				} else if (rampTime.options.id_pst == 10) {
+					temp = self.getVariableValue('Pst10RampT')
+				} else if (rampTime.options.id_pst == 11) {
+					temp = self.getVariableValue('Pst11RampT')
+				} else if (rampTime.options.id_pst == 12) {
+					temp = self.getVariableValue('Pst12RampT')
+				} else if (rampTime.options.id_pst == 13) {
+					temp = self.getVariableValue('Pst13RampT')
+				} else if (rampTime.options.id_pst == 14) {
+					temp = self.getVariableValue('Pst14RampT')
+				} else if (rampTime.options.id_pst == 15) {
+					temp = self.getVariableValue('Pst15RampT')
+				} else if (rampTime.options.id_pst == 16) {
+					temp = self.getVariableValue('Pst16RampT')
+				} else if (rampTime.options.id_pst == 17) {
+					temp = self.getVariableValue('Pst17RampT')
+				} else if (rampTime.options.id_pst == 18) {
+					temp = self.getVariableValue('Pst18RampT')
+				} else if (rampTime.options.id_pst == 19) {
+					temp = self.getVariableValue('Pst19RampT')
+				} else if (rampTime.options.id_pst == 20) {
+					temp = self.getVariableValue('Pst20RampT')
+				} else if (rampTime.options.id_pst == 21) {
+					temp = self.getVariableValue('Pst21RampT')
+				} else if (rampTime.options.id_pst == 22) {
+					temp = self.getVariableValue('Pst22RampT')
+				} else if (rampTime.options.id_pst == 23) {
+					temp = self.getVariableValue('Pst23RampT')
+				} else if (rampTime.options.id_pst == 24) {
+					temp = self.getVariableValue('Pst24RampT')
+				} else if (rampTime.options.id_pst == 25) {
+					temp = self.getVariableValue('Pst25RampT')
+				} else if (rampTime.options.id_pst == 26) {
+					temp = self.getVariableValue('Pst26RampT')
+				} else if (rampTime.options.id_pst == 27) {
+					temp = self.getVariableValue('Pst27RampT')
+				} else if (rampTime.options.id_pst == 28) {
+					temp = self.getVariableValue('Pst28RampT')
+				} else if (rampTime.options.id_pst == 29) {
+					temp = self.getVariableValue('Pst29RampT')
+				}
+
+				temp += rampTime.options.direction
+
+				if (temp > 250) {
+					temp = 250;
+				} else if (temp < 1) {
+					temp = 1;
+				}
+
+				self.log('debug', 'Preset ID: ' + rampTime.options.id_pst + ' RampT: ' + temp)
+
+				if (rampTime.options.id_pst == 0) {
+					self.setVariableValues({ Pst0RampT: temp })
+				} else if (rampTime.options.id_pst == 1) {
+					self.setVariableValues({ Pst1RampT: temp })
+				} else if (rampTime.options.id_pst == 2) {
+					self.setVariableValues({ Pst2RampT: temp })
+				} else if (rampTime.options.id_pst == 3) {
+					self.setVariableValues({ Pst3RampT: temp })
+				} else if (rampTime.options.id_pst == 4) {
+					self.setVariableValues({ Pst4RampT: temp })
+				} else if (rampTime.options.id_pst == 5) {
+					self.setVariableValues({ Pst5RampT: temp })
+				} else if (rampTime.options.id_pst == 6) {
+					self.setVariableValues({ Pst6RampT: temp })
+				} else if (rampTime.options.id_pst == 7) {
+					self.setVariableValues({ Pst7RampT: temp })
+				} else if (rampTime.options.id_pst == 8) {
+					self.setVariableValues({ Pst8RampT: temp })
+				} else if (rampTime.options.id_pst == 9) {
+					self.setVariableValues({ Pst9RampT: temp })
+				} else if (rampTime.options.id_pst == 10) {
+					self.setVariableValues({ Pst10RampT: temp })
+				} else if (rampTime.options.id_pst == 11) {
+					self.setVariableValues({ Pst11RampT: temp })
+				} else if (rampTime.options.id_pst == 12) {
+					self.setVariableValues({ Pst12RampT: temp })
+				} else if (rampTime.options.id_pst == 13) {
+					self.setVariableValues({ Pst13RampT: temp })
+				} else if (rampTime.options.id_pst == 14) {
+					self.setVariableValues({ Pst14RampT: temp })
+				} else if (rampTime.options.id_pst == 15) {
+					self.setVariableValues({ Pst15RampT: temp })
+				} else if (rampTime.options.id_pst == 16) {
+					self.setVariableValues({ Pst16RampT: temp })
+				} else if (rampTime.options.id_pst == 17) {
+					self.setVariableValues({ Pst17RampT: temp })
+				} else if (rampTime.options.id_pst == 18) {
+					self.setVariableValues({ Pst18RampT: temp })
+				} else if (rampTime.options.id_pst == 19) {
+					self.setVariableValues({ Pst19RampT: temp })
+				} else if (rampTime.options.id_pst == 20) {
+					self.setVariableValues({ Pst20RampT: temp })
+				} else if (rampTime.options.id_pst == 21) {
+					self.setVariableValues({ Pst21RampT: temp })
+				} else if (rampTime.options.id_pst == 22) {
+					self.setVariableValues({ Pst22RampT: temp })
+				} else if (rampTime.options.id_pst == 23) {
+					self.setVariableValues({ Pst23RampT: temp })
+				} else if (rampTime.options.id_pst == 24) {
+					self.setVariableValues({ Pst24RampT: temp })
+				} else if (rampTime.options.id_pst == 25) {
+					self.setVariableValues({ Pst25RampT: temp })
+				} else if (rampTime.options.id_pst == 26) {
+					self.setVariableValues({ Pst26RampT: temp })
+				} else if (rampTime.options.id_pst == 27) {
+					self.setVariableValues({ Pst27RampT: temp })
+				} else if (rampTime.options.id_pst == 28) {
+					self.setVariableValues({ Pst28RampT: temp })
+				} else if (rampTime.options.id_pst == 29) {
+					self.setVariableValues({ Pst29RampT: temp })
+				}
+			}
+		},
+		resetPresetRunTime: {
+			name: 'Reset Preset Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_pst',
+					label: 'Preset ID',
+					default: 1,
+					choices: PRESET_ID,
+				},
+			],
+			callback: async (resetPresetRunTime) => {
+				var temp = 50;
+
+				if (resetPresetRunTime.options.id_pst == 0) {
+					self.setVariableValues({ Pst0RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 1) {
+					self.setVariableValues({ Pst1RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 2) {
+					self.setVariableValues({ Pst2RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 3) {
+					self.setVariableValues({ Pst3RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 4) {
+					self.setVariableValues({ Pst4RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 5) {
+					self.setVariableValues({ Pst5RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 6) {
+					self.setVariableValues({ Pst6RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 7) {
+					self.setVariableValues({ Pst7RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 8) {
+					self.setVariableValues({ Pst8RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 9) {
+					self.setVariableValues({ Pst9RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 10) {
+					self.setVariableValues({ Pst10RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 11) {
+					self.setVariableValues({ Pst11RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 12) {
+					self.setVariableValues({ Pst12RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 13) {
+					self.setVariableValues({ Pst13RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 14) {
+					self.setVariableValues({ Pst14RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 15) {
+					self.setVariableValues({ Pst15RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 16) {
+					self.setVariableValues({ Pst16RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 17) {
+					self.setVariableValues({ Pst17RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 18) {
+					self.setVariableValues({ Pst18RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 19) {
+					self.setVariableValues({ Pst19RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 20) {
+					self.setVariableValues({ Pst20RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 21) {
+					self.setVariableValues({ Pst21RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 22) {
+					self.setVariableValues({ Pst22RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 23) {
+					self.setVariableValues({ Pst23RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 24) {
+					self.setVariableValues({ Pst24RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 25) {
+					self.setVariableValues({ Pst25RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 26) {
+					self.setVariableValues({ Pst26RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 27) {
+					self.setVariableValues({ Pst27RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 28) {
+					self.setVariableValues({ Pst28RunT: temp })
+				} else if (resetPresetRunTime.options.id_pst == 29) {
+					self.setVariableValues({ Pst29RunT: temp })
+				}
+
+			}
+		},
+		resetPresetRampTime: {
+			name: 'Reset Preset Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_pst',
+					label: 'Preset ID',
+					default: 1,
+					choices: PRESET_ID,
+				},
+			],
+			callback: async (resetPresetRampTime) => {
+				var temp = 10;
+
+				if (resetPresetRampTime.options.id_pst == 0) {
+					self.setVariableValues({ Pst0RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 1) {
+					self.setVariableValues({ Pst1RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 2) {
+					self.setVariableValues({ Pst2RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 3) {
+					self.setVariableValues({ Pst3RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 4) {
+					self.setVariableValues({ Pst4RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 5) {
+					self.setVariableValues({ Pst5RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 6) {
+					self.setVariableValues({ Pst6RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 7) {
+					self.setVariableValues({ Pst7RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 8) {
+					self.setVariableValues({ Pst8RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 9) {
+					self.setVariableValues({ Pst9RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 10) {
+					self.setVariableValues({ Pst10RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 11) {
+					self.setVariableValues({ Pst11RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 12) {
+					self.setVariableValues({ Pst12RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 13) {
+					self.setVariableValues({ Pst13RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 14) {
+					self.setVariableValues({ Pst14RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 15) {
+					self.setVariableValues({ Pst15RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 16) {
+					self.setVariableValues({ Pst16RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 17) {
+					self.setVariableValues({ Pst17RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 18) {
+					self.setVariableValues({ Pst18RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 19) {
+					self.setVariableValues({ Pst19RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 20) {
+					self.setVariableValues({ Pst20RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 21) {
+					self.setVariableValues({ Pst21RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 22) {
+					self.setVariableValues({ Pst22RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 23) {
+					self.setVariableValues({ Pst23RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 24) {
+					self.setVariableValues({ Pst24RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 25) {
+					self.setVariableValues({ Pst25RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 26) {
+					self.setVariableValues({ Pst26RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 27) {
+					self.setVariableValues({ Pst27RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 28) {
+					self.setVariableValues({ Pst28RampT: temp })
+				} else if (resetPresetRampTime.options.id_pst == 29) {
+					self.setVariableValues({ Pst29RampT: temp })
+				}
+
+			}
+		},
+		setLoopRunTime: {
+			name: 'Set Loop Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var temp = 0
+
+				if (runTime.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0RunT')
+				} else if (runTime.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1RunT')
+				} else if (runTime.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2RunT')
+				} else if (runTime.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3RunT')
+				} else if (runTime.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4RunT')
+				} else if (runTime.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5RunT')
+				} else if (runTime.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6RunT')
+				} else if (runTime.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7RunT')
+				} else if (runTime.options.id_loop == 8) {
+					temp = self.getVariableValue('Lp8RunT')
+				}
+
+				temp += runTime.options.direction
+
+				if (temp > 600) {
+					temp = 600;
+				} else if (temp < 10) {
+					temp = 10;
+				}
+
+				self.log('debug', 'Loop ID: ' + runTime.options.id_loop + ' RunT: ' + temp)
+
+				if (runTime.options.id_loop == 0) {
+					self.setVariableValues({ Lp0RunT: temp })
+				} else if (runTime.options.id_loop == 1) {
+					self.setVariableValues({ Lp1RunT: temp })
+				} else if (runTime.options.id_loop == 2) {
+					self.setVariableValues({ Lp2RunT: temp })
+				} else if (runTime.options.id_loop == 3) {
+					self.setVariableValues({ Lp3RunT: temp })
+				} else if (runTime.options.id_loop == 4) {
+					self.setVariableValues({ Lp4RunT: temp })
+				} else if (runTime.options.id_loop == 5) {
+					self.setVariableValues({ Lp5RunT: temp })
+				} else if (runTime.options.id_loop == 6) {
+					self.setVariableValues({ Lp6RunT: temp })
+				} else if (runTime.options.id_loop == 7) {
+					self.setVariableValues({ Lp7RunT: temp })
+				}
+			}
+		},
+		setLoopRampTime: {
+			name: 'Set Loop Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (rampTime) => {
+				var temp = 0
+
+				if (rampTime.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0RampT')
+				} else if (rampTime.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1RampT')
+				} else if (rampTime.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2RampT')
+				} else if (rampTime.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3RampT')
+				} else if (rampTime.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4RampT')
+				} else if (rampTime.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5RampT')
+				} else if (rampTime.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6RampT')
+				} else if (rampTime.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7RampT')
+				}
+
+				temp += rampTime.options.direction
+
+				if (temp > 250) {
+					temp = 250;
+				} else if (temp < 1) {
+					temp = 1;
+				}
+
+				self.log('debug', 'Loop ID: ' + rampTime.options.id_loop + ' RampT: ' + temp)
+
+				if (rampTime.options.id_loop == 0) {
+					self.setVariableValues({ Lp0RampT: temp })
+				} else if (rampTime.options.id_loop == 1) {
+					self.setVariableValues({ Lp1RampT: temp })
+				} else if (rampTime.options.id_loop == 2) {
+					self.setVariableValues({ Lp2RampT: temp })
+				} else if (rampTime.options.id_loop == 3) {
+					self.setVariableValues({ Lp3RampT: temp })
+				} else if (rampTime.options.id_loop == 4) {
+					self.setVariableValues({ Lp4RampT: temp })
+				} else if (rampTime.options.id_loop == 5) {
+					self.setVariableValues({ Lp5RampT: temp })
+				} else if (rampTime.options.id_loop == 6) {
+					self.setVariableValues({ Lp6RampT: temp })
+				} else if (rampTime.options.id_loop == 7) {
+					self.setVariableValues({ Lp7RampT: temp })
+				}
+			}
+		},
+		resetLoopRunTime: {
+			name: 'Reset Loop Run Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+			],
+			callback: async (resetLpRunTime) => {
+				var temp = 50;
+
+				if (resetLpRunTime.options.id_loop == 0) {
+					self.setVariableValues({ Lp0RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 1) {
+					self.setVariableValues({ Lp1RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 2) {
+					self.setVariableValues({ Lp2RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 3) {
+					self.setVariableValues({ Lp3RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 4) {
+					self.setVariableValues({ Lp4RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 5) {
+					self.setVariableValues({ Lp5RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 6) {
+					self.setVariableValues({ Lp6RunT: temp })
+				} else if (resetLpRunTime.options.id_loop == 7) {
+					self.setVariableValues({ Lp7RunT: temp })
+				}
+			}
+		},
+		resetLoopRampTime: {
+			name: 'Reset Loop Ramp Time',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+			],
+			callback: async (resetLpRampTime) => {
+				var temp = 10;
+
+				if (resetLpRampTime.options.id_loop == 0) {
+					self.setVariableValues({ Lp0RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 1) {
+					self.setVariableValues({ Lp1RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 2) {
+					self.setVariableValues({ Lp2RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 3) {
+					self.setVariableValues({ Lp3RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 4) {
+					self.setVariableValues({ Lp4RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 5) {
+					self.setVariableValues({ Lp5RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 6) {
+					self.setVariableValues({ Lp6RampT: temp })
+				} else if (resetLpRampTime.options.id_loop == 7) {
+					self.setVariableValues({ Lp7RampT: temp })
+				} 
+			}
 		},
 		presetRunTimeU: {
 			name: 'Preset Run Time Increment',

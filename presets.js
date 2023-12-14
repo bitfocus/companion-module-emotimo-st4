@@ -2457,7 +2457,7 @@ module.exports = {
                 presets['motorSpeedDec' + inc] = {
                     category: 'Motors',
                     type: 'button',
-                    name: 'Motor' + inc + ' Increment',
+                    name: 'Motor' + inc + ' Decrement',
                     style: {
                         text: '⬇️ ' + inc,
                         color: '16777215',
@@ -2618,15 +2618,150 @@ module.exports = {
             }
         }
 
-        for (let increaseRunTime = 0; increaseRunTime < 30; increaseRunTime++) {
-            presets['increaseRunTime' + increaseRunTime] = {
+        for (let inc = 0; inc < 30; inc++) {
+            presets['increaseRunTime' + inc] = {
                 category: 'Preset Timing',
-                name: 'Increase RunTime Preset ' + increaseRunTime,
                 type: 'button',
+                name: 'Increase RunTime Preset ' + inc,
                 style: {
-                    text: 'Increase Run\\nT' + increaseRunTime,
-                    size: '14',
-                    // png64: '\x2B06',
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setPresetRunTime',
+                                options: {
+                                    id_pst: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['decreaseRunTime' + inc] = {
+                category: 'Preset Timing',
+                type: 'button',
+                name: 'Decrease RunTime Preset ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setPresetRunTime',
+                                options: {
+                                    id_pst: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['increaseRampTime' + inc] = {
+                category: 'Preset Timing',
+                type: 'button',
+                name: 'Increase RampTime Preset ' + inc,
+                style: {
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setPresetRampTime',
+                                options: {
+                                    id_pst: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['decreaseRampTime' + inc] = {
+                category: 'Preset Timing',
+                type: 'button',
+                name: 'Decrease RampTime Preset ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setPresetRampTime',
+                                options: {
+                                    id_pst: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Preset' + inc + 'RunTime'] = {
+                category: 'Preset Timing',
+                type: 'button',
+                name: 'Preset Run Time ' + inc,
+                style: {
+                    text: 'Pst\\nRunT:\\n$(companion-module-emotimo-st4-3:Pst' + inc + 'RunT)',
+                    size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
                 },
@@ -2634,13 +2769,49 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'presetRunTimeU',
+                                actionId: 'resetPresetRunTime',
                                 options: {
-                                    num: increaseRunTime
+                                    id_pst: inc
                                 }
                             }
                         ],
-                        up: []
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Preset' + inc + 'RampTime'] = {
+                category: 'Preset Timing',
+                type: 'button',
+                name: 'Preset Ramp Time ' + inc,
+                style: {
+                    text: 'Pst\\nRampT:\\n$(companion-module-emotimo-st4-3:Pst' + inc + 'RampT)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetPresetRampTime',
+                                options: {
+                                    id_pst: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
                     },
                 ],
                 feedbacks: [
@@ -2654,14 +2825,150 @@ module.exports = {
             }
         }
 
-        for (let decreaseRunTime = 0; decreaseRunTime < 30; decreaseRunTime++) {
-            presets['decreaseRunTime' + decreaseRunTime] = {
-                category: 'Preset Timing',
-                name: 'Decrease RunTime Preset ' + decreaseRunTime,
+        for (let inc = 0; inc < 8; inc++) {
+            presets['increaseLpRunTime' + inc] = {
+                category: 'Loop Timing',
                 type: 'button',
+                name: 'Increase RunTime Loop ' + inc,
                 style: {
-                    text: 'Decrease Run\\nT' + decreaseRunTime,
-                    size: '14',
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRunTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['decreaseLpRunTime' + inc] = {
+                category: 'Loop Timing',
+                type: 'button',
+                name: 'Decrease RunTime Loop ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRunTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['increaseLpRampTime' + inc] = {
+                category: 'Loop Timing',
+                type: 'button',
+                name: 'Increase RampTime Loop ' + inc,
+                style: {
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRampTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['decreaseLpRampTime' + inc] = {
+                category: 'Loop Timing',
+                type: 'button',
+                name: 'Decrease RampTime Loop ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRampTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'RunTime'] = {
+                category: 'Loop Timing',
+                type: 'button',
+                name: 'Loop Run Time ' + inc,
+                style: {
+                    text: 'Loop\\nRunT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RunT)',
+                    size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
                 },
@@ -2669,13 +2976,49 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'presetRunTimeD',
+                                actionId: 'resetLoopRunTime',
                                 options: {
-                                    num: decreaseRunTime
+                                    id_loop: inc
                                 }
                             }
                         ],
-                        up: []
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'RampTime'] = {
+                category: 'Loop Timing',
+                type: 'button',
+                name: 'Loop Ramp Time ' + inc,
+                style: {
+                    text: 'Loop\\nRampT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RampT)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetLoopRampTime',
+                                options: {
+                                    id_loop: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
                     },
                 ],
                 feedbacks: [
@@ -2689,82 +3032,152 @@ module.exports = {
             }
         }
 
-        for (let increaseRampTime = 0; increaseRampTime < 30; increaseRampTime++) {
-            presets['increaseRampTime' + increaseRampTime] = {
-                category: 'Preset Timing',
-                name: 'Increase RampTime Preset ' + increaseRampTime,
-                type: 'button',
-                style: {
-                    text: 'Increase Ramp\\nT' + increaseRampTime,
-                    size: '14',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'presetRampTimeU',
-                                options: {
-                                    num: increaseRampTime
-                                }
-                            }
-                        ],
-                        up: []
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            }
-        }
+        // for (let increaseRunTime = 0; increaseRunTime < 30; increaseRunTime++) {
+        //     presets['increaseRunTime' + increaseRunTime] = {
+        //         category: 'Preset Timing',
+        //         name: 'Increase RunTime Preset ' + increaseRunTime,
+        //         type: 'button',
+        //         style: {
+        //             text: 'Increase Run\\nT' + increaseRunTime,
+        //             size: '14',
+        //             // png64: '\x2B06',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'presetRunTimeU',
+        //                         options: {
+        //                             num: increaseRunTime
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
 
-        for (let decreaseRampTime = 0; decreaseRampTime < 30; decreaseRampTime++) {
-            presets['decreaseRampTime' + decreaseRampTime] = {
-                category: 'Preset Timing',
-                name: 'Decrease RampTime Preset ' + decreaseRampTime,
-                type: 'button',
-                style: {
-                    text: 'Decrease Ramp\\nT' + decreaseRampTime,
-                    size: '14',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'presetRampTimeD',
-                                options: {
-                                    num: decreaseRampTime
-                                }
-                            }
-                        ],
-                        up: []
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            }
-        }
+        // for (let decreaseRunTime = 0; decreaseRunTime < 30; decreaseRunTime++) {
+        //     presets['decreaseRunTime' + decreaseRunTime] = {
+        //         category: 'Preset Timing',
+        //         name: 'Decrease RunTime Preset ' + decreaseRunTime,
+        //         type: 'button',
+        //         style: {
+        //             text: 'Decrease Run\\nT' + decreaseRunTime,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'presetRunTimeD',
+        //                         options: {
+        //                             num: decreaseRunTime
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
+
+        // for (let increaseRampTime = 0; increaseRampTime < 30; increaseRampTime++) {
+        //     presets['increaseRampTime' + increaseRampTime] = {
+        //         category: 'Preset Timing',
+        //         name: 'Increase RampTime Preset ' + increaseRampTime,
+        //         type: 'button',
+        //         style: {
+        //             text: 'Increase Ramp\\nT' + increaseRampTime,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'presetRampTimeU',
+        //                         options: {
+        //                             num: increaseRampTime
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
+
+        // for (let decreaseRampTime = 0; decreaseRampTime < 30; decreaseRampTime++) {
+        //     presets['decreaseRampTime' + decreaseRampTime] = {
+        //         category: 'Preset Timing',
+        //         name: 'Decrease RampTime Preset ' + decreaseRampTime,
+        //         type: 'button',
+        //         style: {
+        //             text: 'Decrease Ramp\\nT' + decreaseRampTime,
+        //             size: '14',
+        //             color: '16777215',
+        //             bgcolor: combineRgb(0, 0, 0),
+        //         },
+        //         steps: [
+        //             {
+        //                 down: [
+        //                     {
+        //                         actionId: 'presetRampTimeD',
+        //                         options: {
+        //                             num: decreaseRampTime
+        //                         }
+        //                     }
+        //                 ],
+        //                 up: []
+        //             },
+        //         ],
+        //         feedbacks: [
+        //             {
+        //                 style: {
+        //                     color: foregroundColor,
+        //                     bgcolor: backgroundColorRed,
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
 
         // ########################
         // #### Loop   Presets ####
         // ########################
 
         // for (let loopPresets = 0; loopPresets < 8; loopPresets++) {
-
         //     presets['saveLoopPresets' + loopPresets] = {
         //         category: 'Loops',
         //         name: 'Setup Loop ' + loopPresets,
