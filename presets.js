@@ -3029,6 +3029,210 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            presets['Loop' + inc + 'APointInc'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' A Point Inc',
+                style: {
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopAPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'APointDec'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' A Point Dec',
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopAPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'BPointInc'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' B Point Inc',
+                style: {
+                    text: '⬆️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopBPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'BPointDec'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' B Point Dec',
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopBPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'APoint'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop A Point ' + inc,
+                style: {
+                    text: 'Loop\\nA Point:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'APoint)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'recallAPoint',
+                                options: {
+                                    id_loop: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'BPoint'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop B Point ' + inc,
+                style: {
+                    text: 'Loop\\nB Point:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'BPoint)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'recallBPoint',
+                                options: {
+                                    id_loop: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
             }
         }
 

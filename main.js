@@ -507,6 +507,22 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ Lp6RampT: 10 })
 		this.setVariableValues({ Lp7RampT: 10 })
 		this.setVariableValues({ Lp8RampT: 10 })
+		this.setVariableValues({ Lp0APoint: 0 })
+		this.setVariableValues({ Lp1APoint: 0 })
+		this.setVariableValues({ Lp2APoint: 0 })
+		this.setVariableValues({ Lp3APoint: 0 })
+		this.setVariableValues({ Lp4APoint: 0 })
+		this.setVariableValues({ Lp5APoint: 0 })
+		this.setVariableValues({ Lp6APoint: 0 })
+		this.setVariableValues({ Lp7APoint: 0 })
+		this.setVariableValues({ Lp0BPoint: 0 })
+		this.setVariableValues({ Lp1BPoint: 0 })
+		this.setVariableValues({ Lp2BPoint: 0 })
+		this.setVariableValues({ Lp3BPoint: 0 })
+		this.setVariableValues({ Lp4BPoint: 0 })
+		this.setVariableValues({ Lp5BPoint: 0 })
+		this.setVariableValues({ Lp6BPoint: 0 })
+		this.setVariableValues({ Lp7BPoint: 0 })
 	}
 }
 

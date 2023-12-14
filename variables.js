@@ -126,6 +126,22 @@ module.exports = async function (self) {
 		{ name: 'Loop6RampT', variableId: 'Lp6RampT'},
 		{ name: 'Loop7RampT', variableId: 'Lp7RampT'},
 		{ name: 'Loop8RampT', variableId: 'Lp8RampT'},
+		{ name: 'Loop0APoint', variableId: 'Lp0APoint'},
+		{ name: 'Loop1APoint', variableId: 'Lp1APoint'},
+		{ name: 'Loop2APoint', variableId: 'Lp2APoint'},
+		{ name: 'Loop3APoint', variableId: 'Lp3APoint'},
+		{ name: 'Loop4APoint', variableId: 'Lp4APoint'},
+		{ name: 'Loop5APoint', variableId: 'Lp5APoint'},
+		{ name: 'Loop6APoint', variableId: 'Lp6APoint'},
+		{ name: 'Loop7APoint', variableId: 'Lp7APoint'},
+		{ name: 'Loop0BPoint', variableId: 'Lp0BPoint'},
+		{ name: 'Loop1BPoint', variableId: 'Lp1BPoint'},
+		{ name: 'Loop2BPoint', variableId: 'Lp2BPoint'},
+		{ name: 'Loop3BPoint', variableId: 'Lp3BPoint'},
+		{ name: 'Loop4BPoint', variableId: 'Lp4BPoint'},
+		{ name: 'Loop5BPoint', variableId: 'Lp5BPoint'},
+		{ name: 'Loop6BPoint', variableId: 'Lp6BPoint'},
+		{ name: 'Loop7BPoint', variableId: 'Lp7BPoint'},
 		{ name: 'Last TCP Response', variableId: 'tcp_response' }
 	])
 }

@@ -1214,6 +1214,248 @@ module.exports = function (self) {
 				} 
 			}
 		},
+		setLoopAPoint: {
+			name: 'Set Loop A Point',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (LpAPt) => {
+				var temp = 0
+
+				if (LpAPt.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0APoint')
+				} else if (LpAPt.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1APoint')
+				} else if (LpAPt.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2APoint')
+				} else if (LpAPt.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3APoint')
+				} else if (LpAPt.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4APoint')
+				} else if (LpAPt.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5APoint')
+				} else if (LpAPt.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6APoint')
+				} else if (LpAPt.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7APoint')
+				} else if (LpAPt.options.id_loop == 8) {
+					temp = self.getVariableValue('Lp8APoint')
+				}
+
+				temp += LpAPt.options.direction
+
+				if (temp > 29) {
+					temp = 29;
+				} else if (temp < 0) {
+					temp = 0;
+				}
+
+				self.log('debug', 'Loop ID: ' + LpAPt.options.id_loop + ' APoint: ' + temp)
+
+				if (LpAPt.options.id_loop == 0) {
+					self.setVariableValues({ Lp0APoint: temp })
+				} else if (LpAPt.options.id_loop == 1) {
+					self.setVariableValues({ Lp1APoint: temp })
+				} else if (LpAPt.options.id_loop == 2) {
+					self.setVariableValues({ Lp2APoint: temp })
+				} else if (LpAPt.options.id_loop == 3) {
+					self.setVariableValues({ Lp3APoint: temp })
+				} else if (LpAPt.options.id_loop == 4) {
+					self.setVariableValues({ Lp4APoint: temp })
+				} else if (LpAPt.options.id_loop == 5) {
+					self.setVariableValues({ Lp5APoint: temp })
+				} else if (LpAPt.options.id_loop == 6) {
+					self.setVariableValues({ Lp6APoint: temp })
+				} else if (LpAPt.options.id_loop == 7) {
+					self.setVariableValues({ Lp7APoint: temp })
+				}
+			}
+		},
+		setLoopBPoint: {
+			name: 'Set Loop B Point',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (LpBPt) => {
+				var temp = 0
+
+				if (LpBPt.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0BPoint')
+				} else if (LpBPt.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1BPoint')
+				} else if (LpBPt.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2BPoint')
+				} else if (LpBPt.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3BPoint')
+				} else if (LpBPt.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4BPoint')
+				} else if (LpBPt.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5BPoint')
+				} else if (LpBPt.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6BPoint')
+				} else if (LpBPt.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7BPoint')
+				} else if (LpBPt.options.id_loop == 8) {
+					temp = self.getVariableValue('Lp8BPoint')
+				}
+
+				temp += LpBPt.options.direction
+
+				if (temp > 29) {
+					temp = 29;
+				} else if (temp < 0) {
+					temp = 0;
+				}
+
+				self.log('debug', 'Loop ID: ' + LpBPt.options.id_loop + ' BPoint: ' + temp)
+
+				if (LpBPt.options.id_loop == 0) {
+					self.setVariableValues({ Lp0BPoint: temp })
+				} else if (LpBPt.options.id_loop == 1) {
+					self.setVariableValues({ Lp1BPoint: temp })
+				} else if (LpBPt.options.id_loop == 2) {
+					self.setVariableValues({ Lp2BPoint: temp })
+				} else if (LpBPt.options.id_loop == 3) {
+					self.setVariableValues({ Lp3BPoint: temp })
+				} else if (LpBPt.options.id_loop == 4) {
+					self.setVariableValues({ Lp4BPoint: temp })
+				} else if (LpBPt.options.id_loop == 5) {
+					self.setVariableValues({ Lp5BPoint: temp })
+				} else if (LpBPt.options.id_loop == 6) {
+					self.setVariableValues({ Lp6BPoint: temp })
+				} else if (LpBPt.options.id_loop == 7) {
+					self.setVariableValues({ Lp7BPoint: temp })
+				}
+			}
+		},
+		recallAPoint: {
+			name: 'Recall Loop A Point',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+			],
+			callback: async (LpAPt) => {
+				var temp = 0
+
+				if (LpAPt.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0APoint')
+				} else if (LpAPt.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1APoint')
+				} else if (LpAPt.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2APoint')
+				} else if (LpAPt.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3APoint')
+				} else if (LpAPt.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4APoint')
+				} else if (LpAPt.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5APoint')
+				} else if (LpAPt.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6APoint')
+				} else if (LpAPt.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7APoint')
+				} else if (LpAPt.options.id_loop == 8) {
+					temp = self.getVariableValue('Lp8APoint')
+				}
+
+				// self.log('debug', 'Loop ID: ' + LpAPt.options.id_loop + ' APoint: ' + temp)
+
+				const cmd = 'G20 P'
+				const sendBuf = Buffer.from(cmd + temp + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		recallBPoint: {
+			name: 'Recall Loop B Point',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+			],
+			callback: async (LpBPt) => {
+				var temp = 0
+
+				if (LpBPt.options.id_loop == 0) {
+					temp = self.getVariableValue('Lp0BPoint')
+				} else if (LpBPt.options.id_loop == 1) {
+					temp = self.getVariableValue('Lp1BPoint')
+				} else if (LpBPt.options.id_loop == 2) {
+					temp = self.getVariableValue('Lp2BPoint')
+				} else if (LpBPt.options.id_loop == 3) {
+					temp = self.getVariableValue('Lp3BPoint')
+				} else if (LpBPt.options.id_loop == 4) {
+					temp = self.getVariableValue('Lp4BPoint')
+				} else if (LpBPt.options.id_loop == 5) {
+					temp = self.getVariableValue('Lp5BPoint')
+				} else if (LpBPt.options.id_loop == 6) {
+					temp = self.getVariableValue('Lp6BPoint')
+				} else if (LpBPt.options.id_loop == 7) {
+					temp = self.getVariableValue('Lp7BPoint')
+				} else if (LpBPt.options.id_loop == 8) {
+					temp = self.getVariableValue('Lp8BPoint')
+				}
+
+				// self.log('debug', 'Loop ID: ' + LpBPt.options.id_loop + ' BPoint Recall: ' + temp)
+
+				const cmd = 'G20 P'
+				const sendBuf = Buffer.from(cmd + temp + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+				
+			}
+		},
+
 		presetRunTimeU: {
 			name: 'Preset Run Time Increment',
 			options: [
