@@ -311,9 +311,167 @@ class eMotimoModuleInstance extends InstanceBase {
 						break
 				}
 				this.checkFeedbacks("SetPreset")
+				break
 			case 'Exiting Loop':
 				this.checkFeedbacks("LoopStatus")
+				break
+			case 'Reset Stops':
+				var data = tokens[1]
+				this.log('debug', "Motor:" + data); //Data[0] is empty there is a space here
+				if (data == 1) {
+					this.setVariableValues({ PanStopA: 0 })
+					this.setVariableValues({ PanStopB: 0 })
+					this.log('debug', "Pan Cleared");
+				} else if (data == 2) {
+					this.setVariableValues({ TiltStopA: 0 })
+					this.setVariableValues({ TiltStopB: 0 })
+				} else if (data == 3) {
+					this.setVariableValues({ M3StopA: 0 })
+					this.setVariableValues({ M3StopB: 0 })
+				} else if (data == 4) {
+					this.setVariableValues({ M4StopA: 0 })
+					this.setVariableValues({ M4StopB: 0 })
+				} else if (data == 5) {
+					this.setVariableValues({ TNFocusStopA: 0 })
+					this.setVariableValues({ TNFocusStopB: 0 })
+				} else if (data == 6) {
+					this.setVariableValues({ TNIrisStopA: 0 })
+					this.setVariableValues({ TNIrisStopB: 0 })
+				} else if (data == 7) {
+					this.setVariableValues({ TNZoomStopA: 0 })
+					this.setVariableValues({ TNZoomStopB: 0 })
+				} else if (data == 8) {
+					this.setVariableValues({ RSRollStopA: 0 })
+					this.setVariableValues({ RSRollStopB: 0 })
+				} else if (data == 9) {
+					this.setVariableValues({ RSFocusStopA: 0 })
+					this.setVariableValues({ RSFocusStopB: 0 })
+				} else {
+					this.log('debug', "Error");
+				}
+				this.checkFeedbacks("StopAStatus")
+				this.checkFeedbacks("StopBStatus")
+				break
+			case 'StopA':
+				var data = tokens[1].split(',')
+				this.log('debug', "ID:" + data[0] + ":" + data[1]); //Data[0] is empty there is a space here
+				var motor = data[0]
+				var position = data[1]
+				if (position != "-2000000000") {
+					if (motor == 1) {
+						this.setVariableValues({ PanStopA: 1 })
+					} else if (motor == 2) {
+						this.setVariableValues({ TiltStopA: 1 })
+					} else if (motor == 3) {
+						this.setVariableValues({ M3StopA: 1 })
+					} else if (motor == 4) {
+						this.setVariableValues({ M4StopA: 1 })
+					} else if (motor == 5) {
+						this.setVariableValues({ TNFocusStopA: 1 })
+					} else if (motor == 6) {
+						this.setVariableValues({ TNIrisStopA: 1 })
+					} else if (motor == 7) {
+						this.setVariableValues({ TNZoomStopA: 1 })
+					} else if (motor == 8) {
+						this.setVariableValues({ RSRollStopA: 1 })
+					} else if (motor == 9) {
+						this.setVariableValues({ RSFocusStopA: 1 })
+					}
+				} else {
+					if (motor == 1) {
+						this.setVariableValues({ PanStopA: 0 })
+					} else if (motor == 2) {
+						this.setVariableValues({ TiltStopA: 0 })
+					} else if (motor == 3) {
+						this.setVariableValues({ M3StopA: 0 })
+					} else if (motor == 4) {
+						this.setVariableValues({ M4StopA: 0 })
+					} else if (motor == 5) {
+						this.setVariableValues({ TNFocusStopA: 0 })
+					} else if (motor == 6) {
+						this.setVariableValues({ TNIrisStopA: 0 })
+					} else if (motor == 7) {
+						this.setVariableValues({ TNZoomStopA: 0 })
+					} else if (motor == 8) {
+						this.setVariableValues({ RSRollStopA: 0 })
+					} else if (motor == 9) {
+						this.setVariableValues({ RSFocusStopA: 0 })
+					}
+				}
+				this.checkFeedbacks("StopAStatus")	
+				break
+			case 'StopB':
+				var data = tokens[1].split(',')
+				this.log('debug', "ID:" + data[0] + ":" + data[1]); //Data[0] is empty there is a space here
+				var motor = data[0]
+				var position = data[1]
+				if (position != "-2000000000") {
+					if (motor == 1) {
+						this.setVariableValues({ PanStopB: 1 })
+					} else if (motor == 2) {
+						this.setVariableValues({ TiltStopB: 1 })
+					} else if (motor == 3) {
+						this.setVariableValues({ M3StopB: 1 })
+					} else if (motor == 4) {
+						this.setVariableValues({ M4StopB: 1 })
+					} else if (motor == 5) {
+						this.setVariableValues({ TNFocusStopB: 1 })
+					} else if (motor == 6) {
+						this.setVariableValues({ TNIrisStopB: 1 })
+					} else if (motor == 7) {
+						this.setVariableValues({ TNZoomStopB: 1 })
+					} else if (motor == 8) {
+						this.setVariableValues({ RSRollStopB: 1 })
+					} else if (motor == 9) {
+						this.setVariableValues({ RSFocusStopB: 1 })
+					}
+				} else {
+					if (motor == 1) {
+						this.setVariableValues({ PanStopB: 0 })
+					} else if (motor == 2) {
+						this.setVariableValues({ TiltStopB: 0 })
+					} else if (motor == 3) {
+						this.setVariableValues({ M3StopB: 0 })
+					} else if (motor == 4) {
+						this.setVariableValues({ M4StopB: 0 })
+					} else if (motor == 5) {
+						this.setVariableValues({ TNFocusStopB: 0 })
+					} else if (motor == 6) {
+						this.setVariableValues({ TNIrisStopB: 0 })
+					} else if (motor == 7) {
+						this.setVariableValues({ TNZoomStopB: 0 })
+					} else if (motor == 8) {
+						this.setVariableValues({ RSRollStopB: 0 })
+					} else if (motor == 9) {
+						this.setVariableValues({ RSFocusStopB: 0 })
+					}
+				}
+				this.checkFeedbacks("StopBStatus")
+				break
+			case 'All Stops Cleared':
+				this.setVariableValues({ PanStopA: 0 })
+				this.setVariableValues({ PanStopB: 0 })
+				this.setVariableValues({ TiltStopA: 0 })
+				this.setVariableValues({ TiltStopB: 0 })
+				this.setVariableValues({ M3StopA: 0 })
+				this.setVariableValues({ M3StopB: 0 })
+				this.setVariableValues({ M4StopA: 0 })
+				this.setVariableValues({ M4StopB: 0 })
+				this.setVariableValues({ TNFocusStopA: 0 })
+				this.setVariableValues({ TNFocusStopB: 0 })
+				this.setVariableValues({ TNIrisStopA: 0 })
+				this.setVariableValues({ TNIrisStopB: 0 })
+				this.setVariableValues({ TNZoomStopA: 0 })
+				this.setVariableValues({ TNZoomStopB: 0 })
+				this.setVariableValues({ RSRollStopA: 0 })
+				this.setVariableValues({ RSRollStopB: 0 })
+				this.setVariableValues({ RSFocusStopA: 0 })
+				this.setVariableValues({ RSFocusStopB: 0 })
+				this.checkFeedbacks("StopAStatus")
+				this.checkFeedbacks("StopBStatus")
+				break
 			default:
+				break
 		}
 	}
 
@@ -526,6 +684,24 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ Lp6BPoint: 0 })
 		this.setVariableValues({ Lp7BPoint: 0 })
 		this.setVariableValues({ LpActive: -1 })
+		this.setVariableValues({ PanStopA: 0 })
+		this.setVariableValues({ PanStopB: 0 })
+		this.setVariableValues({ TiltStopA: 0 })
+		this.setVariableValues({ TiltStopB: 0 })
+		this.setVariableValues({ M3StopA: 0 })
+		this.setVariableValues({ M3StopB: 0 })
+		this.setVariableValues({ M4StopA: 0 })
+		this.setVariableValues({ M4StopB: 0 })
+		this.setVariableValues({ TNFocusStopA: 0 })
+		this.setVariableValues({ TNFocusStopB: 0 })
+		this.setVariableValues({ TNIrisStopA: 0 })
+		this.setVariableValues({ TNIrisStopB: 0 })
+		this.setVariableValues({ TNZoomStopA: 0 })
+		this.setVariableValues({ TNZoomStopB: 0 })
+		this.setVariableValues({ RSRollStopA: 0 })
+		this.setVariableValues({ RSRollStopB: 0 })
+		this.setVariableValues({ RSFocusStopA: 0 })
+		this.setVariableValues({ RSFocusStopB: 0 })
 	}
 }
 

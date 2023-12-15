@@ -2529,13 +2529,13 @@ module.exports = {
         // ########################
         for (let inc = 1; inc < 9; inc++) {
             presets['setStopA' + inc] = {
-                category: 'Motors',
+                category: 'Limits',
                 type: 'button',
                 name: 'Motor' + inc + ' Stop A',
                 style: {
                     text: 'Motor ' + inc + ' Stop A',
                     color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
+                    bgcolor: combineRgb(127, 0, 0),
                     // show_topbar: 0          //Hides the Top Bar
                 },
                 steps: [
@@ -2569,21 +2569,25 @@ module.exports = {
                 ],
                 feedbacks: [
                     {
+                        feedbackId: 'StopAStatus',
+                        options: {
+                            id_mot: inc,
+                        },
                         style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
+                            bgcolor: combineRgb(0, 127, 0),
+                            color: combineRgb(0, 0, 0),
+                        },
                     }
                 ]
             },
             presets['setStopB' + inc] = {
-                category: 'Motors',
+                category: 'Limits',
                 type: 'button',
                 name: 'Motor' + inc + ' Stop B',
                 style: {
                     text: 'Motor ' + inc + ' Stop B',
                     color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
+                    bgcolor: combineRgb(127, 0, 0),
                     // show_topbar: 0          //Hides the Top Bar
                 },
                 steps: [
@@ -2617,6 +2621,53 @@ module.exports = {
                 ],
                 feedbacks: [
                     {
+                        feedbackId: 'StopBStatus',
+                        options: {
+                            id_mot: inc,
+                        },
+                        style: {
+                            bgcolor: combineRgb(0, 127, 0),
+                            color: combineRgb(0, 0, 0),
+                        },
+                    }
+                ]
+            },
+            presets['clearStops' + inc] = {
+                category: 'Limits',
+                type: 'button',
+                name: 'Clear Motor ' + inc + ' Stops',
+                style: {
+                    text: 'Clear Motor ' + inc + ' Stops',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                           
+                        ],
+                        up: [
+                            
+                        ],
+                        2000: {
+                            options: {
+                                runWhileHeld: true,
+                            },
+                            actions: [
+                                {
+                                    actionId: 'clearStopByAxis',
+                                    options: {
+                                        id_mot: inc,
+                                    },
+                                    delay: 0,
+                                },
+                            ],
+                        },
+                    }
+                ],
+                feedbacks: [
+                    {
                         style: {
                             color: foregroundColor,
                             bgcolor: backgroundColorRed,
@@ -2624,6 +2675,47 @@ module.exports = {
                     }
                 ]
             }
+        }
+
+        presets.clearAllStops = {
+            category: 'Limits',
+            type: 'button',
+            name: 'Clear All Stops',
+            style: {
+                text: 'Clear All Stops',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+
+                    ],
+                    up: [
+
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'clearAllStops',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
         }
 
         // ########################
@@ -3346,7 +3438,7 @@ module.exports = {
                     text: 'Loop\\n' + inc + '\\nRecall',
                     size: 'auto',
                     color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
+                    bgcolor: combineRgb(127, 0, 0),
                 },
                 steps: [
                     {
@@ -3366,11 +3458,8 @@ module.exports = {
                 feedbacks: [
                     {
                         feedbackId: 'LoopStatus',
-                        options: {
-                            num: 0
-                        },
                         style: {
-                            bgcolor: combineRgb(127, 0, 0),
+                            bgcolor: combineRgb(0, 127, 0),
                             color: combineRgb(0, 0, 0),
                         },
                     },
@@ -3459,6 +3548,37 @@ module.exports = {
                     down: [
                         {
                             actionId: 'calibrateAllTN'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.zeroMotor = {
+            category: 'Motors',
+            type: 'button',
+            name: 'Zero Motors',
+            style: {
+                text: 'Zero Motors',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'zeroMotors'
                         }
                     ],
                     up: [

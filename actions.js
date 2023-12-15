@@ -484,6 +484,7 @@ module.exports = function (self) {
 				}
 			},
 		},
+
 		savePset: {
 			name: 'Save Preset',
 			options: [
@@ -561,140 +562,159 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (runTime) => {
-				var temp = 0
+				var runtemp = 0
+				var ramptemp = 0
 
-				if (runTime.options.id_pst == 0) {
-					temp = self.getVariableValue('Pst0RunT')
-				} else if (runTime.options.id_pst == 1) {
-					temp = self.getVariableValue('Pst1RunT')
-				} else if (runTime.options.id_pst == 2) {
-					temp = self.getVariableValue('Pst2RunT')
-				} else if (runTime.options.id_pst == 3) {
-					temp = self.getVariableValue('Pst3RunT')
-				} else if (runTime.options.id_pst == 4) {
-					temp = self.getVariableValue('Pst4RunT')
-				} else if (runTime.options.id_pst == 5) {
-					temp = self.getVariableValue('Pst5RunT')
-				} else if (runTime.options.id_pst == 6) {
-					temp = self.getVariableValue('Pst6RunT')
-				} else if (runTime.options.id_pst == 7) {
-					temp = self.getVariableValue('Pst7RunT')
-				} else if (runTime.options.id_pst == 8) {
-					temp = self.getVariableValue('Pst8RunT')
-				} else if (runTime.options.id_pst == 9) {
-					temp = self.getVariableValue('Pst9RunT')
-				} else if (runTime.options.id_pst == 10) {
-					temp = self.getVariableValue('Pst10RunT')
-				} else if (runTime.options.id_pst == 11) {
-					temp = self.getVariableValue('Pst11RunT')
-				} else if (runTime.options.id_pst == 12) {
-					temp = self.getVariableValue('Pst12RunT')
-				} else if (runTime.options.id_pst == 13) {
-					temp = self.getVariableValue('Pst13RunT')
-				} else if (runTime.options.id_pst == 14) {
-					temp = self.getVariableValue('Pst14RunT')
-				} else if (runTime.options.id_pst == 15) {
-					temp = self.getVariableValue('Pst15RunT')
-				} else if (runTime.options.id_pst == 16) {
-					temp = self.getVariableValue('Pst16RunT')
-				} else if (runTime.options.id_pst == 17) {
-					temp = self.getVariableValue('Pst17RunT')
-				} else if (runTime.options.id_pst == 18) {
-					temp = self.getVariableValue('Pst18RunT')
-				} else if (runTime.options.id_pst == 19) {
-					temp = self.getVariableValue('Pst19RunT')
-				} else if (runTime.options.id_pst == 20) {
-					temp = self.getVariableValue('Pst20RunT')
-				} else if (runTime.options.id_pst == 21) {
-					temp = self.getVariableValue('Pst21RunT')
-				} else if (runTime.options.id_pst == 22) {
-					temp = self.getVariableValue('Pst22RunT')
-				} else if (runTime.options.id_pst == 23) {
-					temp = self.getVariableValue('Pst23RunT')
-				} else if (runTime.options.id_pst == 24) {
-					temp = self.getVariableValue('Pst24RunT')
-				} else if (runTime.options.id_pst == 25) {
-					temp = self.getVariableValue('Pst25RunT')
-				} else if (runTime.options.id_pst == 26) {
-					temp = self.getVariableValue('Pst26RunT')
-				} else if (runTime.options.id_pst == 27) {
-					temp = self.getVariableValue('Pst27RunT')
-				} else if (runTime.options.id_pst == 28) {
-					temp = self.getVariableValue('Pst28RunT')
-				} else if (runTime.options.id_pst == 29) {
-					temp = self.getVariableValue('Pst29RunT')
+				ramptemp = self.getVariableValue('Pst' + runTime.options.id_pst + 'RampT')
+				runtemp = self.getVariableValue('Pst' + runTime.options.id_pst + 'RunT')
+				// if (runTime.options.id_pst == 0) {
+				// 	temp = self.getVariableValue('Pst0RunT')
+				// } else if (runTime.options.id_pst == 1) {
+				// 	temp = self.getVariableValue('Pst1RunT')
+				// } else if (runTime.options.id_pst == 2) {
+				// 	temp = self.getVariableValue('Pst2RunT')
+				// } else if (runTime.options.id_pst == 3) {
+				// 	temp = self.getVariableValue('Pst3RunT')
+				// } else if (runTime.options.id_pst == 4) {
+				// 	temp = self.getVariableValue('Pst4RunT')
+				// } else if (runTime.options.id_pst == 5) {
+				// 	temp = self.getVariableValue('Pst5RunT')
+				// } else if (runTime.options.id_pst == 6) {
+				// 	temp = self.getVariableValue('Pst6RunT')
+				// } else if (runTime.options.id_pst == 7) {
+				// 	temp = self.getVariableValue('Pst7RunT')
+				// } else if (runTime.options.id_pst == 8) {
+				// 	temp = self.getVariableValue('Pst8RunT')
+				// } else if (runTime.options.id_pst == 9) {
+				// 	temp = self.getVariableValue('Pst9RunT')
+				// } else if (runTime.options.id_pst == 10) {
+				// 	temp = self.getVariableValue('Pst10RunT')
+				// } else if (runTime.options.id_pst == 11) {
+				// 	temp = self.getVariableValue('Pst11RunT')
+				// } else if (runTime.options.id_pst == 12) {
+				// 	temp = self.getVariableValue('Pst12RunT')
+				// } else if (runTime.options.id_pst == 13) {
+				// 	temp = self.getVariableValue('Pst13RunT')
+				// } else if (runTime.options.id_pst == 14) {
+				// 	temp = self.getVariableValue('Pst14RunT')
+				// } else if (runTime.options.id_pst == 15) {
+				// 	temp = self.getVariableValue('Pst15RunT')
+				// } else if (runTime.options.id_pst == 16) {
+				// 	temp = self.getVariableValue('Pst16RunT')
+				// } else if (runTime.options.id_pst == 17) {
+				// 	temp = self.getVariableValue('Pst17RunT')
+				// } else if (runTime.options.id_pst == 18) {
+				// 	temp = self.getVariableValue('Pst18RunT')
+				// } else if (runTime.options.id_pst == 19) {
+				// 	temp = self.getVariableValue('Pst19RunT')
+				// } else if (runTime.options.id_pst == 20) {
+				// 	temp = self.getVariableValue('Pst20RunT')
+				// } else if (runTime.options.id_pst == 21) {
+				// 	temp = self.getVariableValue('Pst21RunT')
+				// } else if (runTime.options.id_pst == 22) {
+				// 	temp = self.getVariableValue('Pst22RunT')
+				// } else if (runTime.options.id_pst == 23) {
+				// 	temp = self.getVariableValue('Pst23RunT')
+				// } else if (runTime.options.id_pst == 24) {
+				// 	temp = self.getVariableValue('Pst24RunT')
+				// } else if (runTime.options.id_pst == 25) {
+				// 	temp = self.getVariableValue('Pst25RunT')
+				// } else if (runTime.options.id_pst == 26) {
+				// 	temp = self.getVariableValue('Pst26RunT')
+				// } else if (runTime.options.id_pst == 27) {
+				// 	temp = self.getVariableValue('Pst27RunT')
+				// } else if (runTime.options.id_pst == 28) {
+				// 	temp = self.getVariableValue('Pst28RunT')
+				// } else if (runTime.options.id_pst == 29) {
+				// 	temp = self.getVariableValue('Pst29RunT')
+				// }
+
+				runtemp += runTime.options.direction
+
+				if (runtemp > 600) {
+					runtemp = 600;
+				} else if (runtemp < 10) {
+					runtemp = 10;
 				}
 
-				temp += runTime.options.direction
+				self.log('debug', 'Preset ID: ' + runTime.options.id_pst + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
-				if (temp > 600) {
-					temp = 600;
-				} else if (temp < 10) {
-					temp = 10;
+				// var varID = 'Pst'+runTime.options.id_pst+'RunT'
+				// self.log('debug', 'Variable ID: ' + varID)
+				// self.setVariable( varID, temp )
+				if (runTime.options.id_pst == 0) {
+					self.setVariableValues({ Pst0RunT: runtemp })
+				} else if (runTime.options.id_pst == 1) {
+					self.setVariableValues({ Pst1RunT: runtemp })
+				} else if (runTime.options.id_pst == 2) {
+					self.setVariableValues({ Pst2RunT: runtemp })
+				} else if (runTime.options.id_pst == 3) {
+					self.setVariableValues({ Pst3RunT: runtemp })
+				} else if (runTime.options.id_pst == 4) {
+					self.setVariableValues({ Pst4RunT: runtemp })
+				} else if (runTime.options.id_pst == 5) {
+					self.setVariableValues({ Pst5RunT: runtemp })
+				} else if (runTime.options.id_pst == 6) {
+					self.setVariableValues({ Pst6RunT: runtemp })
+				} else if (runTime.options.id_pst == 7) {
+					self.setVariableValues({ Pst7RunT: runtemp })
+				} else if (runTime.options.id_pst == 8) {
+					self.setVariableValues({ Pst8RunT: runtemp })
+				} else if (runTime.options.id_pst == 9) {
+					self.setVariableValues({ Pst9RunT: runtemp })
+				} else if (runTime.options.id_pst == 10) {
+					self.setVariableValues({ Pst10RunT: runtemp })
+				} else if (runTime.options.id_pst == 11) {
+					self.setVariableValues({ Pst11RunT: runtemp })
+				} else if (runTime.options.id_pst == 12) {
+					self.setVariableValues({ Pst12RunT: runtemp })
+				} else if (runTime.options.id_pst == 13) {
+					self.setVariableValues({ Pst13RunT: runtemp })
+				} else if (runTime.options.id_pst == 14) {
+					self.setVariableValues({ Pst14RunT: runtemp })
+				} else if (runTime.options.id_pst == 15) {
+					self.setVariableValues({ Pst15RunT: runtemp })
+				} else if (runTime.options.id_pst == 16) {
+					self.setVariableValues({ Pst16RunT: runtemp })
+				} else if (runTime.options.id_pst == 17) {
+					self.setVariableValues({ Pst17RunT: runtemp })
+				} else if (runTime.options.id_pst == 18) {
+					self.setVariableValues({ Pst18RunT: runtemp })
+				} else if (runTime.options.id_pst == 19) {
+					self.setVariableValues({ Pst19RunT: runtemp })
+				} else if (runTime.options.id_pst == 20) {
+					self.setVariableValues({ Pst20RunT: runtemp })
+				} else if (runTime.options.id_pst == 21) {
+					self.setVariableValues({ Pst21RunT: runtemp })
+				} else if (runTime.options.id_pst == 22) {
+					self.setVariableValues({ Pst22RunT: runtemp })
+				} else if (runTime.options.id_pst == 23) {
+					self.setVariableValues({ Pst23RunT: runtemp })
+				} else if (runTime.options.id_pst == 24) {
+					self.setVariableValues({ Pst24RunT: runtemp })
+				} else if (runTime.options.id_pst == 25) {
+					self.setVariableValues({ Pst25RunT: runtemp })
+				} else if (runTime.options.id_pst == 26) {
+					self.setVariableValues({ Pst26RunT: runtemp })
+				} else if (runTime.options.id_pst == 27) {
+					self.setVariableValues({ Pst27RunT: runtemp })
+				} else if (runTime.options.id_pst == 28) {
+					self.setVariableValues({ Pst28RunT: runtemp })
+				} else if (runTime.options.id_pst == 29) {
+					self.setVariableValues({ Pst29RunT: runtemp })
 				}
 
-				self.log('debug', 'Preset ID: ' + runTime.options.id_pst + ' RunT: ' + temp)
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + runTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
 
-				if (runTime.options.id_pst == 0) {
-					self.setVariableValues({ Pst0RunT: temp })
-				} else if (runTime.options.id_pst == 1) {
-					self.setVariableValues({ Pst1RunT: temp })
-				} else if (runTime.options.id_pst == 2) {
-					self.setVariableValues({ Pst2RunT: temp })
-				} else if (runTime.options.id_pst == 3) {
-					self.setVariableValues({ Pst3RunT: temp })
-				} else if (runTime.options.id_pst == 4) {
-					self.setVariableValues({ Pst4RunT: temp })
-				} else if (runTime.options.id_pst == 5) {
-					self.setVariableValues({ Pst5RunT: temp })
-				} else if (runTime.options.id_pst == 6) {
-					self.setVariableValues({ Pst6RunT: temp })
-				} else if (runTime.options.id_pst == 7) {
-					self.setVariableValues({ Pst7RunT: temp })
-				} else if (runTime.options.id_pst == 8) {
-					self.setVariableValues({ Pst8RunT: temp })
-				} else if (runTime.options.id_pst == 9) {
-					self.setVariableValues({ Pst9RunT: temp })
-				} else if (runTime.options.id_pst == 10) {
-					self.setVariableValues({ Pst10RunT: temp })
-				} else if (runTime.options.id_pst == 11) {
-					self.setVariableValues({ Pst11RunT: temp })
-				} else if (runTime.options.id_pst == 12) {
-					self.setVariableValues({ Pst12RunT: temp })
-				} else if (runTime.options.id_pst == 13) {
-					self.setVariableValues({ Pst13RunT: temp })
-				} else if (runTime.options.id_pst == 14) {
-					self.setVariableValues({ Pst14RunT: temp })
-				} else if (runTime.options.id_pst == 15) {
-					self.setVariableValues({ Pst15RunT: temp })
-				} else if (runTime.options.id_pst == 16) {
-					self.setVariableValues({ Pst16RunT: temp })
-				} else if (runTime.options.id_pst == 17) {
-					self.setVariableValues({ Pst17RunT: temp })
-				} else if (runTime.options.id_pst == 18) {
-					self.setVariableValues({ Pst18RunT: temp })
-				} else if (runTime.options.id_pst == 19) {
-					self.setVariableValues({ Pst19RunT: temp })
-				} else if (runTime.options.id_pst == 20) {
-					self.setVariableValues({ Pst20RunT: temp })
-				} else if (runTime.options.id_pst == 21) {
-					self.setVariableValues({ Pst21RunT: temp })
-				} else if (runTime.options.id_pst == 22) {
-					self.setVariableValues({ Pst22RunT: temp })
-				} else if (runTime.options.id_pst == 23) {
-					self.setVariableValues({ Pst23RunT: temp })
-				} else if (runTime.options.id_pst == 24) {
-					self.setVariableValues({ Pst24RunT: temp })
-				} else if (runTime.options.id_pst == 25) {
-					self.setVariableValues({ Pst25RunT: temp })
-				} else if (runTime.options.id_pst == 26) {
-					self.setVariableValues({ Pst26RunT: temp })
-				} else if (runTime.options.id_pst == 27) {
-					self.setVariableValues({ Pst27RunT: temp })
-				} else if (runTime.options.id_pst == 28) {
-					self.setVariableValues({ Pst28RunT: temp })
-				} else if (runTime.options.id_pst == 29) {
-					self.setVariableValues({ Pst29RunT: temp })
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
 				}
 			}
 		},
@@ -717,140 +737,156 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (rampTime) => {
-				var temp = 0
+				var ramptemp = 0
+				var runtemp = 0
 
-				if (rampTime.options.id_pst == 0) {
-					temp = self.getVariableValue('Pst0RampT')
-				} else if (rampTime.options.id_pst == 1) {
-					temp = self.getVariableValue('Pst1RampT')
-				} else if (rampTime.options.id_pst == 2) {
-					temp = self.getVariableValue('Pst2RampT')
-				} else if (rampTime.options.id_pst == 3) {
-					temp = self.getVariableValue('Pst3RampT')
-				} else if (rampTime.options.id_pst == 4) {
-					temp = self.getVariableValue('Pst4RampT')
-				} else if (rampTime.options.id_pst == 5) {
-					temp = self.getVariableValue('Pst5RampT')
-				} else if (rampTime.options.id_pst == 6) {
-					temp = self.getVariableValue('Pst6RampT')
-				} else if (rampTime.options.id_pst == 7) {
-					temp = self.getVariableValue('Pst7RampT')
-				} else if (rampTime.options.id_pst == 8) {
-					temp = self.getVariableValue('Pst8RampT')
-				} else if (rampTime.options.id_pst == 9) {
-					temp = self.getVariableValue('Pst9RampT')
-				} else if (rampTime.options.id_pst == 10) {
-					temp = self.getVariableValue('Pst10RampT')
-				} else if (rampTime.options.id_pst == 11) {
-					temp = self.getVariableValue('Pst11RampT')
-				} else if (rampTime.options.id_pst == 12) {
-					temp = self.getVariableValue('Pst12RampT')
-				} else if (rampTime.options.id_pst == 13) {
-					temp = self.getVariableValue('Pst13RampT')
-				} else if (rampTime.options.id_pst == 14) {
-					temp = self.getVariableValue('Pst14RampT')
-				} else if (rampTime.options.id_pst == 15) {
-					temp = self.getVariableValue('Pst15RampT')
-				} else if (rampTime.options.id_pst == 16) {
-					temp = self.getVariableValue('Pst16RampT')
-				} else if (rampTime.options.id_pst == 17) {
-					temp = self.getVariableValue('Pst17RampT')
-				} else if (rampTime.options.id_pst == 18) {
-					temp = self.getVariableValue('Pst18RampT')
-				} else if (rampTime.options.id_pst == 19) {
-					temp = self.getVariableValue('Pst19RampT')
-				} else if (rampTime.options.id_pst == 20) {
-					temp = self.getVariableValue('Pst20RampT')
-				} else if (rampTime.options.id_pst == 21) {
-					temp = self.getVariableValue('Pst21RampT')
-				} else if (rampTime.options.id_pst == 22) {
-					temp = self.getVariableValue('Pst22RampT')
-				} else if (rampTime.options.id_pst == 23) {
-					temp = self.getVariableValue('Pst23RampT')
-				} else if (rampTime.options.id_pst == 24) {
-					temp = self.getVariableValue('Pst24RampT')
-				} else if (rampTime.options.id_pst == 25) {
-					temp = self.getVariableValue('Pst25RampT')
-				} else if (rampTime.options.id_pst == 26) {
-					temp = self.getVariableValue('Pst26RampT')
-				} else if (rampTime.options.id_pst == 27) {
-					temp = self.getVariableValue('Pst27RampT')
-				} else if (rampTime.options.id_pst == 28) {
-					temp = self.getVariableValue('Pst28RampT')
-				} else if (rampTime.options.id_pst == 29) {
-					temp = self.getVariableValue('Pst29RampT')
+				runtemp = self.getVariableValue('Pst' + rampTime.options.id_pst + 'RunT')
+				ramptemp = self.getVariableValue('Pst' + rampTime.options.id_pst + 'RampT')
+				// if (rampTime.options.id_pst == 0) {
+				// 	temp = self.getVariableValue('Pst0RampT')
+				// } else if (rampTime.options.id_pst == 1) {
+				// 	temp = self.getVariableValue('Pst1RampT')
+				// } else if (rampTime.options.id_pst == 2) {
+				// 	temp = self.getVariableValue('Pst2RampT')
+				// } else if (rampTime.options.id_pst == 3) {
+				// 	temp = self.getVariableValue('Pst3RampT')
+				// } else if (rampTime.options.id_pst == 4) {
+				// 	temp = self.getVariableValue('Pst4RampT')
+				// } else if (rampTime.options.id_pst == 5) {
+				// 	temp = self.getVariableValue('Pst5RampT')
+				// } else if (rampTime.options.id_pst == 6) {
+				// 	temp = self.getVariableValue('Pst6RampT')
+				// } else if (rampTime.options.id_pst == 7) {
+				// 	temp = self.getVariableValue('Pst7RampT')
+				// } else if (rampTime.options.id_pst == 8) {
+				// 	temp = self.getVariableValue('Pst8RampT')
+				// } else if (rampTime.options.id_pst == 9) {
+				// 	temp = self.getVariableValue('Pst9RampT')
+				// } else if (rampTime.options.id_pst == 10) {
+				// 	temp = self.getVariableValue('Pst10RampT')
+				// } else if (rampTime.options.id_pst == 11) {
+				// 	temp = self.getVariableValue('Pst11RampT')
+				// } else if (rampTime.options.id_pst == 12) {
+				// 	temp = self.getVariableValue('Pst12RampT')
+				// } else if (rampTime.options.id_pst == 13) {
+				// 	temp = self.getVariableValue('Pst13RampT')
+				// } else if (rampTime.options.id_pst == 14) {
+				// 	temp = self.getVariableValue('Pst14RampT')
+				// } else if (rampTime.options.id_pst == 15) {
+				// 	temp = self.getVariableValue('Pst15RampT')
+				// } else if (rampTime.options.id_pst == 16) {
+				// 	temp = self.getVariableValue('Pst16RampT')
+				// } else if (rampTime.options.id_pst == 17) {
+				// 	temp = self.getVariableValue('Pst17RampT')
+				// } else if (rampTime.options.id_pst == 18) {
+				// 	temp = self.getVariableValue('Pst18RampT')
+				// } else if (rampTime.options.id_pst == 19) {
+				// 	temp = self.getVariableValue('Pst19RampT')
+				// } else if (rampTime.options.id_pst == 20) {
+				// 	temp = self.getVariableValue('Pst20RampT')
+				// } else if (rampTime.options.id_pst == 21) {
+				// 	temp = self.getVariableValue('Pst21RampT')
+				// } else if (rampTime.options.id_pst == 22) {
+				// 	temp = self.getVariableValue('Pst22RampT')
+				// } else if (rampTime.options.id_pst == 23) {
+				// 	temp = self.getVariableValue('Pst23RampT')
+				// } else if (rampTime.options.id_pst == 24) {
+				// 	temp = self.getVariableValue('Pst24RampT')
+				// } else if (rampTime.options.id_pst == 25) {
+				// 	temp = self.getVariableValue('Pst25RampT')
+				// } else if (rampTime.options.id_pst == 26) {
+				// 	temp = self.getVariableValue('Pst26RampT')
+				// } else if (rampTime.options.id_pst == 27) {
+				// 	temp = self.getVariableValue('Pst27RampT')
+				// } else if (rampTime.options.id_pst == 28) {
+				// 	temp = self.getVariableValue('Pst28RampT')
+				// } else if (rampTime.options.id_pst == 29) {
+				// 	temp = self.getVariableValue('Pst29RampT')
+				// }
+
+				ramptemp += rampTime.options.direction
+
+				if (ramptemp > 250) {
+					ramptemp = 250;
+				} else if (ramptemp < 1) {
+					ramptemp = 1;
 				}
 
-				temp += rampTime.options.direction
-
-				if (temp > 250) {
-					temp = 250;
-				} else if (temp < 1) {
-					temp = 1;
-				}
-
-				self.log('debug', 'Preset ID: ' + rampTime.options.id_pst + ' RampT: ' + temp)
+				self.log('debug', 'Preset ID: ' + rampTime.options.id_pst + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
 				if (rampTime.options.id_pst == 0) {
-					self.setVariableValues({ Pst0RampT: temp })
+					self.setVariableValues({ Pst0RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 1) {
-					self.setVariableValues({ Pst1RampT: temp })
+					self.setVariableValues({ Pst1RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 2) {
-					self.setVariableValues({ Pst2RampT: temp })
+					self.setVariableValues({ Pst2RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 3) {
-					self.setVariableValues({ Pst3RampT: temp })
+					self.setVariableValues({ Pst3RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 4) {
-					self.setVariableValues({ Pst4RampT: temp })
+					self.setVariableValues({ Pst4RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 5) {
-					self.setVariableValues({ Pst5RampT: temp })
+					self.setVariableValues({ Pst5RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 6) {
-					self.setVariableValues({ Pst6RampT: temp })
+					self.setVariableValues({ Pst6RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 7) {
-					self.setVariableValues({ Pst7RampT: temp })
+					self.setVariableValues({ Pst7RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 8) {
-					self.setVariableValues({ Pst8RampT: temp })
+					self.setVariableValues({ Pst8RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 9) {
-					self.setVariableValues({ Pst9RampT: temp })
+					self.setVariableValues({ Pst9RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 10) {
-					self.setVariableValues({ Pst10RampT: temp })
+					self.setVariableValues({ Pst10RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 11) {
-					self.setVariableValues({ Pst11RampT: temp })
+					self.setVariableValues({ Pst11RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 12) {
-					self.setVariableValues({ Pst12RampT: temp })
+					self.setVariableValues({ Pst12RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 13) {
-					self.setVariableValues({ Pst13RampT: temp })
+					self.setVariableValues({ Pst13RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 14) {
-					self.setVariableValues({ Pst14RampT: temp })
+					self.setVariableValues({ Pst14RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 15) {
-					self.setVariableValues({ Pst15RampT: temp })
+					self.setVariableValues({ Pst15RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 16) {
-					self.setVariableValues({ Pst16RampT: temp })
+					self.setVariableValues({ Pst16RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 17) {
-					self.setVariableValues({ Pst17RampT: temp })
+					self.setVariableValues({ Pst17RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 18) {
-					self.setVariableValues({ Pst18RampT: temp })
+					self.setVariableValues({ Pst18RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 19) {
-					self.setVariableValues({ Pst19RampT: temp })
+					self.setVariableValues({ Pst19RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 20) {
-					self.setVariableValues({ Pst20RampT: temp })
+					self.setVariableValues({ Pst20RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 21) {
-					self.setVariableValues({ Pst21RampT: temp })
+					self.setVariableValues({ Pst21RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 22) {
-					self.setVariableValues({ Pst22RampT: temp })
+					self.setVariableValues({ Pst22RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 23) {
-					self.setVariableValues({ Pst23RampT: temp })
+					self.setVariableValues({ Pst23RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 24) {
-					self.setVariableValues({ Pst24RampT: temp })
+					self.setVariableValues({ Pst24RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 25) {
-					self.setVariableValues({ Pst25RampT: temp })
+					self.setVariableValues({ Pst25RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 26) {
-					self.setVariableValues({ Pst26RampT: temp })
+					self.setVariableValues({ Pst26RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 27) {
-					self.setVariableValues({ Pst27RampT: temp })
+					self.setVariableValues({ Pst27RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 28) {
-					self.setVariableValues({ Pst28RampT: temp })
+					self.setVariableValues({ Pst28RampT: ramptemp })
 				} else if (rampTime.options.id_pst == 29) {
-					self.setVariableValues({ Pst29RampT: temp })
+					self.setVariableValues({ Pst29RampT: ramptemp })
+				}
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + rampTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
 				}
 			}
 		},
@@ -866,70 +902,83 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetPresetRunTime) => {
-				var temp = 50;
+				var runtemp = 50;
+				var ramptemp = self.getVariableValue('Pst' + resetPresetRunTime.options.id_pst + 'RampT')
 
 				if (resetPresetRunTime.options.id_pst == 0) {
-					self.setVariableValues({ Pst0RunT: temp })
+					self.setVariableValues({ Pst0RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 1) {
-					self.setVariableValues({ Pst1RunT: temp })
+					self.setVariableValues({ Pst1RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 2) {
-					self.setVariableValues({ Pst2RunT: temp })
+					self.setVariableValues({ Pst2RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 3) {
-					self.setVariableValues({ Pst3RunT: temp })
+					self.setVariableValues({ Pst3RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 4) {
-					self.setVariableValues({ Pst4RunT: temp })
+					self.setVariableValues({ Pst4RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 5) {
-					self.setVariableValues({ Pst5RunT: temp })
+					self.setVariableValues({ Pst5RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 6) {
-					self.setVariableValues({ Pst6RunT: temp })
+					self.setVariableValues({ Pst6RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 7) {
-					self.setVariableValues({ Pst7RunT: temp })
+					self.setVariableValues({ Pst7RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 8) {
-					self.setVariableValues({ Pst8RunT: temp })
+					self.setVariableValues({ Pst8RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 9) {
-					self.setVariableValues({ Pst9RunT: temp })
+					self.setVariableValues({ Pst9RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 10) {
-					self.setVariableValues({ Pst10RunT: temp })
+					self.setVariableValues({ Pst10RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 11) {
-					self.setVariableValues({ Pst11RunT: temp })
+					self.setVariableValues({ Pst11RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 12) {
-					self.setVariableValues({ Pst12RunT: temp })
+					self.setVariableValues({ Pst12RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 13) {
-					self.setVariableValues({ Pst13RunT: temp })
+					self.setVariableValues({ Pst13RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 14) {
-					self.setVariableValues({ Pst14RunT: temp })
+					self.setVariableValues({ Pst14RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 15) {
-					self.setVariableValues({ Pst15RunT: temp })
+					self.setVariableValues({ Pst15RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 16) {
-					self.setVariableValues({ Pst16RunT: temp })
+					self.setVariableValues({ Pst16RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 17) {
-					self.setVariableValues({ Pst17RunT: temp })
+					self.setVariableValues({ Pst17RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 18) {
-					self.setVariableValues({ Pst18RunT: temp })
+					self.setVariableValues({ Pst18RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 19) {
-					self.setVariableValues({ Pst19RunT: temp })
+					self.setVariableValues({ Pst19RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 20) {
-					self.setVariableValues({ Pst20RunT: temp })
+					self.setVariableValues({ Pst20RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 21) {
-					self.setVariableValues({ Pst21RunT: temp })
+					self.setVariableValues({ Pst21RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 22) {
-					self.setVariableValues({ Pst22RunT: temp })
+					self.setVariableValues({ Pst22RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 23) {
-					self.setVariableValues({ Pst23RunT: temp })
+					self.setVariableValues({ Pst23RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 24) {
-					self.setVariableValues({ Pst24RunT: temp })
+					self.setVariableValues({ Pst24RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 25) {
-					self.setVariableValues({ Pst25RunT: temp })
+					self.setVariableValues({ Pst25RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 26) {
-					self.setVariableValues({ Pst26RunT: temp })
+					self.setVariableValues({ Pst26RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 27) {
-					self.setVariableValues({ Pst27RunT: temp })
+					self.setVariableValues({ Pst27RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 28) {
-					self.setVariableValues({ Pst28RunT: temp })
+					self.setVariableValues({ Pst28RunT: runtemp })
 				} else if (resetPresetRunTime.options.id_pst == 29) {
-					self.setVariableValues({ Pst29RunT: temp })
+					self.setVariableValues({ Pst29RunT: runtemp })
 				}
 
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + resetPresetRunTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
 		resetPresetRampTime: {
@@ -944,72 +993,86 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetPresetRampTime) => {
-				var temp = 10;
+				var ramptemp = 10;
+				var runtemp = self.getVariableValue('Pst' + resetPresetRampTime.options.id_pst + 'RunT')
 
 				if (resetPresetRampTime.options.id_pst == 0) {
-					self.setVariableValues({ Pst0RampT: temp })
+					self.setVariableValues({ Pst0RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 1) {
-					self.setVariableValues({ Pst1RampT: temp })
+					self.setVariableValues({ Pst1RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 2) {
-					self.setVariableValues({ Pst2RampT: temp })
+					self.setVariableValues({ Pst2RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 3) {
-					self.setVariableValues({ Pst3RampT: temp })
+					self.setVariableValues({ Pst3RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 4) {
-					self.setVariableValues({ Pst4RampT: temp })
+					self.setVariableValues({ Pst4RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 5) {
-					self.setVariableValues({ Pst5RampT: temp })
+					self.setVariableValues({ Pst5RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 6) {
-					self.setVariableValues({ Pst6RampT: temp })
+					self.setVariableValues({ Pst6RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 7) {
-					self.setVariableValues({ Pst7RampT: temp })
+					self.setVariableValues({ Pst7RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 8) {
-					self.setVariableValues({ Pst8RampT: temp })
+					self.setVariableValues({ Pst8RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 9) {
-					self.setVariableValues({ Pst9RampT: temp })
+					self.setVariableValues({ Pst9RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 10) {
-					self.setVariableValues({ Pst10RampT: temp })
+					self.setVariableValues({ Pst10RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 11) {
-					self.setVariableValues({ Pst11RampT: temp })
+					self.setVariableValues({ Pst11RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 12) {
-					self.setVariableValues({ Pst12RampT: temp })
+					self.setVariableValues({ Pst12RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 13) {
-					self.setVariableValues({ Pst13RampT: temp })
+					self.setVariableValues({ Pst13RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 14) {
-					self.setVariableValues({ Pst14RampT: temp })
+					self.setVariableValues({ Pst14RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 15) {
-					self.setVariableValues({ Pst15RampT: temp })
+					self.setVariableValues({ Pst15RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 16) {
-					self.setVariableValues({ Pst16RampT: temp })
+					self.setVariableValues({ Pst16RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 17) {
-					self.setVariableValues({ Pst17RampT: temp })
+					self.setVariableValues({ Pst17RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 18) {
-					self.setVariableValues({ Pst18RampT: temp })
+					self.setVariableValues({ Pst18RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 19) {
-					self.setVariableValues({ Pst19RampT: temp })
+					self.setVariableValues({ Pst19RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 20) {
-					self.setVariableValues({ Pst20RampT: temp })
+					self.setVariableValues({ Pst20RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 21) {
-					self.setVariableValues({ Pst21RampT: temp })
+					self.setVariableValues({ Pst21RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 22) {
-					self.setVariableValues({ Pst22RampT: temp })
+					self.setVariableValues({ Pst22RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 23) {
-					self.setVariableValues({ Pst23RampT: temp })
+					self.setVariableValues({ Pst23RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 24) {
-					self.setVariableValues({ Pst24RampT: temp })
+					self.setVariableValues({ Pst24RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 25) {
-					self.setVariableValues({ Pst25RampT: temp })
+					self.setVariableValues({ Pst25RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 26) {
-					self.setVariableValues({ Pst26RampT: temp })
+					self.setVariableValues({ Pst26RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 27) {
-					self.setVariableValues({ Pst27RampT: temp })
+					self.setVariableValues({ Pst27RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 28) {
-					self.setVariableValues({ Pst28RampT: temp })
+					self.setVariableValues({ Pst28RampT: ramptemp })
 				} else if (resetPresetRampTime.options.id_pst == 29) {
-					self.setVariableValues({ Pst29RampT: temp })
+					self.setVariableValues({ Pst29RampT: ramptemp })
 				}
 
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + resetPresetRampTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
+
 		setLoopRunTime: {
 			name: 'Set Loop Run Time',
 			options: [
@@ -1504,6 +1567,7 @@ module.exports = function (self) {
 				self.log('debug', 'Active Loop: ' + loopActive)
 				if (loopActive == -1) {
 					self.setVariableValues({ LpActive: LpRecall.options.id_loop })
+					self.checkFeedbacks("LoopStatus")
 					const cmd = 'G25 L' + LpRecall.options.id_loop + ' A' + tempA + ' B' + tempB + ' C500 D500'
 					const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 					const cmd2 = 'G24 L' + LpRecall.options.id_loop + ' N0'
@@ -1514,7 +1578,7 @@ module.exports = function (self) {
 
 						if (self.socket !== undefined && self.socket.isConnected) {
 							self.socket.send(sendBuf)
-							self.socket.send(sendBuf2)
+							setTimeout(self.socket.send(sendBuf2), 100)
 						} else {
 							self.log('debug', 'Socket not connected :(')
 						}
@@ -1620,10 +1684,19 @@ module.exports = function (self) {
 					choices: MOTOR_ID,
 				},
 			],
-			callback: async (stopA) => {
+			callback: async (stopA) => {		
+				const cmd = 'G213 M' + stopA.options.id_mot
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 
-				
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
 		setStopB: {
@@ -1637,10 +1710,19 @@ module.exports = function (self) {
 					choices: MOTOR_ID,
 				},
 			],
-			callback: async (stopA) => {
+			callback: async (stopB) => {
+				const cmd = 'G214 M' + stopB.options.id_mot
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 
-				
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
 		recallStopA: {
@@ -1655,9 +1737,18 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (recStopA) => {
+				const cmd = 'G217'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 
-				
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
 		recallStopB: {
@@ -1672,9 +1763,140 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (recStopB) => {
+				const cmd = 'G218'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopA: {
+			name: 'Clear Stop A',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (stopA) => {
+				const cmd = 'G211 M' + stopA.options.id_mot
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopB: {
+			name: 'Clear Stop B',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (stopB) => {
+				const cmd = 'G212 M' + stopB.options.id_mot
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopByAxis: {
+			name: 'Clear Stops by Axis',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (stopB) => {				
+				const cmd = 'G219 M' + stopB.options.id_mot
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearAllStops: {
+			name: 'Clear All Stops',
+			options: [
+				
+			],
+			callback: async (stopB) => {				
+				const cmd = 'G211 M0'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+				const cmd2 = 'G212 M0'
+				const sendBuf2 = Buffer.from(cmd2 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+						setTimeout(self.socket.send(sendBuf2), 10)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		zeroMotors: {
+			name: 'Zero Motors',
+			options: [
+				
+			],
+			callback: async (zero) => {				
+				const cmd = 'G201'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
 				
 
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
 			}
 		},
 
@@ -1794,6 +2016,7 @@ module.exports = function (self) {
 				}
 			},
 		},
+
 		virtualInput: {
 			name: 'Virtual Button Input',
 			options: [
@@ -1837,6 +2060,7 @@ module.exports = function (self) {
 				console.log('Hello world!', event.options.num)
 			},
 		},
+
 		// buttonFeedback: {
 		// 	name: 'Button Feedback (highlight/clear)',
 		// 	options: [
