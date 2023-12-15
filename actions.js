@@ -200,13 +200,13 @@ module.exports = function (self) {
 					} else if (actionJogSmart.options.id_mot == 9) {
 						temp = self.getVariableValue('FocusSpeed')
 					}
-					
+
 					if (actionJogSmart.options.id_mot < 5) {
 						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
 						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 25.0
 					}
-					
+
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
 
 					/*
@@ -1211,7 +1211,7 @@ module.exports = function (self) {
 					self.setVariableValues({ Lp6RampT: temp })
 				} else if (resetLpRampTime.options.id_loop == 7) {
 					self.setVariableValues({ Lp7RampT: temp })
-				} 
+				}
 			}
 		},
 		setLoopAPoint: {
@@ -1452,7 +1452,229 @@ module.exports = function (self) {
 						self.log('debug', 'Socket not connected :(')
 					}
 				}
+
+			}
+		},
+		recallLoop: {
+			name: 'Recall Loop',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_loop',
+					label: 'Loop ID',
+					default: 1,
+					choices: LOOP_ID,
+				},
+			],
+			callback: async (LpRecall) => {
+				var tempA = 0
+				var tempB = 0
+				var loopActive = self.getVariableValue('LpActive')
+
+				if (LpRecall.options.id_loop == 0) {
+					tempA = self.getVariableValue('Lp0APoint')
+					tempB = self.getVariableValue('Lp0BPoint')
+				} else if (LpRecall.options.id_loop == 1) {
+					tempA = self.getVariableValue('Lp1APoint')
+					tempB = self.getVariableValue('Lp1BPoint')
+				} else if (LpRecall.options.id_loop == 2) {
+					tempA = self.getVariableValue('Lp2APoint')
+					tempB = self.getVariableValue('Lp2BPoint')
+				} else if (LpRecall.options.id_loop == 3) {
+					tempA = self.getVariableValue('Lp3APoint')
+					tempB = self.getVariableValue('Lp3BPoint')
+				} else if (LpRecall.options.id_loop == 4) {
+					tempA = self.getVariableValue('Lp4APoint')
+					tempB = self.getVariableValue('Lp4BPoint')
+				} else if (LpRecall.options.id_loop == 5) {
+					tempA = self.getVariableValue('Lp5APoint')
+					tempB = self.getVariableValue('Lp5BPoint')
+				} else if (LpRecall.options.id_loop == 6) {
+					tempA = self.getVariableValue('Lp6APoint')
+					tempB = self.getVariableValue('Lp6BPoint')
+				} else if (LpRecall.options.id_loop == 7) {
+					tempA = self.getVariableValue('Lp7APoint')
+					tempB = self.getVariableValue('Lp7BPoint')
+				} else if (LpRecall.options.id_loop == 8) {
+					tempA = self.getVariableValue('Lp8APoint')
+					tempB = self.getVariableValue('Lp8BPoint')
+				}
+
+
+				self.log('debug', 'Active Loop: ' + loopActive)
+				if (loopActive == -1) {
+					self.setVariableValues({ LpActive: LpRecall.options.id_loop })
+					const cmd = 'G25 L' + LpRecall.options.id_loop + ' A' + tempA + ' B' + tempB + ' C500 D500'
+					const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+					const cmd2 = 'G24 L' + LpRecall.options.id_loop + ' N0'
+					const sendBuf2 = Buffer.from(cmd2 + '\n', 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+							self.socket.send(sendBuf2)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+				} else {
+					self.setVariableValues({ LpActive: -1 })
+					const cmd = 'G24'
+					const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+				}
+			}
+		},
+		
+		homeRS: {
+			name: 'Center RS',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_end',
+					label: 'Command End Character:',
+					default: '\n',
+					choices: CHOICES_END,
+				},
+			],
+			callback: async (centerRS) => {
+				const cmd = 'G202'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		calibrateAllTN: {
+			name: 'Calibrate All TN',
+			options: [
+			],
+			callback: async (centerRS) => {
+				const cmd = 'G812 C0'
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		calibrateTNMotor: {
+			name: 'Calibrate TN Motor',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 5,
+					choices: TN_MOTOR_ID,
+				},
+			],
+			callback: async (calTN) => {
+				const cmd = 'G812 C0 M' + (calTN.options.id_mot-4)
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		
+		setStopA: {
+			name: 'Set Stop A',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (stopA) => {
+
 				
+
+			}
+		},
+		setStopB: {
+			name: 'Set Stop B',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (stopA) => {
+
+				
+
+			}
+		},
+		recallStopA: {
+			name: 'Recall Stop A',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (recStopA) => {
+
+				
+
+			}
+		},
+		recallStopB: {
+			name: 'Recall Stop B',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (recStopB) => {
+
+				
+
 			}
 		},
 

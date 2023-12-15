@@ -60,6 +60,36 @@ module.exports = async function (self) {
 				}
 			},
 		},
+		LoopStatus: {
+			name: 'Looping Status',
+			type: 'boolean',
+			label: 'Looping Status',
+			defaultStyle: {
+				bgcolor: combineRgb(127, 0, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Test',
+					default: 5,
+					min: 0,
+					max: 10,
+				},
+			],
+			callback: (feedback) => {
+				console.log('Hello world!', feedback.options.num)
+				var state = self.getVariableValue('LpActive')
+				if(state) {
+					// feedback.defaultStyle.bgcolor = combineRgb(127, 0, 0)
+					return true
+				} else {
+					// feedback.defaultStyle.bgcolor = combineRgb(0, 127, 0)
+					return false
+				}
+			},
+		},
 	})
 }
 

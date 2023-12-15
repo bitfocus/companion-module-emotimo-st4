@@ -311,6 +311,8 @@ class eMotimoModuleInstance extends InstanceBase {
 						break
 				}
 				this.checkFeedbacks("SetPreset")
+			case 'Exiting Loop':
+				this.checkFeedbacks("LoopStatus")
 			default:
 		}
 	}
@@ -523,6 +525,7 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ Lp5BPoint: 0 })
 		this.setVariableValues({ Lp6BPoint: 0 })
 		this.setVariableValues({ Lp7BPoint: 0 })
+		this.setVariableValues({ LpActive: -1 })
 	}
 }
 

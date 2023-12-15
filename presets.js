@@ -1196,6 +1196,7 @@ module.exports = {
                     }
                 ]
             },
+
             // ########################
             // #### Motor  Presets ####
             // ########################
@@ -2144,8 +2145,6 @@ module.exports = {
             // ########################
             // #### Motor  Speeds  ####
             // ########################
-
-
             presets.panSpeedLimit = {
                 category: 'Motors',
                 type: 'button',
@@ -2526,6 +2525,108 @@ module.exports = {
         // }
 
         // ########################
+        // ####  Motor  Stops  ####
+        // ########################
+        for (let inc = 1; inc < 9; inc++) {
+            presets['setStopA' + inc] = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Motor' + inc + ' Stop A',
+                style: {
+                    text: 'Motor ' + inc + ' Stop A',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                           
+                        ],
+                        up: [
+                            {
+                                actionId: 'setStopA',
+                                options: {
+                                    id_mot: inc,
+                                }
+                            }
+                        ],
+                        2000: {
+                            options: {
+                                runWhileHeld: true,
+                            },
+                            actions: [
+                                {
+                                    actionId: 'recallStopA',
+                                    options: {
+                                        id_mot: inc,
+                                    },
+                                    delay: 0,
+                                },
+                            ],
+                        },
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['setStopB' + inc] = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Motor' + inc + ' Stop B',
+                style: {
+                    text: 'Motor ' + inc + ' Stop B',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                           
+                        ],
+                        up: [
+                            {
+                                actionId: 'setStopB',
+                                options: {
+                                    id_mot: inc,
+                                }
+                            }
+                        ],
+                        2000: {
+                            options: {
+                                runWhileHeld: true,
+                            },
+                            actions: [
+                                {
+                                    actionId: 'recallStopB',
+                                    options: {
+                                        id_mot: inc,
+                                    },
+                                    delay: 0,
+                                },
+                            ],
+                        },
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            }
+        }
+
+        // ########################
         // #### Go To  Presets ####
         // ########################
 
@@ -2825,6 +2926,9 @@ module.exports = {
             }
         }
 
+        // ########################
+        // ####     Loops      ####
+        // ########################
         for (let inc = 0; inc < 8; inc++) {
             presets['increaseLpRunTime' + inc] = {
                 category: 'Loop Timing',
@@ -3233,8 +3337,144 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            presets['Loop' + inc + 'Recall'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' Recall',
+                style: {
+                    text: 'Loop\\n' + inc + '\\nRecall',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'recallLoop',
+                                options: {
+                                    id_loop: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        feedbackId: 'LoopStatus',
+                        options: {
+                            num: 0
+                        },
+                        style: {
+                            bgcolor: combineRgb(127, 0, 0),
+                            color: combineRgb(0, 0, 0),
+                        },
+                    },
+                ]
             }
         }
+
+        // ########################
+        // ####     Other      ####
+        // ########################
+        presets.rsHome = {
+            category: 'Motors',
+            type: 'button',
+            name: 'Center RS',
+            style: {
+                text: 'Center RS',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'homeRS'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.calibrateTN = {
+            category: 'Motors',
+            type: 'button',
+            name: 'Calibrate TN Motor',
+            style: {
+                text: 'Cal. TN Motor',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'calibrateTNMotor',
+                            id_mot: 5
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.calibrateAllTN = {
+            category: 'Motors',
+            type: 'button',
+            name: 'Calibrate All TN',
+            style: {
+                text: 'Cal. All TN',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'calibrateAllTN'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
 
         // for (let increaseRunTime = 0; increaseRunTime < 30; increaseRunTime++) {
         //     presets['increaseRunTime' + increaseRunTime] = {

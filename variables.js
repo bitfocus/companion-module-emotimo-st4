@@ -142,6 +142,7 @@ module.exports = async function (self) {
 		{ name: 'Loop5BPoint', variableId: 'Lp5BPoint'},
 		{ name: 'Loop6BPoint', variableId: 'Lp6BPoint'},
 		{ name: 'Loop7BPoint', variableId: 'Lp7BPoint'},
+		{ name: 'LoopActive', variableId: 'LpActive'},
 		{ name: 'Last TCP Response', variableId: 'tcp_response' }
 	])
 }
