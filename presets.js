@@ -3018,6 +3018,292 @@ module.exports = {
             }
         }
 
+        presets.smartIncreaseRun = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Increase RunTime',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetRunTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRun = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Decrease RunTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetRunTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartIncreaseRamp = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Increase RampTime',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetRampTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRamp = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Decrease RampTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetRampTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.IncreasePstSetup = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Increase Preset ID',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetID',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.DecreasePstSetup = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Decrease Preset ID',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setPresetID',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curpstsetup = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Selected Preset',
+            style: {
+                text: 'Preset\\nID:\\n$(companion-module-emotimo-st4-3:CurrentPstSet)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curpstRunsetup = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Selected Preset Run',
+            style: {
+                text: 'Run:\\n$(companion-module-emotimo-st4-3:CurrentPstSetRun)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curpstRampsetup = {
+            category: 'Preset Timing',
+            type: 'button',
+            name: 'Selected Preset Ramp',
+            style: {
+                text: 'Ramp:\\n$(companion-module-emotimo-st4-3:CurrentPstSetRamp)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        }
+
         // ########################
         // ####     Loops      ####
         // ########################

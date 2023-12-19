@@ -1072,6 +1072,259 @@ module.exports = function (self) {
 				}
 			}
 		},
+		setPresetRunTimeSmart: {
+			name: 'Smart Set Preset Run Time',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var runtemp = 0
+				var ramptemp = 0
+				var preset = self.getVariableValue('CurrentPstSet')
+
+				runtemp = self.getVariableValue('CurrentPstSetRun')
+				ramptemp = self.getVariableValue('CurrentPstSetRamp')
+
+				runtemp += runTime.options.direction
+
+				if (runtemp > 600) {
+					runtemp = 600;
+				} else if (runtemp < 10) {
+					runtemp = 10;
+				}
+
+				self.log('debug', 'Preset ID: ' + preset + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				// var varID = 'Pst'+preset+'RunT'
+				// self.log('debug', 'Variable ID: ' + varID)
+				// self.setVariable( varID, temp )
+				if (preset == 0) {
+					self.setVariableValues({ Pst0RunT: runtemp })
+				} else if (preset == 1) {
+					self.setVariableValues({ Pst1RunT: runtemp })
+				} else if (preset == 2) {
+					self.setVariableValues({ Pst2RunT: runtemp })
+				} else if (preset == 3) {
+					self.setVariableValues({ Pst3RunT: runtemp })
+				} else if (preset == 4) {
+					self.setVariableValues({ Pst4RunT: runtemp })
+				} else if (preset == 5) {
+					self.setVariableValues({ Pst5RunT: runtemp })
+				} else if (preset == 6) {
+					self.setVariableValues({ Pst6RunT: runtemp })
+				} else if (preset == 7) {
+					self.setVariableValues({ Pst7RunT: runtemp })
+				} else if (preset == 8) {
+					self.setVariableValues({ Pst8RunT: runtemp })
+				} else if (preset == 9) {
+					self.setVariableValues({ Pst9RunT: runtemp })
+				} else if (preset == 10) {
+					self.setVariableValues({ Pst10RunT: runtemp })
+				} else if (preset == 11) {
+					self.setVariableValues({ Pst11RunT: runtemp })
+				} else if (preset == 12) {
+					self.setVariableValues({ Pst12RunT: runtemp })
+				} else if (preset == 13) {
+					self.setVariableValues({ Pst13RunT: runtemp })
+				} else if (preset == 14) {
+					self.setVariableValues({ Pst14RunT: runtemp })
+				} else if (preset == 15) {
+					self.setVariableValues({ Pst15RunT: runtemp })
+				} else if (preset == 16) {
+					self.setVariableValues({ Pst16RunT: runtemp })
+				} else if (preset == 17) {
+					self.setVariableValues({ Pst17RunT: runtemp })
+				} else if (preset == 18) {
+					self.setVariableValues({ Pst18RunT: runtemp })
+				} else if (preset == 19) {
+					self.setVariableValues({ Pst19RunT: runtemp })
+				} else if (preset == 20) {
+					self.setVariableValues({ Pst20RunT: runtemp })
+				} else if (preset == 21) {
+					self.setVariableValues({ Pst21RunT: runtemp })
+				} else if (preset == 22) {
+					self.setVariableValues({ Pst22RunT: runtemp })
+				} else if (preset == 23) {
+					self.setVariableValues({ Pst23RunT: runtemp })
+				} else if (preset == 24) {
+					self.setVariableValues({ Pst24RunT: runtemp })
+				} else if (preset == 25) {
+					self.setVariableValues({ Pst25RunT: runtemp })
+				} else if (preset == 26) {
+					self.setVariableValues({ Pst26RunT: runtemp })
+				} else if (preset == 27) {
+					self.setVariableValues({ Pst27RunT: runtemp })
+				} else if (preset == 28) {
+					self.setVariableValues({ Pst28RunT: runtemp })
+				} else if (preset == 29) {
+					self.setVariableValues({ Pst29RunT: runtemp })
+				}
+				self.setVariableValues({ CurrentPstSetRun: runtemp })
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setPresetRampTimeSmart: {
+			name: 'Smart Set Preset Ramp Time',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (rampTime) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var preset = self.getVariableValue('CurrentPstSet')
+
+				runtemp = self.getVariableValue('CurrentPstSetRun')
+				ramptemp = self.getVariableValue('CurrentPstSetRamp')
+				
+
+				ramptemp += rampTime.options.direction
+
+				if (ramptemp > 250) {
+					ramptemp = 250;
+				} else if (ramptemp < 1) {
+					ramptemp = 1;
+				}
+
+				self.log('debug', 'Preset ID: ' + preset + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				if (preset == 0) {
+					self.setVariableValues({ Pst0RampT: ramptemp })
+				} else if (preset == 1) {
+					self.setVariableValues({ Pst1RampT: ramptemp })
+				} else if (preset == 2) {
+					self.setVariableValues({ Pst2RampT: ramptemp })
+				} else if (preset == 3) {
+					self.setVariableValues({ Pst3RampT: ramptemp })
+				} else if (preset == 4) {
+					self.setVariableValues({ Pst4RampT: ramptemp })
+				} else if (preset == 5) {
+					self.setVariableValues({ Pst5RampT: ramptemp })
+				} else if (preset == 6) {
+					self.setVariableValues({ Pst6RampT: ramptemp })
+				} else if (preset == 7) {
+					self.setVariableValues({ Pst7RampT: ramptemp })
+				} else if (preset == 8) {
+					self.setVariableValues({ Pst8RampT: ramptemp })
+				} else if (preset == 9) {
+					self.setVariableValues({ Pst9RampT: ramptemp })
+				} else if (preset == 10) {
+					self.setVariableValues({ Pst10RampT: ramptemp })
+				} else if (preset == 11) {
+					self.setVariableValues({ Pst11RampT: ramptemp })
+				} else if (preset == 12) {
+					self.setVariableValues({ Pst12RampT: ramptemp })
+				} else if (preset == 13) {
+					self.setVariableValues({ Pst13RampT: ramptemp })
+				} else if (preset == 14) {
+					self.setVariableValues({ Pst14RampT: ramptemp })
+				} else if (preset == 15) {
+					self.setVariableValues({ Pst15RampT: ramptemp })
+				} else if (preset == 16) {
+					self.setVariableValues({ Pst16RampT: ramptemp })
+				} else if (preset == 17) {
+					self.setVariableValues({ Pst17RampT: ramptemp })
+				} else if (preset == 18) {
+					self.setVariableValues({ Pst18RampT: ramptemp })
+				} else if (preset == 19) {
+					self.setVariableValues({ Pst19RampT: ramptemp })
+				} else if (preset == 20) {
+					self.setVariableValues({ Pst20RampT: ramptemp })
+				} else if (preset == 21) {
+					self.setVariableValues({ Pst21RampT: ramptemp })
+				} else if (preset == 22) {
+					self.setVariableValues({ Pst22RampT: ramptemp })
+				} else if (preset == 23) {
+					self.setVariableValues({ Pst23RampT: ramptemp })
+				} else if (preset == 24) {
+					self.setVariableValues({ Pst24RampT: ramptemp })
+				} else if (preset == 25) {
+					self.setVariableValues({ Pst25RampT: ramptemp })
+				} else if (preset == 26) {
+					self.setVariableValues({ Pst26RampT: ramptemp })
+				} else if (preset == 27) {
+					self.setVariableValues({ Pst27RampT: ramptemp })
+				} else if (preset == 28) {
+					self.setVariableValues({ Pst28RampT: ramptemp })
+				} else if (preset == 29) {
+					self.setVariableValues({ Pst29RampT: ramptemp })
+				}
+				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setPresetID: {
+			name: 'Set Preset ID',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (pst) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var preset = self.getVariableValue('CurrentPstSet')
+
+				
+				preset += pst.options.direction
+				
+				if (preset > 30) {
+					preset = 30;
+				} else if (preset < 0) {
+					preset = 0;
+				}
+				
+				runtemp = self.getVariableValue('Pst' + preset + 'RunT')
+				ramptemp = self.getVariableValue('Pst' + preset + 'RampT')
+				
+				self.log('debug', 'Preset ID: ' + preset + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				self.setVariableValues({ CurrentPstSet: preset })
+				self.setVariableValues({ CurrentPstSetRun: runtemp })
+				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
+
+				
+			}
+		},
 
 		setLoopRunTime: {
 			name: 'Set Loop Run Time',

@@ -702,6 +702,9 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ RSRollStopB: 0 })
 		this.setVariableValues({ RSFocusStopA: 0 })
 		this.setVariableValues({ RSFocusStopB: 0 })
+		this.setVariableValues({ CurrentPstSet: 0 })
+		this.setVariableValues({ CurrentPstSetRun: 50 })
+		this.setVariableValues({ CurrentPstSetRamp: 10 })
 	}
 }
 
