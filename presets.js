@@ -3258,7 +3258,9 @@ module.exports = {
             steps: [
                 {
                     down: [
-                        
+                        {
+                            actionId: 'resetPresetRunTimeSmart',
+                        }
                     ],
                     up: [
 
@@ -3287,6 +3289,419 @@ module.exports = {
             steps: [
                 {
                     down: [
+                        {
+                            actionId: 'resetPresetRampTimeSmart',
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.recallSmart = {
+            category: 'Preset',
+            type: 'button',
+            name: 'Preset Smart Recall',
+            style: {
+                text: 'Pre $(companion-module-emotimo-st4-3:CurrentPstSet)',
+                color: '16777215',
+                bgcolor: combineRgb(100, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                    ],
+                    up: [
+                        {
+                            actionId: 'recallPsetSmart',
+                            options: {
+                                
+                            }
+                        }
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'savePsetSmart',
+                                options: {
+                                    
+                                },
+                                delay: 0,
+                            },
+                        ],
+                    },
+                },
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'SetPresetSmart',
+                    options: {
+                        
+                    },
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                },
+            ]
+        },
+
+        presets.smartIncreaseAPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Increase Loop A Point',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopAPointSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseAPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop A Point',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopAPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartIncreaseBPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Increase Loop B Point',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 90, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopBPointSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseBPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop B Point',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 90, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopBPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartIncreaseRunLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Increase Loop RunTime',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRunTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRunLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop RunTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRunTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartIncreaseRampLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Increase Loop RampTime',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRampTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRampLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop RampTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRampTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.IncreaseLpSetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Increase Loop ID',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopID',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.DecreaseLpSetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop ID',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopID',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curLpsetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Selected Loop',
+            style: {
+                text: 'Loop\\nID:\\n$(companion-module-emotimo-st4-3:CurrentLpSet)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
                         
                     ],
                     up: [
@@ -3302,7 +3717,175 @@ module.exports = {
                     }
                 }
             ]
+        },
+        presets.curLpAPointsetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Selected Loop A Point',
+            style: {
+                text: 'Loop A Point:\\n$(companion-module-emotimo-st4-3:CurrentLpA)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'recallAPointSmart',
+                            options: {
+                                
+                            }
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curLpBPointsetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Selected Loop B Point',
+            style: {
+                text: 'Loop B Point:\\n$(companion-module-emotimo-st4-3:CurrentLpB)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'recallBPointSmart',
+                            options: {
+                                
+                            }
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curLpRunsetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Selected Loop Run',
+            style: {
+                text: 'Loop Run:\\n$(companion-module-emotimo-st4-3:CurrentLpRun)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'resetLoopRunTimeSmart',
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curLpRampsetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Selected Loop Ramp',
+            style: {
+                text: 'Loop Ramp:\\n$(companion-module-emotimo-st4-3:CurrentLpRamp)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'resetLoopRampTimeSmart',
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.recallLpSmart = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Loop Smart Recall',
+            style: {
+                text: 'Loop $(companion-module-emotimo-st4-3:CurrentLpSet)',
+                color: '16777215',
+                bgcolor: combineRgb(100, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                    ],
+                    up: [
+                        {
+                            actionId: 'recallLpSmart',
+                            options: {
+                                
+                            }
+                        }
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'LoopStatus',
+                    options: {
+                        
+                    },
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                },
+            ]
         }
+        
 
         // ########################
         // ####     Loops      ####

@@ -485,6 +485,7 @@ module.exports = function (self) {
 			},
 		},
 
+		//Presets
 		savePset: {
 			name: 'Save Preset',
 			options: [
@@ -899,6 +900,8 @@ module.exports = function (self) {
 					label: 'Preset ID',
 					default: 1,
 					choices: PRESET_ID,
+					// allowCustom: true,
+					// allowExpression: true,
 				},
 			],
 			callback: async (resetPresetRunTime) => {
@@ -990,6 +993,7 @@ module.exports = function (self) {
 					label: 'Preset ID',
 					default: 1,
 					choices: PRESET_ID,
+					// allowCustom: true,
 				},
 			],
 			callback: async (resetPresetRampTime) => {
@@ -1072,6 +1076,7 @@ module.exports = function (self) {
 				}
 			}
 		},
+		//Smart Presets
 		setPresetRunTimeSmart: {
 			name: 'Smart Set Preset Run Time',
 			options: [
@@ -1288,6 +1293,180 @@ module.exports = function (self) {
 				}
 			}
 		},
+		resetPresetRunTimeSmart: {
+			name: 'Reset Preset Run Time Smart',
+			options: [
+				
+			],
+			callback: async (resetPresetRunTime) => {
+				var preset = self.getVariableValue('CurrentPstSet')
+				var runtemp = 50;
+				var ramptemp = self.getVariableValue('Pst' + preset + 'RampT')
+
+				if (preset == 0) {
+					self.setVariableValues({ Pst0RunT: runtemp })
+				} else if (preset == 1) {
+					self.setVariableValues({ Pst1RunT: runtemp })
+				} else if (preset == 2) {
+					self.setVariableValues({ Pst2RunT: runtemp })
+				} else if (preset == 3) {
+					self.setVariableValues({ Pst3RunT: runtemp })
+				} else if (preset == 4) {
+					self.setVariableValues({ Pst4RunT: runtemp })
+				} else if (preset == 5) {
+					self.setVariableValues({ Pst5RunT: runtemp })
+				} else if (preset == 6) {
+					self.setVariableValues({ Pst6RunT: runtemp })
+				} else if (preset == 7) {
+					self.setVariableValues({ Pst7RunT: runtemp })
+				} else if (preset == 8) {
+					self.setVariableValues({ Pst8RunT: runtemp })
+				} else if (preset == 9) {
+					self.setVariableValues({ Pst9RunT: runtemp })
+				} else if (preset == 10) {
+					self.setVariableValues({ Pst10RunT: runtemp })
+				} else if (preset == 11) {
+					self.setVariableValues({ Pst11RunT: runtemp })
+				} else if (preset == 12) {
+					self.setVariableValues({ Pst12RunT: runtemp })
+				} else if (preset == 13) {
+					self.setVariableValues({ Pst13RunT: runtemp })
+				} else if (preset == 14) {
+					self.setVariableValues({ Pst14RunT: runtemp })
+				} else if (preset == 15) {
+					self.setVariableValues({ Pst15RunT: runtemp })
+				} else if (preset == 16) {
+					self.setVariableValues({ Pst16RunT: runtemp })
+				} else if (preset == 17) {
+					self.setVariableValues({ Pst17RunT: runtemp })
+				} else if (preset == 18) {
+					self.setVariableValues({ Pst18RunT: runtemp })
+				} else if (preset == 19) {
+					self.setVariableValues({ Pst19RunT: runtemp })
+				} else if (preset == 20) {
+					self.setVariableValues({ Pst20RunT: runtemp })
+				} else if (preset == 21) {
+					self.setVariableValues({ Pst21RunT: runtemp })
+				} else if (preset == 22) {
+					self.setVariableValues({ Pst22RunT: runtemp })
+				} else if (preset == 23) {
+					self.setVariableValues({ Pst23RunT: runtemp })
+				} else if (preset == 24) {
+					self.setVariableValues({ Pst24RunT: runtemp })
+				} else if (preset == 25) {
+					self.setVariableValues({ Pst25RunT: runtemp })
+				} else if (preset == 26) {
+					self.setVariableValues({ Pst26RunT: runtemp })
+				} else if (preset == 27) {
+					self.setVariableValues({ Pst27RunT: runtemp })
+				} else if (preset == 28) {
+					self.setVariableValues({ Pst28RunT: runtemp })
+				} else if (preset == 29) {
+					self.setVariableValues({ Pst29RunT: runtemp })
+				}
+				self.setVariableValues({ CurrentPstSetRun: runtemp })
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		resetPresetRampTimeSmart: {
+			name: 'Reset Preset Ramp Time Smart',
+			options: [
+				
+			],
+			callback: async (resetPresetRampTime) => {
+				var preset = self.getVariableValue('CurrentPstSet')
+				var ramptemp = 10;
+				var runtemp = self.getVariableValue('Pst' + preset + 'RunT')
+
+				if (preset == 0) {
+					self.setVariableValues({ Pst0RampT: ramptemp })
+				} else if (preset == 1) {
+					self.setVariableValues({ Pst1RampT: ramptemp })
+				} else if (preset == 2) {
+					self.setVariableValues({ Pst2RampT: ramptemp })
+				} else if (preset == 3) {
+					self.setVariableValues({ Pst3RampT: ramptemp })
+				} else if (preset == 4) {
+					self.setVariableValues({ Pst4RampT: ramptemp })
+				} else if (preset == 5) {
+					self.setVariableValues({ Pst5RampT: ramptemp })
+				} else if (preset == 6) {
+					self.setVariableValues({ Pst6RampT: ramptemp })
+				} else if (preset == 7) {
+					self.setVariableValues({ Pst7RampT: ramptemp })
+				} else if (preset == 8) {
+					self.setVariableValues({ Pst8RampT: ramptemp })
+				} else if (preset == 9) {
+					self.setVariableValues({ Pst9RampT: ramptemp })
+				} else if (preset == 10) {
+					self.setVariableValues({ Pst10RampT: ramptemp })
+				} else if (preset == 11) {
+					self.setVariableValues({ Pst11RampT: ramptemp })
+				} else if (preset == 12) {
+					self.setVariableValues({ Pst12RampT: ramptemp })
+				} else if (preset == 13) {
+					self.setVariableValues({ Pst13RampT: ramptemp })
+				} else if (preset == 14) {
+					self.setVariableValues({ Pst14RampT: ramptemp })
+				} else if (preset == 15) {
+					self.setVariableValues({ Pst15RampT: ramptemp })
+				} else if (preset == 16) {
+					self.setVariableValues({ Pst16RampT: ramptemp })
+				} else if (preset == 17) {
+					self.setVariableValues({ Pst17RampT: ramptemp })
+				} else if (preset == 18) {
+					self.setVariableValues({ Pst18RampT: ramptemp })
+				} else if (preset == 19) {
+					self.setVariableValues({ Pst19RampT: ramptemp })
+				} else if (preset == 20) {
+					self.setVariableValues({ Pst20RampT: ramptemp })
+				} else if (preset == 21) {
+					self.setVariableValues({ Pst21RampT: ramptemp })
+				} else if (preset == 22) {
+					self.setVariableValues({ Pst22RampT: ramptemp })
+				} else if (preset == 23) {
+					self.setVariableValues({ Pst23RampT: ramptemp })
+				} else if (preset == 24) {
+					self.setVariableValues({ Pst24RampT: ramptemp })
+				} else if (preset == 25) {
+					self.setVariableValues({ Pst25RampT: ramptemp })
+				} else if (preset == 26) {
+					self.setVariableValues({ Pst26RampT: ramptemp })
+				} else if (preset == 27) {
+					self.setVariableValues({ Pst27RampT: ramptemp })
+				} else if (preset == 28) {
+					self.setVariableValues({ Pst28RampT: ramptemp })
+				} else if (preset == 29) {
+					self.setVariableValues({ Pst29RampT: ramptemp })
+				}
+				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
+
+				const cmd = 'G21 N1 P'
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
 		setPresetID: {
 			name: 'Set Preset ID',
 			options: [
@@ -1322,10 +1501,64 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentPstSetRun: runtemp })
 				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
 
+				self.checkFeedbacks("SetPresetSmart")
+
 				
 			}
 		},
+		savePsetSmart: {
+			name: 'Save Preset Smart',
+			options: [
+			
+			],
+			callback: async (setPreset) => {
+				var runtemp = 0
+				var ramptemp = 0
+				var preset = self.getVariableValue('CurrentPstSet')
 
+				runtemp = self.getVariableValue('CurrentPstSetRun')
+				ramptemp = self.getVariableValue('CurrentPstSetRamp')
+
+				const cmd = 'G21 P'
+
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		recallPsetSmart: {
+			name: 'Recall Preset Smart',
+			options: [
+				
+			],
+			callback: async (recallPreset) => {
+				var preset = self.getVariableValue('CurrentPstSet')
+
+				const cmd = 'G20 P'
+
+				const sendBuf = Buffer.from(cmd + preset + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+
+		//Loops
 		setLoopRunTime: {
 			name: 'Set Loop Run Time',
 			options: [
@@ -1854,6 +2087,513 @@ module.exports = function (self) {
 			}
 		},
 		
+		//Smart Loops
+		setLoopRunTimeSmart: {
+			name: 'Smart Set Loop Run Time',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var runtemp = 0
+				var ramptemp = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+				var lpAPt = self.getVariableValue('CurrentLpA')
+				var lpBPt = self.getVariableValue('CurrentLpB')
+
+				runtemp = self.getVariableValue('CurrentLpRun')
+				ramptemp = self.getVariableValue('CurrentLpRamp')
+
+				runtemp += runTime.options.direction
+
+				if (runtemp > 600) {
+					runtemp = 600;
+				} else if (runtemp < 10) {
+					runtemp = 10;
+				}
+
+				self.log('debug', 'Loop ID: ' + loop + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				// var varID = 'Lp'+loop+'RunT'
+				// self.log('debug', 'Variable ID: ' + varID)
+				// self.setVariable( varID, temp )
+				if (loop == 0) {
+					self.setVariableValues({ Lp0RunT: runtemp })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1RunT: runtemp })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2RunT: runtemp })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3RunT: runtemp })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4RunT: runtemp })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5RunT: runtemp })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6RunT: runtemp })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7RunT: runtemp })
+				} else if (loop == 8) {
+					self.setVariableValues({ Lp8RunT: runtemp })
+				}
+				self.setVariableValues({ CurrentLpRun: runtemp })
+
+				const cmd = 'G25 L'
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setLoopRampTimeSmart: {
+			name: 'Smart Set Loop Ramp Time',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (rampTime) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+				var lpAPt = self.getVariableValue('CurrentLpA')
+				var lpBPt = self.getVariableValue('CurrentLpB')
+
+				runtemp = self.getVariableValue('CurrentLpRun')
+				ramptemp = self.getVariableValue('CurrentLpRamp')
+				
+
+				ramptemp += rampTime.options.direction
+
+				if (ramptemp > 250) {
+					ramptemp = 250;
+				} else if (ramptemp < 1) {
+					ramptemp = 1;
+				}
+
+				self.log('debug', 'Loop ID: ' + loop + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				if (loop == 0) {
+					self.setVariableValues({ Lp0RampT: ramptemp })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1RampT: ramptemp })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2RampT: ramptemp })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3RampT: ramptemp })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4RampT: ramptemp })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5RampT: ramptemp })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6RampT: ramptemp })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7RampT: ramptemp })
+				} else if (loop == 8) {
+					self.setVariableValues({ Lp8RampT: ramptemp })
+				}
+				self.setVariableValues({ CurrentLpRamp: ramptemp })
+
+				const cmd = 'G25 L'
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		resetLoopRunTimeSmart: {
+			name: 'Reset Loop Run Time Smart',
+			options: [
+				
+			],
+			callback: async (resetLpRunTime) => {
+				var loop = self.getVariableValue('CurrentLpSet')		
+				
+				var temp = 50;
+
+				if (loop == 0) {
+					self.setVariableValues({ Lp0RunT: temp })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1RunT: temp })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2RunT: temp })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3RunT: temp })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4RunT: temp })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5RunT: temp })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6RunT: temp })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7RunT: temp })
+				}
+				self.setVariableValues({ CurrentLpRun: temp })
+			}
+		},
+		resetLoopRampTimeSmart: {
+			name: 'Reset Loop Ramp Time Smart',
+			options: [
+				
+			],
+			callback: async (resetLpRampTime) => {
+				var loop = self.getVariableValue('CurrentLpSet')	
+
+				var temp = 10;
+
+				if (loop == 0) {
+					self.setVariableValues({ Lp0RampT: temp })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1RampT: temp })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2RampT: temp })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3RampT: temp })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4RampT: temp })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5RampT: temp })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6RampT: temp })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7RampT: temp })
+				}
+				self.setVariableValues({ CurrentLpRamp: temp })
+			}
+		},
+		setLoopAPointSmart: {
+			name: 'Smart Set Loop A Point',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+				var lpAPt = self.getVariableValue('CurrentLpA')
+				var lpBPt = self.getVariableValue('CurrentLpB')
+
+				runtemp = self.getVariableValue('CurrentLpRun')
+				ramptemp = self.getVariableValue('CurrentLpRamp')
+
+				lpAPt += runTime.options.direction
+
+				if (lpAPt > 29) {
+					lpAPt = 29;
+				} else if (lpAPt < 0) {
+					lpAPt = 0;
+				}
+
+				self.log('debug', 'Loop ID: ' + loop + ' A Point: ' + lpAPt + ' B Point: ' + lpBPt)
+
+				// var varID = 'Lp'+loop+'RunT'
+				// self.log('debug', 'Variable ID: ' + varID)
+				// self.setVariable( varID, temp )
+				if (loop == 0) {
+					self.setVariableValues({ Lp0APoint: lpAPt })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1APoint: lpAPt })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2APoint: lpAPt })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3APoint: lpAPt })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4APoint: lpAPt })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5APoint: lpAPt })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6APoint: lpAPt })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7APoint: lpAPt })
+				} 
+				self.setVariableValues({ CurrentLpA: lpAPt })
+
+				const cmd = 'G25 L'
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setLoopBPointSmart: {
+			name: 'Smart Set Loop B Point',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (runTime) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+				var lpAPt = self.getVariableValue('CurrentLpA')
+				var lpBPt = self.getVariableValue('CurrentLpB')
+
+				runtemp = self.getVariableValue('CurrentLpRun')
+				ramptemp = self.getVariableValue('CurrentLpRamp')
+
+				lpBPt += runTime.options.direction
+
+				if (lpBPt > 29) {
+					lpBPt = 29;
+				} else if (lpBPt < 0) {
+					lpBPt = 0;
+				}
+
+				self.log('debug', 'Loop ID: ' + loop + ' A Point: ' + lpAPt + ' B Point: ' + lpBPt)
+
+				// var varID = 'Lp'+loop+'RunT'
+				// self.log('debug', 'Variable ID: ' + varID)
+				// self.setVariable( varID, temp )
+				if (loop == 0) {
+					self.setVariableValues({ Lp0BPoint: lpBPt })
+				} else if (loop == 1) {
+					self.setVariableValues({ Lp1BPoint: lpBPt })
+				} else if (loop == 2) {
+					self.setVariableValues({ Lp2BPoint: lpBPt })
+				} else if (loop == 3) {
+					self.setVariableValues({ Lp3BPoint: lpBPt })
+				} else if (loop == 4) {
+					self.setVariableValues({ Lp4BPoint: lpBPt })
+				} else if (loop == 5) {
+					self.setVariableValues({ Lp5BPoint: lpBPt })
+				} else if (loop == 6) {
+					self.setVariableValues({ Lp6BPoint: lpBPt })
+				} else if (loop == 7) {
+					self.setVariableValues({ Lp7BPoint: lpBPt })
+				} 
+				self.setVariableValues({ CurrentLpB: lpBPt })
+
+				const cmd = 'G25 L'
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		recallAPointSmart: {
+			name: 'Recall Loop A Point Smart',
+			options: [
+				
+			],
+			callback: async (LpAPt) => {
+				var temp = 0
+
+				
+				temp = self.getVariableValue('CurrentLpA')
+				
+
+				// self.log('debug', 'Loop ID: ' + LpAPt.options.id_loop + ' APoint: ' + temp)
+
+				const cmd = 'G20 P'
+				const sendBuf = Buffer.from(cmd + temp + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		recallBPointSmart: {
+			name: 'Recall Loop B Point Smart',
+			options: [
+				
+			],
+			callback: async (LpAPt) => {
+				var temp = 0
+
+				
+				temp = self.getVariableValue('CurrentLpB')
+				
+
+				// self.log('debug', 'Loop ID: ' + LpAPt.options.id_loop + ' APoint: ' + temp)
+
+				const cmd = 'G20 P'
+				const sendBuf = Buffer.from(cmd + temp + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setLoopID: {
+			name: 'Set Loop ID',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (pst) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var lpApt = 0
+				var lpBpt = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+
+				
+				loop += pst.options.direction
+				
+				if (loop > 7) {
+					loop = 7;
+				} else if (loop < 0) {
+					loop = 0;
+				}
+				
+				runtemp = self.getVariableValue('Lp' + loop + 'RunT')
+				ramptemp = self.getVariableValue('Lp' + loop + 'RampT')
+				lpApt = self.getVariableValue('Lp' + loop + 'APoint')
+				lpBpt = self.getVariableValue('Lp' + loop + 'BPoint')
+				
+				self.log('debug', 'Loop ID: ' + loop + ' A: ' + lpApt + ' B: ' + lpBpt + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
+
+				self.setVariableValues({ CurrentLpSet: loop })
+				self.setVariableValues({ CurrentLpRun: runtemp })
+				self.setVariableValues({ CurrentLpRamp: ramptemp })
+				self.setVariableValues({ CurrentLpA: lpApt })
+				self.setVariableValues({ CurrentLpB: lpBpt })
+
+				self.checkFeedbacks("SetLoopSmart")
+
+				
+			}
+		},
+		saveLpSmart: {
+			name: 'Save Loop Smart',
+			options: [
+			
+			],
+			callback: async (setLoop) => {
+				var ramptemp = 0
+				var runtemp = 0
+				var loop = self.getVariableValue('CurrentLpSet')
+				var lpAPt = self.getVariableValue('CurrentLpA')
+				var lpBPt = self.getVariableValue('CurrentLpB')
+
+				runtemp = self.getVariableValue('CurrentLpRun')
+				ramptemp = self.getVariableValue('CurrentLpRamp')
+
+				const cmd = 'G25 L'
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			},
+		},
+		recallLpSmart: {
+			name: 'Recall Loop Smart',
+			options: [
+				
+			],
+			callback: async (recallLoop) => {
+				var loop = self.getVariableValue('CurrentLpSet')
+				var loopActive = self.getVariableValue('LpActive')
+
+				if (loopActive == -1) {
+					self.setVariableValues({ LpActive: loop })
+					self.checkFeedbacks("LoopStatus")
+					const cmd = 'G24 L'
+
+					const sendBuf = Buffer.from(cmd + loop + '\n', 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+				} else {
+					self.setVariableValues({ LpActive: -1 })
+					self.checkFeedbacks("LoopStatus")
+					const cmd = 'G24'
+
+					const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+				}
+			},
+		},
+
+
 		homeRS: {
 			name: 'Center RS',
 			options: [

@@ -311,6 +311,7 @@ class eMotimoModuleInstance extends InstanceBase {
 						break
 				}
 				this.checkFeedbacks("SetPreset")
+				this.checkFeedbacks("SetPresetSmart")
 				break
 			case 'Exiting Loop':
 				this.checkFeedbacks("LoopStatus")
@@ -705,6 +706,11 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ CurrentPstSet: 0 })
 		this.setVariableValues({ CurrentPstSetRun: 50 })
 		this.setVariableValues({ CurrentPstSetRamp: 10 })
+		this.setVariableValues({ CurrentLpSet: 0 })
+		this.setVariableValues({ CurrentLpA: 0 })
+		this.setVariableValues({ CurrentLpB: 0 })
+		this.setVariableValues({ CurrentLpRun: 50 })
+		this.setVariableValues({ CurrentLpRamp: 10 })
 	}
 }
 

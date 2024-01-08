@@ -72,6 +72,31 @@ module.exports = async function (self) {
 				}
 			},
 		},
+		SetPresetSmart: {
+			name: 'Set Preset',
+			type: 'boolean',
+			label: 'Channel State',
+			defaultStyle: {
+				bgcolor: combineRgb(0, 127, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [
+				
+			],
+			callback: (feedback) => {
+				var presetID = self.getVariableValue('CurrentPstSet')
+
+				var presetStr = 'Pst' + presetID + 'Stat'
+				// console.log(presetStr);
+				var state = self.getVariableValue(presetStr)
+				if(state) {
+					console.log(presetStr);
+					return true
+				} else {
+					return false
+				}
+			},
+		},
 		LoopStatus: {
 			name: 'Looping Status',
 			type: 'boolean',
