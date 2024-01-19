@@ -220,6 +220,9 @@ module.exports = async function (self) {
 				}
 			},
 		},
+		// CurrentAxisSpeed: {
+			//Can we use a feedback to dynamically change the Current Axis Speed Text
+		// }
 		
 	})
 }

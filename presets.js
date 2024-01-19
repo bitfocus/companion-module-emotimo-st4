@@ -2716,7 +2716,408 @@ module.exports = {
                     }
                 }
             ]
+        },
+
+        // ########################
+        // ####  Smart Motor   ####
+        // ########################
+        presets.curMtrSetup = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Selected Motor',
+            style: {
+                text: 'Motor\\nID:\\n$(companion-module-emotimo-st4-3:CurrentMtrSet)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.IncreaseMtrSetup = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Increase Motor ID',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setMotorID',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.DecreaseMtrSetup = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Decrease Motor ID',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setMotorID',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.CurMotNeg = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Neg',
+            style: {
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Neg\\n',
+                size: '18',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'jogMotorSmarter',
+                            options: {
+                                direction: -1,
+                            }
+                        }
+                    ],
+                    up: [
+                        {
+                            actionId: 'stopCurrentMotor',
+                        }
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.CurMotPos = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Pos',
+            style: {
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Pos\\n',
+                size: '18',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'jogMotorSmarter',
+                            options: {
+                                direction: 1,
+                            }
+                        }
+                    ],
+                    up: [
+                        {
+                            actionId: 'stopCurrentMotor',
+                        }
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.SetCurMtrStopA = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Stop A',
+            style: {
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop A',
+                color: '16777215',
+                bgcolor: combineRgb(127, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        {
+                            actionId: 'setStopASmart',   
+                        }
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'recallStopA',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'StopAStatus',
+                    options: {
+                        id_mot: 1,
+                    },
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                }
+            ]
+        },
+        presets.SetCurMtrStopB = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Stop B',
+            style: {
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop B',
+                color: '16777215',
+                bgcolor: combineRgb(127, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        {
+                            actionId: 'setStopBSmart',
+                        }
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'recallStopB',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'StopBStatus',
+                    options: {
+                        id_mot: 1,
+                    },
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                }
+            ]
+        },
+        presets.clearStopsByCurAxis = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Clear Current Motor Stops',
+            style: {
+                text: 'Clear $(companion-module-emotimo-st4-3:CurrentMtrStr) Stops',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'clearStopByAxisSmart',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curMotorSpeedInc = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Increment',
+            style: {
+                text: '⬆️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setJogSpeedSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curMotorSpeedDec = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Decrement',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setJogSpeedSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curMtrSpeedLimit = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Speed',
+            style: {
+                text: 'Speed:\\n$(companion-module-emotimo-st4-3:CurrentMtrSpeed)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'resetJogSpeedSmart',
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
         }
+        
 
         // ########################
         // #### Go To  Presets ####
@@ -4335,6 +4736,7 @@ module.exports = {
                 ]
             }
         }
+
 
         // ########################
         // ####     Other      ####

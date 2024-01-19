@@ -711,6 +711,9 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ CurrentLpB: 0 })
 		this.setVariableValues({ CurrentLpRun: 50 })
 		this.setVariableValues({ CurrentLpRamp: 10 })
+		this.setVariableValues({ CurrentMtrSet: 1 })
+		this.setVariableValues({ CurrentMtrStr: 'Pan' })
+		this.setVariableValues({ CurrentMtrSpeed: 100 })
 	}
 }
 

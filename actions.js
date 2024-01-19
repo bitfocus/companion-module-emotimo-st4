@@ -2666,6 +2666,7 @@ module.exports = function (self) {
 			}
 		},
 		
+		//Limits
 		setStopA: {
 			name: 'Set Stop A',
 			options: [
@@ -2892,6 +2893,430 @@ module.exports = function (self) {
 				}
 			}
 		},
+
+		//Smart Motor Setup
+		setMotorID: {
+			name: 'Set Motor ID',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (pst) => {
+				
+				var motor = self.getVariableValue('CurrentMtrSet')
+				var motorName = self.getVariableValue('CurrentMtrStr')
+				var motorSpeed = 0
+
+				motor += pst.options.direction
+				
+				if (motor > 8) {
+					motor = 8;
+				} else if (motor < 1) {
+					motor = 1;
+				}
+
+				if (motor == 1) {
+					motorName = 'Pan'
+					motorSpeed = self.getVariableValue('PanSpeed')
+				} else if (motor == 2) {
+					motorName = 'Tilt'
+					motorSpeed = self.getVariableValue('TiltSpeed')
+				} else if (motor == 3) {
+					motorName = 'Slide'
+					motorSpeed = self.getVariableValue('M3Speed')
+				} else if (motor == 4) {
+					motorName = 'M4'
+					motorSpeed = self.getVariableValue('M4Speed')
+				} else if (motor == 5) {
+					motorName = 'Focus'
+					motorSpeed = self.getVariableValue('TN1Speed')
+				} else if (motor == 6) {
+					motorName = 'Iris'
+					motorSpeed = self.getVariableValue('TN2Speed')
+				} else if (motor == 7) {
+					motorName = 'Zoom'
+					motorSpeed = self.getVariableValue('TN3Speed')
+				} else if (motor == 8) {
+					motorName = 'Roll'
+					motorSpeed = self.getVariableValue('RollSpeed')
+				}
+
+
+				self.setVariableValues({ CurrentMtrSet: motor })
+				self.setVariableValues({ CurrentMtrStr: motorName })
+				self.setVariableValues({ CurrentMtrSpeed: motorSpeed})
+				
+			}
+		},
+		setStopASmart: {
+			name: 'Set Stop A Smart',
+			options: [
+				
+			],
+			callback: async (stopA) => {		
+				var motor = self.getVariableValue('CurrentMtrSet')
+				const cmd = 'G213 M' + motor
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setStopBSmart: {
+			name: 'Set Stop B Smart',
+			options: [
+				
+			],
+			callback: async (stopB) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				const cmd = 'G214 M' + motor
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopASmart: {
+			name: 'Clear Stop A Smart',
+			options: [
+				
+			],
+			callback: async (stopA) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				const cmd = 'G211 M' + motor
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopBSmart: {
+			name: 'Clear Stop B Smart',
+			options: [
+				
+			],
+			callback: async (stopB) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				const cmd = 'G212 M' + motor
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		clearStopByAxisSmart: {
+			name: 'Clear Stops by Axis Smart',
+			options: [
+				
+			],
+			callback: async (stopB) => {				
+				var motor = self.getVariableValue('CurrentMtrSet')
+				const cmd = 'G219 M' + motor
+				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+			}
+		},
+		setJogSpeedSmart: {
+			name: 'Set Motor Jog Speed Smart',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (jogSpeed) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				var motorSpeed = self.getVariableValue('CurrentMtrSpeed')
+
+				
+
+				motorSpeed += jogSpeed.options.direction
+
+				if (motorSpeed > 100) {
+					motorSpeed = 100;
+				} else if (motorSpeed < 0) {
+					motorSpeed = 0;
+				}
+
+				self.log('debug', 'Motor ID: ' + motor + ' Speed: ' + motorSpeed)
+
+				if (motor == 1) {
+					self.setVariableValues({ PanSpeed: motorSpeed })
+				} else if (motor == 2) {
+					self.setVariableValues({ TiltSpeed: motorSpeed })
+				} else if (motor == 3) {
+					self.setVariableValues({ M3Speed: motorSpeed })
+				} else if (motor == 4) {
+					self.setVariableValues({ M4Speed: motorSpeed })
+				} else if (motor == 5) {
+					self.setVariableValues({ TN1Speed: motorSpeed })
+				} else if (motor == 6) {
+					self.setVariableValues({ TN2Speed: motorSpeed })
+				} else if (motor == 7) {
+					self.setVariableValues({ TN3Speed: motorSpeed })
+				} else if (motor == 8) {
+					self.setVariableValues({ RollSpeed: motorSpeed })
+				}
+
+				self.setVariableValues({ CurrentMtrSpeed: motorSpeed })
+
+			}
+		},
+		resetJogSpeedSmart: {
+			name: 'Reset Motor Jog Speed Smart',
+			options: [
+				
+			],
+			callback: async (resetSpeed) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				if (motor == 1) {
+					self.setVariableValues({ PanSpeed: 100 })
+					self.setVariableValues({ CurrentMtrSpeed: 100 })
+				} else if (motor == 2) {
+					self.setVariableValues({ TiltSpeed: 100 })
+					self.setVariableValues({ CurrentMtrSpeed: 100 })
+				} else if (motor == 3) {
+					self.setVariableValues({ M3Speed: 100 })
+					self.setVariableValues({ CurrentMtrSpeed: 100 })
+				} else if (motor == 4) {
+					self.setVariableValues({ M4Speed: 100 })
+					self.setVariableValues({ CurrentMtrSpeed: 100 })
+				} else if (motor == 5) {
+					self.setVariableValues({ TN1Speed: 25 })
+					self.setVariableValues({ CurrentMtrSpeed: 25 })
+				} else if (motor == 6) {
+					self.setVariableValues({ TN2Speed: 25 })
+					self.setVariableValues({ CurrentMtrSpeed: 25 })
+				} else if (motor == 7) {
+					self.setVariableValues({ TN3Speed: 25 })
+					self.setVariableValues({ CurrentMtrSpeed: 25 })
+				} else if (motor == 8) {
+					self.setVariableValues({ RollSpeed: 100 })
+					self.setVariableValues({ CurrentMtrSpeed: 100 })
+				}
+
+			}
+		},
+		jogMotorSmarter: {
+			name: 'Motor Jog Smarter',
+			options: [
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (actionJogSmart) => {
+				const cmd = 'G301 M'
+				const cmd2 = ' V'
+				const cmd3 = '\n'
+				var motorSpeed = 0
+				var temp = 0
+
+				var motor = self.getVariableValue('CurrentMtrSet')
+
+				if (cmd != '') {
+
+					if (motor == 1) {
+						temp = self.getVariableValue('PanSpeed')
+					} else if (motor == 2) {
+						temp = self.getVariableValue('TiltSpeed')
+					} else if (motor == 3) {
+						temp = self.getVariableValue('M3Speed')
+					} else if (motor == 4) {
+						temp = self.getVariableValue('M4Speed')
+					} else if (motor == 5) {
+						temp = self.getVariableValue('TN1Speed')
+					} else if (motor == 6) {
+						temp = self.getVariableValue('TN2Speed')
+					} else if (motor == 7) {
+						temp = self.getVariableValue('TN3Speed')
+					} else if (motor == 8) {
+						temp = self.getVariableValue('RollSpeed')
+					} else if (motor == 9) {
+						temp = self.getVariableValue('FocusSpeed')
+					}
+
+					if (motor < 5) {
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
+					} else {
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 25.0
+					}
+
+					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
+
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + motor + cmd2 + motorSpeed + cmd3, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
+		stopCurrentMotor: {
+			name: 'Stop Current Motor',
+			options: [
+				
+			],
+			callback: async (actionJogSmart) => {
+				const cmd = 'G301 M'
+				const cmd2 = ' V0'
+				const cmd3 = '\n'
+				var motorSpeed = 0
+				var temp = 0
+
+				var motor = self.getVariableValue('CurrentMtrSet')
+
+				if (cmd != '') {
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + motor + cmd2 + cmd3, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
+		//These are already general commands without a motor ID
+		// recallStopA: {
+		// 	name: 'Recall Stop A Smart',
+		// 	options: [
+		// 		{
+		// 			type: 'dropdown',
+		// 			id: 'id_mot',
+		// 			label: 'Motor ID',
+		// 			default: 1,
+		// 			choices: MOTOR_ID,
+		// 		},
+		// 	],
+		// 	callback: async (recStopA) => {
+		// 		const cmd = 'G217'
+		// 		const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+		// 		if (self.config.prot == 'tcp') {
+		// 			self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+		// 			if (self.socket !== undefined && self.socket.isConnected) {
+		// 				self.socket.send(sendBuf)
+		// 			} else {
+		// 				self.log('debug', 'Socket not connected :(')
+		// 			}
+		// 		}
+		// 	}
+		// },
+		// recallStopB: {
+		// 	name: 'Recall Stop B Smart',
+		// 	options: [
+		// 		{
+		// 			type: 'dropdown',
+		// 			id: 'id_mot',
+		// 			label: 'Motor ID',
+		// 			default: 1,
+		// 			choices: MOTOR_ID,
+		// 		},
+		// 	],
+		// 	callback: async (recStopB) => {
+		// 		const cmd = 'G218'
+		// 		const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+
+		// 		if (self.config.prot == 'tcp') {
+		// 			self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+		// 			if (self.socket !== undefined && self.socket.isConnected) {
+		// 				self.socket.send(sendBuf)
+		// 			} else {
+		// 				self.log('debug', 'Socket not connected :(')
+		// 			}
+		// 		}
+		// 	}
+		// },
+
 
 		presetRunTimeU: {
 			name: 'Preset Run Time Increment',
