@@ -352,6 +352,8 @@ class eMotimoModuleInstance extends InstanceBase {
 				}
 				this.checkFeedbacks("StopAStatus")
 				this.checkFeedbacks("StopBStatus")
+				this.checkFeedbacks("StopAStatusSmart")
+				this.checkFeedbacks("StopBStatusSmart")
 				break
 			case 'StopA':
 				var data = tokens[1].split(',')
@@ -400,6 +402,7 @@ class eMotimoModuleInstance extends InstanceBase {
 					}
 				}
 				this.checkFeedbacks("StopAStatus")	
+				this.checkFeedbacks("StopAStatusSmart")
 				break
 			case 'StopB':
 				var data = tokens[1].split(',')
@@ -448,6 +451,7 @@ class eMotimoModuleInstance extends InstanceBase {
 					}
 				}
 				this.checkFeedbacks("StopBStatus")
+				this.checkFeedbacks("StopBStatusSmart")
 				break
 			case 'All Stops Cleared':
 				this.setVariableValues({ PanStopA: 0 })
@@ -470,6 +474,8 @@ class eMotimoModuleInstance extends InstanceBase {
 				this.setVariableValues({ RSFocusStopB: 0 })
 				this.checkFeedbacks("StopAStatus")
 				this.checkFeedbacks("StopBStatus")
+				this.checkFeedbacks("StopAStatusSmart")
+				this.checkFeedbacks("StopBStatusSmart")
 				break
 			default:
 				break

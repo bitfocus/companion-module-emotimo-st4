@@ -2923,10 +2923,7 @@ module.exports = {
             ],
             feedbacks: [
                 {
-                    feedbackId: 'StopAStatus',
-                    options: {
-                        id_mot: 1,
-                    },
+                    feedbackId: 'StopAStatusSmart',
                     style: {
                         bgcolor: combineRgb(0, 127, 0),
                         color: combineRgb(0, 0, 0),
@@ -2969,10 +2966,7 @@ module.exports = {
             ],
             feedbacks: [
                 {
-                    feedbackId: 'StopBStatus',
-                    options: {
-                        id_mot: 1,
-                    },
+                    feedbackId: 'StopBStatusSmart',              
                     style: {
                         bgcolor: combineRgb(0, 127, 0),
                         color: combineRgb(0, 0, 0),

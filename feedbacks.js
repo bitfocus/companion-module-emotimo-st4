@@ -220,6 +220,94 @@ module.exports = async function (self) {
 				}
 			},
 		},
+		StopAStatusSmart: {
+			name: 'Stop A Status Smart',
+			type: 'boolean',
+			label: 'Stop A Status Smart',
+			defaultStyle: {
+				bgcolor: combineRgb(0, 127, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [
+				
+			],
+			callback: (feedback) => {
+				var motorID = self.getVariableValue('CurrentMtrSet')
+
+				
+
+				if (motorID == 1) {
+					state = self.getVariableValue('PanStopA')
+				} else if (motorID == 2) {
+					state = self.getVariableValue('TiltStopA')
+				} else if (motorID == 3) {
+					state = self.getVariableValue('M3StopA')
+				} else if (motorID == 4) {
+					state = self.getVariableValue('M4StopA')
+				} else if (motorID == 5) {
+					state = self.getVariableValue('TNFocusStopA')
+				} else if (motorID == 6) {
+					state = self.getVariableValue('TNIrisStopA')
+				} else if (motorID == 7) {
+					state = self.getVariableValue('TNZoomStopA')
+				} else if (motorID == 8) {
+					state = self.getVariableValue('RSRollStopA')
+				} else if (motorID == 9) {
+					state = self.getVariableValue('RSFocusStopA')
+				}
+
+				console.log("A Status: " + state + " Motor: " + motorID +"\n")
+				if(state) {
+					return true
+				} else {
+					return false
+				}
+			},
+		},
+		StopBStatusSmart: {
+			name: 'Stop B Status Smart',
+			type: 'boolean',
+			label: 'Stop B Status Smart',
+			defaultStyle: {
+				bgcolor: combineRgb(0, 127, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [
+				
+			],
+			callback: (feedback) => {
+				var motorID = self.getVariableValue('CurrentMtrSet')
+
+				
+
+				if (motorID == 1) {
+					state = self.getVariableValue('PanStopB')
+				} else if (motorID == 2) {
+					state = self.getVariableValue('TiltStopB')
+				} else if (motorID == 3) {
+					state = self.getVariableValue('M3StopB')
+				} else if (motorID == 4) {
+					state = self.getVariableValue('M4StopB')
+				} else if (motorID == 5) {
+					state = self.getVariableValue('TNFocusStopB')
+				} else if (motorID == 6) {
+					state = self.getVariableValue('TNIrisStopB')
+				} else if (motorID == 7) {
+					state = self.getVariableValue('TNZoomStopB')
+				} else if (motorID == 8) {
+					state = self.getVariableValue('RSRollStopB')
+				} else if (motorID == 9) {
+					state = self.getVariableValue('RSFocusStopB')
+				}
+
+				console.log("B Status: " + state + " Motor: " + motorID +"\n")
+				if(state) {
+					return true
+				} else {
+					return false
+				}
+			},
+		},
 		// CurrentAxisSpeed: {
 			//Can we use a feedback to dynamically change the Current Axis Speed Text
 		// }

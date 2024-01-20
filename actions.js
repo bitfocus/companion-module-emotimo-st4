@@ -2951,6 +2951,8 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentMtrStr: motorName })
 				self.setVariableValues({ CurrentMtrSpeed: motorSpeed})
 				
+				self.checkFeedbacks("StopAStatusSmart")
+				self.checkFeedbacks("StopBStatusSmart")
 			}
 		},
 		setStopASmart: {
