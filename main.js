@@ -558,9 +558,9 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ TiltSpeed: 100 })
 		this.setVariableValues({ M3Speed: 100 })
 		this.setVariableValues({ M4Speed: 100 })
-		this.setVariableValues({ TN1Speed: 25 })
-		this.setVariableValues({ TN2Speed: 25 })
-		this.setVariableValues({ TN3Speed: 25 })
+		this.setVariableValues({ TN1Speed: 50 })
+		this.setVariableValues({ TN2Speed: 50 })
+		this.setVariableValues({ TN3Speed: 50 })
 		this.setVariableValues({ RollSpeed: 100 })
 		this.setVariableValues({ FocusSpeed: 100 })
 		this.setVariableValues({ Pst0Stat: 0 })
@@ -719,6 +719,8 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ CurrentLpRamp: 10 })
 		this.setVariableValues({ CurrentMtrSet: 1 })
 		this.setVariableValues({ CurrentMtrStr: 'Pan' })
+		this.setVariableValues({ CurrentMtrPosStr: 'Pan Left' })
+		this.setVariableValues({ CurrentMtrNegStr: 'Pan Right' })
 		this.setVariableValues({ CurrentMtrSpeed: 100 })
 	}
 }

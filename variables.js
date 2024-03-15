@@ -17,6 +17,8 @@ module.exports = async function (self) {
 		{ name: 'FocusSpeed', variableId: 'FocusSpeed' },
 		{ name: 'CurrentMotorSetup', variableId: 'CurrentMtrSet'},
 		{ name: 'CurrentMotorStr', variableId: 'CurrentMtrStr'},
+		{ name: 'CurrentMotorPosDirStr', variableId: 'CurrentMtrPosStr'},
+		{ name: 'CurrentMotorNegDirStr', variableId: 'CurrentMtrNegStr'},
 		{ name: 'CurrentMotorSpeed', variableId: 'CurrentMtrSpeed'},
 		{ name: 'CurrentPresetSetup', variableId: 'CurrentPstSet'},
 		{ name: 'CurrentPresetSetupRun', variableId: 'CurrentPstSetRun'},
