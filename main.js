@@ -722,6 +722,16 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ CurrentMtrPosStr: 'Pan Left' })
 		this.setVariableValues({ CurrentMtrNegStr: 'Pan Right' })
 		this.setVariableValues({ CurrentMtrSpeed: 100 })
+		this.setVariableValues({ PanInversion: 1 })
+		this.setVariableValues({ TiltInversion: 1 })
+		this.setVariableValues({ M3Inversion: 1 })
+		this.setVariableValues({ M4Inversion: 1 })
+		this.setVariableValues({ TN1Inversion: 1 })
+		this.setVariableValues({ TN2Inversion: 1 })
+		this.setVariableValues({ TN3Inversion: 1 })
+		this.setVariableValues({ RollInversion: 1 })
+		this.setVariableValues({ FocusInversion: 1 })
+		this.setVariableValues({ CurrentMtrInversion: 'Normal' })
 	}
 }
 

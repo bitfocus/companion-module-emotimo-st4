@@ -177,34 +177,44 @@ module.exports = function (self) {
 				const cmd2 = ' V'
 				const cmd3 = '\n'
 				var motorSpeed = 0
+				var motorInversion = 1
 				var temp = 0
 
 				if (cmd != '') {
 
 					if (actionJogSmart.options.id_mot == 1) {
 						temp = self.getVariableValue('PanSpeed')
+						motorInversion = self.getVariableValue('PanInversion')
 					} else if (actionJogSmart.options.id_mot == 2) {
 						temp = self.getVariableValue('TiltSpeed')
+						motorInversion = self.getVariableValue('TiltInversion')
 					} else if (actionJogSmart.options.id_mot == 3) {
 						temp = self.getVariableValue('M3Speed')
+						motorInversion = self.getVariableValue('M3Inversion')
 					} else if (actionJogSmart.options.id_mot == 4) {
 						temp = self.getVariableValue('M4Speed')
+						motorInversion = self.getVariableValue('M4Inversion')
 					} else if (actionJogSmart.options.id_mot == 5) {
 						temp = self.getVariableValue('TN1Speed')
+						motorInversion = self.getVariableValue('TN1Inversion')
 					} else if (actionJogSmart.options.id_mot == 6) {
 						temp = self.getVariableValue('TN2Speed')
+						motorInversion = self.getVariableValue('TN2Inversion')
 					} else if (actionJogSmart.options.id_mot == 7) {
 						temp = self.getVariableValue('TN3Speed')
+						motorInversion = self.getVariableValue('TN3Inversion')
 					} else if (actionJogSmart.options.id_mot == 8) {
 						temp = self.getVariableValue('RollSpeed')
+						motorInversion = self.getVariableValue('RollInversion')
 					} else if (actionJogSmart.options.id_mot == 9) {
 						temp = self.getVariableValue('FocusSpeed')
+						motorInversion = self.getVariableValue('FocusInversion')
 					}
 
 					if (actionJogSmart.options.id_mot < 5 || actionJogSmart.options.id_mot == 8) {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
+						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 100.0
+						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 100.0
 					}
 
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
@@ -2911,8 +2921,10 @@ module.exports = function (self) {
 				var motor = self.getVariableValue('CurrentMtrSet')
 				var motorName = self.getVariableValue('CurrentMtrStr')
 				var motorSpeed = 0
+				var motorInvert = 0
 				var motorPosName = ''
 				var motorNegName = ''
+				var motorInvertName = ''
 
 				motor += pst.options.direction
 				
@@ -2925,56 +2937,71 @@ module.exports = function (self) {
 				if (motor == 1) {
 					motorName = 'Pan'
 					motorSpeed = self.getVariableValue('PanSpeed')
+					motorInvert = self.getVariableValue('PanInversion')
 					motorPosName = motorName + ' Left'
 					motorNegName = motorName + ' Right'
 				} else if (motor == 2) {
 					motorName = 'Tilt'
 					motorSpeed = self.getVariableValue('TiltSpeed')
+					motorInvert = self.getVariableValue('TiltInversion')
 					motorPosName = motorName + ' Up'
 					motorNegName = motorName + ' Down'
 				} else if (motor == 3) {
 					motorName = 'Slide'
 					motorSpeed = self.getVariableValue('M3Speed')
+					motorInvert = self.getVariableValue('M3Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 4) {
 					motorName = 'M4'
 					motorSpeed = self.getVariableValue('M4Speed')
+					motorInvert = self.getVariableValue('M4Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 5) {
 					motorName = 'Focus'
 					motorSpeed = self.getVariableValue('TN1Speed')
+					motorInvert = self.getVariableValue('TN1Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 6) {
 					motorName = 'Iris'
 					motorSpeed = self.getVariableValue('TN2Speed')
+					motorInvert = self.getVariableValue('TN2Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 7) {
 					motorName = 'Zoom'
 					motorSpeed = self.getVariableValue('TN3Speed')
+					motorInvert = self.getVariableValue('TN3Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 8) {
 					motorName = 'Roll'
 					motorSpeed = self.getVariableValue('RollSpeed')
+					motorInvert = self.getVariableValue('RollInversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 9) {
 					motorName = 'RS Focus'
 					motorSpeed = self.getVariableValue('FocusSpeed')
+					motorInvert = self.getVariableValue('FocusInversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				}
 
+				if (motorInvert == 1) {
+					motorInvertName = 'Normal'
+				} else {
+					motorInvertName = 'Inverted'
+				}
 
 				self.setVariableValues({ CurrentMtrSet: motor })
 				self.setVariableValues({ CurrentMtrStr: motorName })
 				self.setVariableValues({ CurrentMtrPosStr: motorPosName })
 				self.setVariableValues({ CurrentMtrNegStr: motorNegName })
 				self.setVariableValues({ CurrentMtrSpeed: motorSpeed})
+				self.setVariableValues({ CurrentMtrInversion: motorInvertName})
 				
 				self.checkFeedbacks("StopAStatusSmart")
 				self.checkFeedbacks("StopBStatusSmart")
@@ -3187,6 +3214,7 @@ module.exports = function (self) {
 				const cmd2 = ' V'
 				const cmd3 = '\n'
 				var motorSpeed = 0
+				var motorInversion = 1
 				var temp = 0
 
 				var motor = self.getVariableValue('CurrentMtrSet')
@@ -3195,28 +3223,37 @@ module.exports = function (self) {
 
 					if (motor == 1) {
 						temp = self.getVariableValue('PanSpeed')
+						motorInversion = self.getVariableValue('PanInversion')
 					} else if (motor == 2) {
 						temp = self.getVariableValue('TiltSpeed')
+						motorInversion = self.getVariableValue('TiltInversion')
 					} else if (motor == 3) {
 						temp = self.getVariableValue('M3Speed')
+						motorInversion = self.getVariableValue('M3Inversion')
 					} else if (motor == 4) {
 						temp = self.getVariableValue('M4Speed')
+						motorInversion = self.getVariableValue('M4Inversion')
 					} else if (motor == 5) {
 						temp = self.getVariableValue('TN1Speed')
+						motorInversion = self.getVariableValue('TN1Inversion')
 					} else if (motor == 6) {
 						temp = self.getVariableValue('TN2Speed')
+						motorInversion = self.getVariableValue('TN2Inversion')
 					} else if (motor == 7) {
 						temp = self.getVariableValue('TN3Speed')
+						motorInversion = self.getVariableValue('TN3Inversion')
 					} else if (motor == 8) {
 						temp = self.getVariableValue('RollSpeed')
+						motorInversion = self.getVariableValue('RollInversion')
 					} else if (motor == 9) {
 						temp = self.getVariableValue('FocusSpeed')
+						motorInversion = self.getVariableValue('FocusInversion')
 					}
 
 					if (motor < 5 || motor == 8) {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
+						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 100.0
+						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 100.0
 					}
 
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
@@ -3290,6 +3327,64 @@ module.exports = function (self) {
 						}
 					}
 				}
+			},
+		},
+		invertCurrentAxis: {
+			name: 'Invert Current Motor',
+			options: [
+				
+			],
+			callback: async (invertAxis) => {
+				var motor = self.getVariableValue('CurrentMtrSet')
+				var motorInvertName = ''
+				var inversionState = 0
+				
+
+				if (motor == 1) {
+					inversionState = self.getVariableValue('PanInversion')
+					inversionState *= -1
+					self.setVariableValues({ PanInversion: inversionState })
+				} else if (motor == 2) {
+					inversionState = self.getVariableValue('TiltInversion')
+					inversionState *= -1
+					self.setVariableValues({ TiltInversion: inversionState })
+				} else if (motor == 3) {
+					inversionState = self.getVariableValue('M3Inversion')
+					inversionState *= -1
+					self.setVariableValues({ M3Inversion: inversionState })
+				} else if (motor == 4) {
+					inversionState = self.getVariableValue('M4Inversion')
+					inversionState *= -1
+					self.setVariableValues({ M4Inversion: inversionState })
+				} else if (motor == 5) {
+					inversionState = self.getVariableValue('TN1Inversion')
+					inversionState *= -1
+					self.setVariableValues({ TN1Inversion: inversionState })
+				} else if (motor == 6) {
+					inversionState = self.getVariableValue('TN2Inversion')
+					inversionState *= -1
+					self.setVariableValues({ TN2Inversion: inversionState })
+				} else if (motor == 7) {
+					inversionState = self.getVariableValue('TN3Inversion')
+					inversionState *= -1
+					self.setVariableValues({ TN3Inversion: inversionState })
+				} else if (motor == 8) {
+					inversionState = self.getVariableValue('RollInversion')
+					inversionState *= -1
+					self.setVariableValues({ RollInversion: inversionState })
+				} else if (motor == 9) {
+					inversionState = self.getVariableValue('FocusInversion')
+					inversionState *= -1
+					self.setVariableValues({ FocusInversion: inversionState })
+				}
+
+				if (inversionState == 1) {
+					motorInvertName = 'Normal'
+				} else {
+					motorInvertName = 'Inverted'
+				}
+
+				self.setVariableValues({ CurrentMtrInversion: motorInvertName})
 			},
 		},
 		//These are already general commands without a motor ID

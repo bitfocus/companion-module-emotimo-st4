@@ -3597,6 +3597,37 @@ module.exports = {
                     }
                 }
             ]
+        },
+        presets.curMtrAxisInversion = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Inversion',
+            style: {
+                text: 'Direction:\\n$(companion-module-emotimo-st4-3:CurrentMtrInversion)',
+                size: '14',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'invertCurrentAxis',
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
         }
         
 
