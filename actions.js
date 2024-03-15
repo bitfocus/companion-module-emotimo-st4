@@ -201,10 +201,10 @@ module.exports = function (self) {
 						temp = self.getVariableValue('FocusSpeed')
 					}
 
-					if (actionJogSmart.options.id_mot < 5) {
+					if (actionJogSmart.options.id_mot < 5 || actionJogSmart.options.id_mot == 8) {
 						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 25.0
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 100.0
 					}
 
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
@@ -2911,11 +2911,13 @@ module.exports = function (self) {
 				var motor = self.getVariableValue('CurrentMtrSet')
 				var motorName = self.getVariableValue('CurrentMtrStr')
 				var motorSpeed = 0
+				var motorPosName = ''
+				var motorNegName = ''
 
 				motor += pst.options.direction
 				
-				if (motor > 8) {
-					motor = 8;
+				if (motor > 9) {
+					motor = 9;
 				} else if (motor < 1) {
 					motor = 1;
 				}
@@ -2923,32 +2925,55 @@ module.exports = function (self) {
 				if (motor == 1) {
 					motorName = 'Pan'
 					motorSpeed = self.getVariableValue('PanSpeed')
+					motorPosName = motorName + ' Left'
+					motorNegName = motorName + ' Right'
 				} else if (motor == 2) {
 					motorName = 'Tilt'
 					motorSpeed = self.getVariableValue('TiltSpeed')
+					motorPosName = motorName + ' Up'
+					motorNegName = motorName + ' Down'
 				} else if (motor == 3) {
 					motorName = 'Slide'
 					motorSpeed = self.getVariableValue('M3Speed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				} else if (motor == 4) {
 					motorName = 'M4'
 					motorSpeed = self.getVariableValue('M4Speed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				} else if (motor == 5) {
 					motorName = 'Focus'
 					motorSpeed = self.getVariableValue('TN1Speed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				} else if (motor == 6) {
 					motorName = 'Iris'
 					motorSpeed = self.getVariableValue('TN2Speed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				} else if (motor == 7) {
 					motorName = 'Zoom'
 					motorSpeed = self.getVariableValue('TN3Speed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				} else if (motor == 8) {
 					motorName = 'Roll'
 					motorSpeed = self.getVariableValue('RollSpeed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
+				} else if (motor == 9) {
+					motorName = 'RS Focus'
+					motorSpeed = self.getVariableValue('FocusSpeed')
+					motorPosName = motorName + ' Pos'
+					motorNegName = motorName + ' Neg'
 				}
 
 
 				self.setVariableValues({ CurrentMtrSet: motor })
 				self.setVariableValues({ CurrentMtrStr: motorName })
+				self.setVariableValues({ CurrentMtrPosStr: motorPosName })
+				self.setVariableValues({ CurrentMtrNegStr: motorNegName })
 				self.setVariableValues({ CurrentMtrSpeed: motorSpeed})
 				
 				self.checkFeedbacks("StopAStatusSmart")
@@ -3103,6 +3128,8 @@ module.exports = function (self) {
 					self.setVariableValues({ TN3Speed: motorSpeed })
 				} else if (motor == 8) {
 					self.setVariableValues({ RollSpeed: motorSpeed })
+				} else if (motor == 9) {
+					self.setVariableValues({ FocusSpeed: motorSpeed })
 				}
 
 				self.setVariableValues({ CurrentMtrSpeed: motorSpeed })
@@ -3186,10 +3213,10 @@ module.exports = function (self) {
 						temp = self.getVariableValue('FocusSpeed')
 					}
 
-					if (motor < 5) {
+					if (motor < 5 || motor == 8) {
 						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
-						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 25.0
+						motorSpeed = actionJogSmart.options.direction * temp / 100.0 * 100.0
 					}
 
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
