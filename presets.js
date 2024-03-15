@@ -1348,7 +1348,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1399,7 +1399,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1457,7 +1457,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1522,7 +1522,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1587,7 +1587,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1652,7 +1652,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1814,7 +1814,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1864,7 +1864,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],

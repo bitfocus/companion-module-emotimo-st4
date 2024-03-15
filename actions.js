@@ -2944,8 +2944,8 @@ module.exports = function (self) {
 					motorName = 'Tilt'
 					motorSpeed = self.getVariableValue('TiltSpeed')
 					motorInvert = self.getVariableValue('TiltInversion')
-					motorPosName = motorName + ' Up'
-					motorNegName = motorName + ' Down'
+					motorPosName = motorName + ' Down'
+					motorNegName = motorName + ' Up'
 				} else if (motor == 3) {
 					motorName = 'Slide'
 					motorSpeed = self.getVariableValue('M3Speed')
