@@ -30,6 +30,7 @@ module.exports = {
         let image_down_left =
         'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABg1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8aT76cAAAAgHRSTlMAafwJfflezc+3WA7Z5Rk6PAvpBNE73kJT89QxZ48czNIv9A1DnI3qKQUaymjT4a7HdVuGf85LR20CVHr+tLBlA0GvYSTYZEnbAcazNPX4yB4GrAgnmL6Bcj4qIVKIe8kdVadIEe27B90bOG/3Er1rYJq1wibyh+4Q5CMzRllMXDo5euMAAAGfSURBVFjD7dblUwJBGAbw5aSlBJRGQERBkLC7u7u7u7veP90jDnaEcdhjP+k9X5h9Zu43O7PLe4eQECH/KGsIaUooOEcLK75LpehH628idSrE+nMANfyQ3MY2BRm0C6mM462tUwJAJtVyUB1WmsoSFZEk46D6TBcYS3UKPpCYawxD5VxHImVD/RHIxMQbGintkGQcppkcOkuutQPYfkDfmjck556ZTSydve2YY5UWk0Mww672VPh+XFqCU8tA+whtL+KOpa+bF3Rh8B4ymDNaSnSzG9IPIpsL34/HTPZfS58auMPYuYNMWcQXOsD3U9ZDOkZkkCvqwSIqUI2WfEDmgiQxRANiIp8GKtDLO6/Znw19oOdXhKoROtEUBr1F5Y9f4dt1XygqKgh6YqcHwMQkQBWICr1H6czTgrpoQde0IGnekJEWNEwLMv/GPDDB/M/fDioVeLYA5GqoYt+xNRY4toJkCiBUG7vTEVxJu2Z549RbqXQuba7uVDZWO66mgw6d7kYaEPvvCb+REIp/srGzLP4aa0n8zKFkKUSIkD+Qb9QrYMvxAbaBAAAAAElFTkSuQmCC'
 
+        let motorNames = ['Pan', 'Tilt', 'Slide', 'M4', 'TN Focus', 'TN Iris', 'TN Zoom', 'Roll']
 
         // ########################
         // #### System Presets ####
@@ -705,315 +706,7 @@ module.exports = {
             type: 'text',
             text: 'These are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
         },
-        // presets.CurMotPos2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Pos',
-        //     style: {
-        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrPosStr)\\n',
-        //         size: '18',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-        //                 {
-        //                     actionId: 'jogMotorSmarter',
-        //                     options: {
-        //                         direction: 1,
-        //                     }
-        //                 }
-        //             ],
-        //             up: [
-        //                 {
-        //                     actionId: 'stopCurrentMotor',
-        //                 }
-        //             ],
-        //         },
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // },
-        // presets.CurMotNeg2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Neg',
-        //     style: {
-        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrNegStr)\\n',
-        //         size: '18',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-        //                 {
-        //                     actionId: 'jogMotorSmarter',
-        //                     options: {
-        //                         direction: -1,
-        //                     }
-        //                 }
-        //             ],
-        //             up: [
-        //                 {
-        //                     actionId: 'stopCurrentMotor',
-        //                 }
-        //             ],
-        //         },
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // },
-        // presets.curMtrAxisInversion2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Inversion',
-        //     style: {
-        //         text: 'Direction:\\n$(companion-module-emotimo-st4-3:CurrentMtrInversion)',
-        //         size: '14',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-        //                 {
-        //                     actionId: 'invertCurrentAxis',
-        //                 }
-        //             ],
-        //             up: [
-
-        //             ],
-        //         },
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // }
-        // presets.MotorLineBreak3 = {
-        //     category: 'Motors',
-        //     name: '',
-        //     type: 'text',
-        //     text: ''
-        // },
-
-        // presets.SetCurMtrStopA2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Stop A',
-        //     style: {
-        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop A',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(127, 0, 0),
-        //         // show_topbar: 0          //Hides the Top Bar
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-                       
-        //             ],
-        //             up: [
-        //                 {
-        //                     actionId: 'setStopASmart',   
-        //                 }
-        //             ],
-        //             2000: {
-        //                 options: {
-        //                     runWhileHeld: true,
-        //                 },
-        //                 actions: [
-        //                     {
-        //                         actionId: 'recallStopA',
-        //                         delay: 0,
-        //                     },
-        //                 ],
-        //             },
-        //         }
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             feedbackId: 'StopAStatusSmart',
-        //             style: {
-        //                 bgcolor: combineRgb(0, 127, 0),
-        //                 color: combineRgb(0, 0, 0),
-        //             },
-        //         }
-        //     ]
-        // },
-        // presets.clearStopsByCurAxis2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Clear Current Motor Stops',
-        //     style: {
-        //         text: 'Clear $(companion-module-emotimo-st4-3:CurrentMtrStr) Stops',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //         // show_topbar: 0          //Hides the Top Bar
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-                       
-        //             ],
-        //             up: [
-                        
-        //             ],
-        //             2000: {
-        //                 options: {
-        //                     runWhileHeld: true,
-        //                 },
-        //                 actions: [
-        //                     {
-        //                         actionId: 'clearStopByAxisSmart',
-        //                         delay: 0,
-        //                     },
-        //                 ],
-        //             },
-        //         }
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // },
-        // presets.SetCurMtrStopB2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Stop B',
-        //     style: {
-        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop B',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(127, 0, 0),
-        //         // show_topbar: 0          //Hides the Top Bar
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-                       
-        //             ],
-        //             up: [
-        //                 {
-        //                     actionId: 'setStopBSmart',
-        //                 }
-        //             ],
-        //             2000: {
-        //                 options: {
-        //                     runWhileHeld: true,
-        //                 },
-        //                 actions: [
-        //                     {
-        //                         actionId: 'recallStopB',
-        //                         delay: 0,
-        //                     },
-        //                 ],
-        //             },
-        //         }
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             feedbackId: 'StopBStatusSmart',              
-        //             style: {
-        //                 bgcolor: combineRgb(0, 127, 0),
-        //                 color: combineRgb(0, 0, 0),
-        //             },
-        //         }
-        //     ]
-        // },
-        // presets.MotorLineBreak4 = {
-        //     category: 'Motors',
-        //     name: '',
-        //     type: 'text',
-        //     text: ''
-        // },
-
-        // presets.curMtrSetup2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Selected Motor',
-        //     style: {
-        //         text: 'Motor\\nID:\\n$(companion-module-emotimo-st4-3:CurrentMtrSet)',
-        //         size: 'auto',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-                        
-        //             ],
-        //             up: [
-
-        //             ],
-        //         },
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // },
-        // presets.curMtrSpeedLimit2 = {
-        //     category: 'Motors',
-        //     type: 'button',
-        //     name: 'Current Motor Speed',
-        //     style: {
-        //         text: 'Speed:\\n$(companion-module-emotimo-st4-3:CurrentMtrSpeed)',
-        //         size: 'auto',
-        //         color: '16777215',
-        //         bgcolor: combineRgb(0, 0, 0),
-        //     },
-        //     steps: [
-        //         {
-        //             down: [
-        //                 {
-        //                     actionId: 'resetJogSpeedSmart',
-        //                 }
-        //             ],
-        //             up: [
-
-        //             ],
-        //         },
-        //     ],
-        //     feedbacks: [
-        //         {
-        //             style: {
-        //                 color: foregroundColor,
-        //                 bgcolor: backgroundColorRed,
-        //             }
-        //         }
-        //     ]
-        // },
-        // presets.MotorLineBreak5 = {
-        //     category: 'Motors',
-        //     name: '',
-        //     type: 'text',
-        //     text: ''
-        // },
+        
         
         presets.MotorIDRotary2 = {
             category: 'Motors',
@@ -1098,7 +791,7 @@ module.exports = {
             category: 'Motors',
             name: 'Motor Arrows',
             type: 'text',
-            text: 'These are Pan/Tilt Controls with Arrow Images'
+            text: 'These are Pan/Tilt Velocity Controls with Arrow Images'
         },
         // ########################
             // # Motor Arrow Presets ##
@@ -1616,12 +1309,147 @@ module.exports = {
             },
             
             
-            // presets.MotorHeader4 = {
-            //     category: 'Motors',
-            //     name: 'Pan Motor',
-            //     type: 'text',
-            //     text: 'These buttons are for the Pan Motor'
-            // },
+            presets.MotorHeader4 = {
+                category: 'Motors',
+                name: 'Position Control',
+                type: 'text',
+                text: 'These are Rotary Encoder Commands that give you Position Control of the Specified Axis.\nThese are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
+            },
+            presets.FocusPosocusPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Focus Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Focus Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 5,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 5,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 5
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.IrisPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Iris Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Iris Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 6,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 6,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 6
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.ZoomPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Zoom Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Zoom Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 7,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 7,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 7
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
             
             presets.MotorHeader5 = {
                 category: 'Motors',
@@ -1633,9 +1461,9 @@ module.exports = {
             presets['motorSpeedInc' + inc] = {
                 category: 'Motors',
                 type: 'button',
-                name: 'Motor' + inc + ' Increment',
+                name: motorNames[inc-1] + ' Increment',
                 style: {
-                    text: '⬆️ ' + inc,
+                    text: '⬆️',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 100),
                     // show_topbar: 0          //Hides the Top Bar
@@ -1748,7 +1576,7 @@ module.exports = {
                 type: 'button',
                 name: 'M3 Speed',
                 style: {
-                    text: 'M3\\nSpeed:\\n$(companion-module-emotimo-st4-3:M3Speed)',
+                    text: 'Slide\\nSpeed:\\n$(companion-module-emotimo-st4-3:M3Speed)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1958,9 +1786,9 @@ module.exports = {
                 presets['motorSpeedDec' + inc] = {
                     category: 'Motors',
                     type: 'button',
-                    name: 'Motor' + inc + ' Decrement',
+                    name: motorNames[inc-1] + ' Decrement',
                     style: {
-                        text: '⬇️ ' + inc,
+                        text: '⬇️',
                         color: '16777215',
                         bgcolor: combineRgb(0, 0, 100),
                         // show_topbar: 0          //Hides the Top Bar
@@ -1998,7 +1826,7 @@ module.exports = {
                 category: 'Motors',
                 name: 'Jog Motors by Axis',
                 type: 'text',
-                text: 'These buttons can be used to Have Live Control of the Specified Axis'
+                text: 'These buttons can be used for Live Velocity Control of the Specified Axis'
             }
             presets.MotPanNeg = {
                 category: 'Motors',
@@ -2948,13 +2776,19 @@ module.exports = {
         // ########################
         // ####  Motor  Stops  ####
         // ########################
+        presets.MotorHeader7 = {
+            category: 'Motors',
+            name: 'Stops by Axis',
+            type: 'text',
+            text: 'These buttons can be used to Set/Clear the Virtual Limits for the Specified Axis'
+        }
         for (let inc = 1; inc < 9; inc++) {
             presets['setStopA' + inc] = {
-                category: 'Limits',
+                category: 'Motors',
                 type: 'button',
-                name: 'Motor' + inc + ' Stop A',
+                name: motorNames[inc-1] + ' Stop A',
                 style: {
-                    text: 'Motor ' + inc + ' Stop A',
+                    text: motorNames[inc-1] + ' Stop A',
                     color: '16777215',
                     bgcolor: combineRgb(127, 0, 0),
                     // show_topbar: 0          //Hides the Top Bar
@@ -3002,11 +2836,11 @@ module.exports = {
                 ]
             },
             presets['setStopB' + inc] = {
-                category: 'Limits',
+                category: 'Motors',
                 type: 'button',
-                name: 'Motor' + inc + ' Stop B',
+                name: motorNames[inc-1] + ' Stop B',
                 style: {
-                    text: 'Motor ' + inc + ' Stop B',
+                    text: motorNames[inc-1] + ' Stop B',
                     color: '16777215',
                     bgcolor: combineRgb(127, 0, 0),
                     // show_topbar: 0          //Hides the Top Bar
@@ -3054,11 +2888,11 @@ module.exports = {
                 ]
             },
             presets['clearStops' + inc] = {
-                category: 'Limits',
+                category: 'Motors',
                 type: 'button',
-                name: 'Clear Motor ' + inc + ' Stops',
+                name: 'Clear ' + motorNames[inc-1] + ' Stops',
                 style: {
-                    text: 'Clear Motor ' + inc + ' Stops',
+                    text: 'Clear ' + motorNames[inc-1] + ' Stops',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
                     // show_topbar: 0          //Hides the Top Bar
@@ -3099,7 +2933,7 @@ module.exports = {
         }
 
         presets.clearAllStops = {
-            category: 'Limits',
+            category: 'Motors',
             type: 'button',
             name: 'Clear All Stops',
             style: {
@@ -5161,150 +4995,7 @@ module.exports = {
         // #######################################
         // ####     Streamdeck+ Encoders      ####
         // #######################################
-        presets.MotFocusPosocusPositionControl = {
-            category: 'Encoders',
-            type: 'button',
-            name: 'Focus Position Control',
-            options: { rotaryActions: true },
-            style: {
-                text: 'Focus Pos. Rotary',
-                size: 'auto',
-                color: '16777215',
-                bgcolor: combineRgb(0, 0, 50),
-            },
-            steps: [
-                {
-                    rotate_left: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 5,
-                                direction: -1
-                            }
-                        }
-                    ],
-                    rotate_right: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 5,
-                                direction: 1
-                            }
-                        }
-                    ],
-                    down: [
-                        {
-                            actionId: 'toggleIncrement',
-                            options: {
-                                id_mot: 5
-                            }
-                        }
-                    ],
-                    up: [
 
-                    ],
-                },
-            ],
-        },
-        presets.IrisPositionControl = {
-            category: 'Encoders',
-            type: 'button',
-            name: 'Iris Position Control',
-            options: { rotaryActions: true },
-            style: {
-                text: 'Iris Pos. Rotary',
-                size: 'auto',
-                color: '16777215',
-                bgcolor: combineRgb(0, 0, 50),
-            },
-            steps: [
-                {
-                    rotate_left: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 6,
-                                direction: -1
-                            }
-                        }
-                    ],
-                    rotate_right: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 6,
-                                direction: 1
-                            }
-                        }
-                    ],
-                    down: [
-                        {
-                            actionId: 'toggleIncrement',
-                            options: {
-                                id_mot: 6
-                            }
-                        }
-                    ],
-                    up: [
-
-                    ],
-                },
-            ],
-        },
-        presets.ZoomPositionControl = {
-            category: 'Encoders',
-            type: 'button',
-            name: 'Zoom Position Control',
-            options: { rotaryActions: true },
-            style: {
-                text: 'Zoom Pos. Rotary',
-                size: 'auto',
-                color: '16777215',
-                bgcolor: combineRgb(0, 0, 50),
-            },
-            steps: [
-                {
-                    rotate_left: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 7,
-                                direction: -1
-                            }
-                        }
-                    ],
-                    rotate_right: [
-                        {
-                            actionId: 'positionDrive',
-                            options: {
-                                id_mot: 7,
-                                direction: 1
-                            }
-                        }
-                    ],
-                    down: [
-                        {
-                            actionId: 'toggleIncrement',
-                            options: {
-                                id_mot: 7
-                            }
-                        }
-                    ],
-                    up: [
-
-                    ],
-                },
-            ],
-        },
-        
-        
-        
-        presets.Header = {
-            category: 'Encoders',
-            name: 'Test Header',
-            type: 'text',
-            text: 'Testing a text preset'
-        },
         
 
 
