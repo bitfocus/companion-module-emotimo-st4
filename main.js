@@ -314,6 +314,11 @@ class eMotimoModuleInstance extends InstanceBase {
 				this.checkFeedbacks("SetPresetSmart")
 				break
 			case 'Exiting Loop':
+				this.setVariableValues({ LpActive: -1 })
+				this.checkFeedbacks("LoopStatus")
+				break
+			case 'Stop All Initiated':
+				this.setVariableValues({ LpActive: -1 })
 				this.checkFeedbacks("LoopStatus")
 				break
 			case 'Reset Stops':
@@ -719,8 +724,8 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ CurrentLpRamp: 10 })
 		this.setVariableValues({ CurrentMtrSet: 1 })
 		this.setVariableValues({ CurrentMtrStr: 'Pan' })
-		this.setVariableValues({ CurrentMtrPosStr: 'Pan Left' })
-		this.setVariableValues({ CurrentMtrNegStr: 'Pan Right' })
+		this.setVariableValues({ CurrentMtrPosStr: 'Pan Right' })
+		this.setVariableValues({ CurrentMtrNegStr: 'Pan Left' })
 		this.setVariableValues({ CurrentMtrSpeed: 100 })
 		this.setVariableValues({ PanInversion: 1 })
 		this.setVariableValues({ TiltInversion: 1 })
@@ -729,7 +734,7 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ TN1Inversion: 1 })
 		this.setVariableValues({ TN2Inversion: 1 })
 		this.setVariableValues({ TN3Inversion: 1 })
-		this.setVariableValues({ RollInversion: 1 })
+		this.setVariableValues({ RollInversion: -1 })
 		this.setVariableValues({ FocusInversion: 1 })
 		this.setVariableValues({ CurrentMtrInversion: 'Normal' })
 	}
