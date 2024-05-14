@@ -1315,7 +1315,7 @@ module.exports = {
                 type: 'text',
                 text: 'These are Rotary Encoder Commands that give you Position Control of the Specified Axis.\nThese are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
             },
-            presets.FocusPosocusPositionControl = {
+            presets.FocusPositionControl = {
                 category: 'Motors',
                 type: 'button',
                 name: 'Focus Position Control',
@@ -1441,6 +1441,231 @@ module.exports = {
                                 actionId: 'toggleIncrement',
                                 options: {
                                     id_mot: 7
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.PanPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Pan Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Pan Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 1,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 1,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 1
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.TiltPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Tilt Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Tilt Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 2,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 2,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 2
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.SlidePositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Slide Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Slide Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 3,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 3,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 3
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.M4PositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'M4 Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'M4 Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 4,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 4,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 4
+                                }
+                            }
+                        ],
+                        up: [
+    
+                        ],
+                    },
+                ],
+            },
+            presets.RollPositionControl = {
+                category: 'Motors',
+                type: 'button',
+                name: 'Roll Position Control',
+                options: { rotaryActions: true },
+                style: {
+                    text: 'Roll Pos. Rotary',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 50),
+                },
+                steps: [
+                    {
+                        rotate_left: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 8,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        rotate_right: [
+                            {
+                                actionId: 'positionDrive',
+                                options: {
+                                    id_mot: 8,
+                                    direction: 1
+                                }
+                            }
+                        ],
+                        down: [
+                            {
+                                actionId: 'toggleIncrement',
+                                options: {
+                                    id_mot: 8
                                 }
                             }
                         ],

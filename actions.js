@@ -19,6 +19,8 @@ const MOTOR_ID = [
 	{ id: 9, label: 'Focus' },
 ]
 
+
+
 const TN_MOTOR_ID = [
 	{ id: 5, label: 'TN 1' },
 	{ id: 6, label: 'TN 2' },
@@ -247,8 +249,8 @@ module.exports = function (self) {
 				}
 			},
 		},
-		positionDrive: {
-			name: 'Send Motor Position',
+		tnpositionDrive: {
+			name: 'Send TN Motor Position',
 			options: [
 				{
 					type: 'dropdown',
@@ -329,6 +331,116 @@ module.exports = function (self) {
 				}
 			},
 		},
+		positionDrive: {
+			name: 'Send Motor Position',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (setMotorPosition) => {
+				const cmd = 'G0 '
+				const cmd2 = '\n'
+				var cmdParam ='X'
+				var temp = 0
+				var increment = 0
+
+				if (cmd != '') {
+					if (setMotorPosition.options.id_mot == 1) {
+						temp = self.getVariableValue('PPos')
+						increment = self.getVariableValue('PStep')
+						cmdParam = 'X'
+					} else if (setMotorPosition.options.id_mot == 2) {
+						temp = self.getVariableValue('TPos')
+						increment = self.getVariableValue('TStep')
+						cmdParam = 'Y'
+					} else if (setMotorPosition.options.id_mot == 3) {
+						temp = self.getVariableValue('SPos')
+						increment = self.getVariableValue('SStep')
+						cmdParam = 'Z'
+					} else if (setMotorPosition.options.id_mot == 4) {
+						temp = self.getVariableValue('MPos')
+						increment = self.getVariableValue('MStep')
+						cmdParam = 'W'
+					} else if (setMotorPosition.options.id_mot == 5) {
+						temp = self.getVariableValue('FPos')
+						increment = self.getVariableValue('FStep')
+						cmdParam = 'F'
+					} else if (setMotorPosition.options.id_mot == 6) {
+						temp = self.getVariableValue('IPos')
+						increment = self.getVariableValue('IStep')
+						cmdParam = 'I'
+					} else if (setMotorPosition.options.id_mot == 7) {
+						temp = self.getVariableValue('ZPos')
+						increment = self.getVariableValue('ZStep')
+						cmdParam = 'C'
+					} else if (setMotorPosition.options.id_mot == 8) {
+						temp = self.getVariableValue('RPos')
+						increment = self.getVariableValue('RStep')
+						cmdParam = 'R'
+					}
+
+					temp += (setMotorPosition.options.direction * increment);
+					// self.log('debug', 'Motor ID' + setMotorPosition.options.id_mot + 'Position' + temp)
+
+
+					if (setMotorPosition.options.id_mot == 1) {
+						self.setVariableValues({ PPos: temp })
+					} else if (setMotorPosition.options.id_mot == 2) {
+						self.setVariableValues({ TPos: temp })
+					} else if (setMotorPosition.options.id_mot == 3) {
+						self.setVariableValues({ SPos: temp })
+					} else if (setMotorPosition.options.id_mot == 4) {
+						self.setVariableValues({ MPos: temp })
+					} else if (setMotorPosition.options.id_mot == 5) {
+						self.setVariableValues({ FPos: temp })
+					} else if (setMotorPosition.options.id_mot == 6) {
+						self.setVariableValues({ IPos: temp })
+					} else if (setMotorPosition.options.id_mot == 7) {
+						self.setVariableValues({ ZPos: temp })
+					} else if (setMotorPosition.options.id_mot == 8) {
+						self.setVariableValues({ RPos: temp })
+					}
+
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + cmdParam + temp + cmd2, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
 		toggleIncrement: {
 			name: 'Toggle Motor Increment',
 			options: [
@@ -337,34 +449,74 @@ module.exports = function (self) {
 					id: 'id_mot',
 					label: 'Motor ID',
 					default: 5,
-					choices: TN_MOTOR_ID,
+					choices: MOTOR_ID,
 				},
 			],
 			callback: async (toggleIncrement) => {
 				var temp = 0
 
-				if (toggleIncrement.options.id_mot == 5) {
+				if (toggleIncrement.options.id_mot == 1) {
+					temp = self.getVariableValue('PStep')
+				} else if (toggleIncrement.options.id_mot == 2) {
+					temp = self.getVariableValue('TStep')
+				} else if (toggleIncrement.options.id_mot == 3) {
+					temp = self.getVariableValue('SStep')
+				} else if (toggleIncrement.options.id_mot == 4) {
+					temp = self.getVariableValue('MStep')
+				} else if (toggleIncrement.options.id_mot == 5) {
 					temp = self.getVariableValue('FStep')
 				} else if (toggleIncrement.options.id_mot == 6) {
 					temp = self.getVariableValue('IStep')
 				} else if (toggleIncrement.options.id_mot == 7) {
 					temp = self.getVariableValue('ZStep')
+				} else if (toggleIncrement.options.id_mot == 8) {
+					temp = self.getVariableValue('RStep')
 				}
 
-				if (temp == 200) {
-					temp = 50;
+				if (toggleIncrement.options.id_mot < 3) {
+					if (temp == 1) {
+						temp = 10;
+					} else {
+						temp = 1;
+					}
+				} else if (toggleIncrement.options.id_mot < 5) {
+					if (temp == 1000) {
+						temp = 10000;
+					} else {
+						temp = 1000;
+					}
+				} else if (toggleIncrement.options.id_mot < 8) {
+					if (temp == 200) {
+						temp = 50;
+					} else {
+						temp = 200;
+					}
 				} else {
-					temp = 200;
+					if (temp == 1) {
+						temp = 10;
+					} else {
+						temp = 1;
+					}
 				}
 
 				self.log('debug', 'Motor ID: ' + toggleIncrement.options.id_mot + ' Increment: ' + temp)
 
-				if (toggleIncrement.options.id_mot == 5) {
+				if (toggleIncrement.options.id_mot == 1) {
+					temp = self.setVariableValues({ PStep: temp })
+				} else if (toggleIncrement.options.id_mot == 2) {
+					temp = self.setVariableValues({ TStep: temp })
+				} else if (toggleIncrement.options.id_mot == 3) {
+					temp = self.setVariableValues({ SStep: temp })
+				} else if (toggleIncrement.options.id_mot == 4) {
+					temp = self.setVariableValues({ MStep: temp })
+				} else if (toggleIncrement.options.id_mot == 5) {
 					self.setVariableValues({ FStep: temp })
 				} else if (toggleIncrement.options.id_mot == 6) {
 					self.setVariableValues({ IStep: temp })
 				} else if (toggleIncrement.options.id_mot == 7) {
 					self.setVariableValues({ ZStep: temp })
+				} else if (toggleIncrement.options.id_mot == 8) {
+					self.setVariableValues({ RStep: temp })
 				}
 
 			}
