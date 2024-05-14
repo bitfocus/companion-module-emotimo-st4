@@ -2938,14 +2938,14 @@ module.exports = function (self) {
 					motorName = 'Pan'
 					motorSpeed = self.getVariableValue('PanSpeed')
 					motorInvert = self.getVariableValue('PanInversion')
-					motorPosName = motorName + ' Left'
-					motorNegName = motorName + ' Right'
+					motorPosName = motorName + ' Right'
+					motorNegName = motorName + ' Left'
 				} else if (motor == 2) {
 					motorName = 'Tilt'
 					motorSpeed = self.getVariableValue('TiltSpeed')
 					motorInvert = self.getVariableValue('TiltInversion')
-					motorPosName = motorName + ' Down'
-					motorNegName = motorName + ' Up'
+					motorPosName = motorName + ' Up'
+					motorNegName = motorName + ' Down'
 				} else if (motor == 3) {
 					motorName = 'Slide'
 					motorSpeed = self.getVariableValue('M3Speed')
@@ -2980,8 +2980,8 @@ module.exports = function (self) {
 					motorName = 'Roll'
 					motorSpeed = self.getVariableValue('RollSpeed')
 					motorInvert = self.getVariableValue('RollInversion')
-					motorPosName = motorName + ' Pos'
-					motorNegName = motorName + ' Neg'
+					motorPosName = motorName + ' CW'
+					motorNegName = motorName + ' CCW'
 				} else if (motor == 9) {
 					motorName = 'RS Focus'
 					motorSpeed = self.getVariableValue('FocusSpeed')
