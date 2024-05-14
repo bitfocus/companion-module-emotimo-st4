@@ -1246,7 +1246,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1297,7 +1297,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1348,7 +1348,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1399,7 +1399,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1450,14 +1450,14 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             },
                             {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1515,14 +1515,14 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             },
                             {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1580,14 +1580,14 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             },
                             {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -1645,14 +1645,14 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 1,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             },
                             {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1690,9 +1690,9 @@ module.exports = {
             presets.MotPanNeg = {
                 category: 'Motors',
                 type: 'button',
-                name: 'Pan Right',
+                name: 'Pan Left',
                 style: {
-                    text: 'Pan Right\\n',
+                    text: 'Pan Left\\n',
                     size: '18',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1740,9 +1740,9 @@ module.exports = {
             presets.MotPanPos = {
                 category: 'Motors',
                 type: 'button',
-                name: 'Pan Left',
+                name: 'Pan Right',
                 style: {
-                    text: 'Pan Left\\n',
+                    text: 'Pan Right\\n',
                     size: '18',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1814,7 +1814,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: 1,
+                                    direction: -1,
                                 }
                             }
                         ],
@@ -1864,7 +1864,7 @@ module.exports = {
                                 actionId: 'jogMotorSmart',
                                 options: {
                                     id_mot: 2,
-                                    direction: -1,
+                                    direction: 1,
                                 }
                             }
                         ],
@@ -3208,91 +3208,38 @@ module.exports = {
         // ########################
         // ####  Smart Motor   ####
         // ########################
-        presets.curMtrSetup = {
+        presets.MotorHeader1 = {
+            category: 'Motors Smart',
+            name: 'Streamdeck Motor Page',
+            type: 'text',
+            text: 'This is an Example Motor Setup Page for Streamdeck'
+        },
+        presets.CurMotPos = {
             category: 'Motors Smart',
             type: 'button',
-            name: 'Selected Motor',
+            name: 'Current Motor Pos',
             style: {
-                text: 'Motor\\nID:\\n$(companion-module-emotimo-st4-3:CurrentMtrSet)',
-                size: 'auto',
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrPosStr)\\n',
+                size: '18',
                 color: '16777215',
                 bgcolor: combineRgb(0, 0, 0),
             },
             steps: [
                 {
                     down: [
-                        
+                        {
+                            actionId: 'jogMotorSmarter',
+                            options: {
+                                direction: 1,
+                            }
+                        }
                     ],
                     up: [
-
+                        {
+                            actionId: 'stopCurrentMotor',
+                        }
                     ],
                 },
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
-        presets.IncreaseMtrSetup = {
-            category: 'Motors Smart',
-            type: 'button',
-            name: 'Increase Motor ID',
-            style: {
-                text: '⬆️',
-                color: '16777215',
-                bgcolor: combineRgb(50, 50, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setMotorID',
-                            options: {
-                                direction: 1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
-        presets.DecreaseMtrSetup = {
-            category: 'Motors Smart',
-            type: 'button',
-            name: 'Decrease Motor ID',
-            style: {
-                text: '⬇️',
-                color: '16777215',
-                bgcolor: combineRgb(50, 50, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setMotorID',
-                            options: {
-                                direction: -1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
             ],
             feedbacks: [
                 {
@@ -3339,13 +3286,13 @@ module.exports = {
                 }
             ]
         },
-        presets.CurMotPos = {
+        presets.curMtrAxisInversion = {
             category: 'Motors Smart',
             type: 'button',
-            name: 'Current Motor Pos',
+            name: 'Current Motor Inversion',
             style: {
-                text: '$(companion-module-emotimo-st4-3:CurrentMtrPosStr)\\n',
-                size: '18',
+                text: 'Direction:\\n$(companion-module-emotimo-st4-3:CurrentMtrInversion)',
+                size: '14',
                 color: '16777215',
                 bgcolor: combineRgb(0, 0, 0),
             },
@@ -3353,16 +3300,11 @@ module.exports = {
                 {
                     down: [
                         {
-                            actionId: 'jogMotorSmarter',
-                            options: {
-                                direction: 1,
-                            }
+                            actionId: 'invertCurrentAxis',
                         }
                     ],
                     up: [
-                        {
-                            actionId: 'stopCurrentMotor',
-                        }
+
                     ],
                 },
             ],
@@ -3374,133 +3316,7 @@ module.exports = {
                     }
                 }
             ]
-        },
-        presets.SetCurMtrStopA = {
-            category: 'Motors Smart',
-            type: 'button',
-            name: 'Current Motor Stop A',
-            style: {
-                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop A',
-                color: '16777215',
-                bgcolor: combineRgb(127, 0, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                       
-                    ],
-                    up: [
-                        {
-                            actionId: 'setStopASmart',   
-                        }
-                    ],
-                    2000: {
-                        options: {
-                            runWhileHeld: true,
-                        },
-                        actions: [
-                            {
-                                actionId: 'recallStopA',
-                                delay: 0,
-                            },
-                        ],
-                    },
-                }
-            ],
-            feedbacks: [
-                {
-                    feedbackId: 'StopAStatusSmart',
-                    style: {
-                        bgcolor: combineRgb(0, 127, 0),
-                        color: combineRgb(0, 0, 0),
-                    },
-                }
-            ]
-        },
-        presets.SetCurMtrStopB = {
-            category: 'Motors Smart',
-            type: 'button',
-            name: 'Current Motor Stop B',
-            style: {
-                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop B',
-                color: '16777215',
-                bgcolor: combineRgb(127, 0, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                       
-                    ],
-                    up: [
-                        {
-                            actionId: 'setStopBSmart',
-                        }
-                    ],
-                    2000: {
-                        options: {
-                            runWhileHeld: true,
-                        },
-                        actions: [
-                            {
-                                actionId: 'recallStopB',
-                                delay: 0,
-                            },
-                        ],
-                    },
-                }
-            ],
-            feedbacks: [
-                {
-                    feedbackId: 'StopBStatusSmart',              
-                    style: {
-                        bgcolor: combineRgb(0, 127, 0),
-                        color: combineRgb(0, 0, 0),
-                    },
-                }
-            ]
-        },
-        presets.clearStopsByCurAxis = {
-            category: 'Motors Smart',
-            type: 'button',
-            name: 'Clear Current Motor Stops',
-            style: {
-                text: 'Clear $(companion-module-emotimo-st4-3:CurrentMtrStr) Stops',
-                color: '16777215',
-                bgcolor: combineRgb(0, 0, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                       
-                    ],
-                    up: [
-                        
-                    ],
-                    2000: {
-                        options: {
-                            runWhileHeld: true,
-                        },
-                        actions: [
-                            {
-                                actionId: 'clearStopByAxisSmart',
-                                delay: 0,
-                            },
-                        ],
-                    },
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
+        }
         presets.curMotorSpeedInc = {
             category: 'Motors Smart',
             type: 'button',
@@ -3534,21 +3350,91 @@ module.exports = {
                 }
             ]
         },
-        presets.curMotorSpeedDec = {
+        presets.MotorLineBreak1 = {
+            category: 'Motors Smart',
+            name: '',
+            type: 'text',
+            text: ''
+        },
+
+        
+        presets.IncreaseMtrSetup = {
             category: 'Motors Smart',
             type: 'button',
-            name: 'Current Motor Decrement',
+            name: 'Increase Motor ID',
             style: {
-                text: '⬇️',
+                text: '⬆️',
                 color: '16777215',
-                bgcolor: combineRgb(0, 0, 100),
+                bgcolor: combineRgb(50, 50, 0),
                 // show_topbar: 0          //Hides the Top Bar
             },
             steps: [
                 {
                     down: [
                         {
-                            actionId: 'setJogSpeedSmart',
+                            actionId: 'setMotorID',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.curMtrSetup = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Selected Motor',
+            style: {
+                text: 'Motor\\nID:\\n$(companion-module-emotimo-st4-3:CurrentMtrSet)',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 0),
+            },
+            steps: [
+                {
+                    down: [
+                        
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.DecreaseMtrSetup = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Decrease Motor ID',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setMotorID',
                             options: {
                                 direction: -1
                             }
@@ -3598,27 +3484,162 @@ module.exports = {
                 }
             ]
         },
-        presets.curMtrAxisInversion = {
+        presets.MotorLineBreak2 = {
+            category: 'Motors Smart',
+            name: '',
+            type: 'text',
+            text: ''
+        },
+        
+        presets.SetCurMtrStopA = {
             category: 'Motors Smart',
             type: 'button',
-            name: 'Current Motor Inversion',
+            name: 'Current Motor Stop A',
             style: {
-                text: 'Direction:\\n$(companion-module-emotimo-st4-3:CurrentMtrInversion)',
-                size: '14',
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop A',
+                color: '16777215',
+                bgcolor: combineRgb(127, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        {
+                            actionId: 'setStopASmart',   
+                        }
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'recallStopA',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'StopAStatusSmart',
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                }
+            ]
+        },
+        presets.clearStopsByCurAxis = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Clear Current Motor Stops',
+            style: {
+                text: 'Clear $(companion-module-emotimo-st4-3:CurrentMtrStr) Stops',
                 color: '16777215',
                 bgcolor: combineRgb(0, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'clearStopByAxisSmart',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.SetCurMtrStopB = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Stop B',
+            style: {
+                text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop B',
+                color: '16777215',
+                bgcolor: combineRgb(127, 0, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                       
+                    ],
+                    up: [
+                        {
+                            actionId: 'setStopBSmart',
+                        }
+                    ],
+                    2000: {
+                        options: {
+                            runWhileHeld: true,
+                        },
+                        actions: [
+                            {
+                                actionId: 'recallStopB',
+                                delay: 0,
+                            },
+                        ],
+                    },
+                }
+            ],
+            feedbacks: [
+                {
+                    feedbackId: 'StopBStatusSmart',              
+                    style: {
+                        bgcolor: combineRgb(0, 127, 0),
+                        color: combineRgb(0, 0, 0),
+                    },
+                }
+            ]
+        },
+        presets.curMotorSpeedDec = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Current Motor Decrement',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
             },
             steps: [
                 {
                     down: [
                         {
-                            actionId: 'invertCurrentAxis',
+                            actionId: 'setJogSpeedSmart',
+                            options: {
+                                direction: -1
+                            }
                         }
                     ],
                     up: [
-
-                    ],
-                },
+                    ]
+                }
             ],
             feedbacks: [
                 {
@@ -3629,6 +3650,403 @@ module.exports = {
                 }
             ]
         }
+        
+        presets.MotorHeader2 = {
+            category: 'Motors Smart',
+            name: 'Rotary Encoders',
+            type: 'text',
+            text: 'These are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
+        },
+        // presets.CurMotPos2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Pos',
+        //     style: {
+        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrPosStr)\\n',
+        //         size: '18',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'jogMotorSmarter',
+        //                     options: {
+        //                         direction: 1,
+        //                     }
+        //                 }
+        //             ],
+        //             up: [
+        //                 {
+        //                     actionId: 'stopCurrentMotor',
+        //                 }
+        //             ],
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // },
+        // presets.CurMotNeg2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Neg',
+        //     style: {
+        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrNegStr)\\n',
+        //         size: '18',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'jogMotorSmarter',
+        //                     options: {
+        //                         direction: -1,
+        //                     }
+        //                 }
+        //             ],
+        //             up: [
+        //                 {
+        //                     actionId: 'stopCurrentMotor',
+        //                 }
+        //             ],
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // },
+        // presets.curMtrAxisInversion2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Inversion',
+        //     style: {
+        //         text: 'Direction:\\n$(companion-module-emotimo-st4-3:CurrentMtrInversion)',
+        //         size: '14',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'invertCurrentAxis',
+        //                 }
+        //             ],
+        //             up: [
+
+        //             ],
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // }
+        // presets.MotorLineBreak3 = {
+        //     category: 'Motors Smart',
+        //     name: '',
+        //     type: 'text',
+        //     text: ''
+        // },
+
+        // presets.SetCurMtrStopA2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Stop A',
+        //     style: {
+        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop A',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(127, 0, 0),
+        //         // show_topbar: 0          //Hides the Top Bar
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+                       
+        //             ],
+        //             up: [
+        //                 {
+        //                     actionId: 'setStopASmart',   
+        //                 }
+        //             ],
+        //             2000: {
+        //                 options: {
+        //                     runWhileHeld: true,
+        //                 },
+        //                 actions: [
+        //                     {
+        //                         actionId: 'recallStopA',
+        //                         delay: 0,
+        //                     },
+        //                 ],
+        //             },
+        //         }
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             feedbackId: 'StopAStatusSmart',
+        //             style: {
+        //                 bgcolor: combineRgb(0, 127, 0),
+        //                 color: combineRgb(0, 0, 0),
+        //             },
+        //         }
+        //     ]
+        // },
+        // presets.clearStopsByCurAxis2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Clear Current Motor Stops',
+        //     style: {
+        //         text: 'Clear $(companion-module-emotimo-st4-3:CurrentMtrStr) Stops',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //         // show_topbar: 0          //Hides the Top Bar
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+                       
+        //             ],
+        //             up: [
+                        
+        //             ],
+        //             2000: {
+        //                 options: {
+        //                     runWhileHeld: true,
+        //                 },
+        //                 actions: [
+        //                     {
+        //                         actionId: 'clearStopByAxisSmart',
+        //                         delay: 0,
+        //                     },
+        //                 ],
+        //             },
+        //         }
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // },
+        // presets.SetCurMtrStopB2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Stop B',
+        //     style: {
+        //         text: '$(companion-module-emotimo-st4-3:CurrentMtrStr) Stop B',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(127, 0, 0),
+        //         // show_topbar: 0          //Hides the Top Bar
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+                       
+        //             ],
+        //             up: [
+        //                 {
+        //                     actionId: 'setStopBSmart',
+        //                 }
+        //             ],
+        //             2000: {
+        //                 options: {
+        //                     runWhileHeld: true,
+        //                 },
+        //                 actions: [
+        //                     {
+        //                         actionId: 'recallStopB',
+        //                         delay: 0,
+        //                     },
+        //                 ],
+        //             },
+        //         }
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             feedbackId: 'StopBStatusSmart',              
+        //             style: {
+        //                 bgcolor: combineRgb(0, 127, 0),
+        //                 color: combineRgb(0, 0, 0),
+        //             },
+        //         }
+        //     ]
+        // },
+        // presets.MotorLineBreak4 = {
+        //     category: 'Motors Smart',
+        //     name: '',
+        //     type: 'text',
+        //     text: ''
+        // },
+
+        // presets.curMtrSetup2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Selected Motor',
+        //     style: {
+        //         text: 'Motor\\nID:\\n$(companion-module-emotimo-st4-3:CurrentMtrSet)',
+        //         size: 'auto',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+                        
+        //             ],
+        //             up: [
+
+        //             ],
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // },
+        // presets.curMtrSpeedLimit2 = {
+        //     category: 'Motors Smart',
+        //     type: 'button',
+        //     name: 'Current Motor Speed',
+        //     style: {
+        //         text: 'Speed:\\n$(companion-module-emotimo-st4-3:CurrentMtrSpeed)',
+        //         size: 'auto',
+        //         color: '16777215',
+        //         bgcolor: combineRgb(0, 0, 0),
+        //     },
+        //     steps: [
+        //         {
+        //             down: [
+        //                 {
+        //                     actionId: 'resetJogSpeedSmart',
+        //                 }
+        //             ],
+        //             up: [
+
+        //             ],
+        //         },
+        //     ],
+        //     feedbacks: [
+        //         {
+        //             style: {
+        //                 color: foregroundColor,
+        //                 bgcolor: backgroundColorRed,
+        //             }
+        //         }
+        //     ]
+        // },
+        // presets.MotorLineBreak5 = {
+        //     category: 'Motors Smart',
+        //     name: '',
+        //     type: 'text',
+        //     text: ''
+        // },
+        
+        presets.MotorIDRotary2 = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Motor ID',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Motor ID Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setMotorID',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setMotorID',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                       
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.MotorSpeedRotary2 = {
+            category: 'Motors Smart',
+            type: 'button',
+            name: 'Motor Speed Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Motor Speed Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 100),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setJogSpeedSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setJogSpeedSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'resetJogSpeedSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        }
+        
+       
         
 
         // ########################
@@ -4271,22 +4689,28 @@ module.exports = {
                 },
             ]
         },
+        presets.LineBreak1 = {
+            category: 'Loop Smart',
+            name: '',
+            type: 'text',
+            text: ' '
+        },
 
-        presets.smartIncreaseAPoint = {
+        presets.IncreaseLpSetup = {
             category: 'Loop Smart',
             type: 'button',
-            name: 'Increase Loop A Point',
+            name: 'Increase Loop ID',
             style: {
                 text: '⬆️',
                 color: '16777215',
-                bgcolor: combineRgb(0, 50, 100),
+                bgcolor: combineRgb(50, 50, 0),
                 // show_topbar: 0          //Hides the Top Bar
             },
             steps: [
                 {
                     down: [
                         {
-                            actionId: 'setLoopAPointSmart',
+                            actionId: 'setLoopID',
                             options: {
                                 direction: 1
                             }
@@ -4305,12 +4729,12 @@ module.exports = {
                 }
             ]
         },
-        presets.smartDecreaseAPoint = {
+        presets.smartIncreaseAPoint = {
             category: 'Loop Smart',
             type: 'button',
-            name: 'Decrease Loop A Point',
+            name: 'Increase Loop A Point',
             style: {
-                text: '⬇️',
+                text: '⬆️',
                 color: '16777215',
                 bgcolor: combineRgb(0, 50, 100),
                 // show_topbar: 0          //Hides the Top Bar
@@ -4321,7 +4745,7 @@ module.exports = {
                         {
                             actionId: 'setLoopAPointSmart',
                             options: {
-                                direction: -1
+                                direction: 1
                             }
                         }
                     ],
@@ -4371,39 +4795,6 @@ module.exports = {
                 }
             ]
         },
-        presets.smartDecreaseBPoint = {
-            category: 'Loop Smart',
-            type: 'button',
-            name: 'Decrease Loop B Point',
-            style: {
-                text: '⬇️',
-                color: '16777215',
-                bgcolor: combineRgb(0, 90, 100),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setLoopBPointSmart',
-                            options: {
-                                direction: -1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
         presets.smartIncreaseRunLp = {
             category: 'Loop Smart',
             type: 'button',
@@ -4421,39 +4812,6 @@ module.exports = {
                             actionId: 'setLoopRunTimeSmart',
                             options: {
                                 direction: 1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
-        presets.smartDecreaseRunLp = {
-            category: 'Loop Smart',
-            type: 'button',
-            name: 'Decrease Loop RunTime',
-            style: {
-                text: '⬇️',
-                color: '16777215',
-                bgcolor: combineRgb(0, 50, 100),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setLoopRunTimeSmart',
-                            options: {
-                                direction: -1
                             }
                         }
                     ],
@@ -4503,105 +4861,13 @@ module.exports = {
                 }
             ]
         },
-        presets.smartDecreaseRampLp = {
+        presets.LineBreak2 = {
             category: 'Loop Smart',
-            type: 'button',
-            name: 'Decrease Loop RampTime',
-            style: {
-                text: '⬇️',
-                color: '16777215',
-                bgcolor: combineRgb(50, 0, 100),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setLoopRampTimeSmart',
-                            options: {
-                                direction: -1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
+            name: '',
+            type: 'text',
+            text: ' '
         },
-        presets.IncreaseLpSetup = {
-            category: 'Loop Smart',
-            type: 'button',
-            name: 'Increase Loop ID',
-            style: {
-                text: '⬆️',
-                color: '16777215',
-                bgcolor: combineRgb(50, 50, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setLoopID',
-                            options: {
-                                direction: 1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
-        presets.DecreaseLpSetup = {
-            category: 'Loop Smart',
-            type: 'button',
-            name: 'Decrease Loop ID',
-            style: {
-                text: '⬇️',
-                color: '16777215',
-                bgcolor: combineRgb(50, 50, 0),
-                // show_topbar: 0          //Hides the Top Bar
-            },
-            steps: [
-                {
-                    down: [
-                        {
-                            actionId: 'setLoopID',
-                            options: {
-                                direction: -1
-                            }
-                        }
-                    ],
-                    up: [
-                    ]
-                }
-            ],
-            feedbacks: [
-                {
-                    style: {
-                        color: foregroundColor,
-                        bgcolor: backgroundColorRed,
-                    }
-                }
-            ]
-        },
+
         presets.curLpsetup = {
             category: 'Loop Smart',
             type: 'button',
@@ -4761,6 +5027,180 @@ module.exports = {
                 }
             ]
         },
+        presets.LineBreak3 = {
+            category: 'Loop Smart',
+            name: '',
+            type: 'text',
+            text: ' '
+        },
+
+        presets.DecreaseLpSetup = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop ID',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 50, 0),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopID',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseAPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop A Point',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopAPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseBPoint = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop B Point',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 90, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopBPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRunLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop RunTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRunTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+        presets.smartDecreaseRampLp = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Decrease Loop RampTime',
+            style: {
+                text: '⬇️',
+                color: '16777215',
+                bgcolor: combineRgb(50, 0, 100),
+                // show_topbar: 0          //Hides the Top Bar
+            },
+            steps: [
+                {
+                    down: [
+                        {
+                            actionId: 'setLoopRampTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    up: [
+                    ]
+                }
+            ],
+            feedbacks: [
+                {
+                    style: {
+                        color: foregroundColor,
+                        bgcolor: backgroundColorRed,
+                    }
+                }
+            ]
+        },
+
+        
         presets.recallLpSmart = {
             category: 'Loop Smart',
             type: 'button',
@@ -4797,6 +5237,173 @@ module.exports = {
                     },
                 },
             ]
+        },
+
+        presets.LoopEncoderHeader = {
+            category: 'Loop Smart',
+            name: 'Rotary Encoders',
+            type: 'text',
+            text: 'These are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
+        },
+        presets.LoopRunTimeRotary = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Loop Run Time Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Loop Run Time Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setLoopRunTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setLoopRunTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'resetLoopRunTimeSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.LoopRampTimeRotary = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Loop Ramp Time Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Loop Ramp Time Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setLoopRampTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setLoopRampTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'resetLoopRampTimeSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.LoopAPointRotary = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Loop A Point Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Loop A Point Rotary',
+                size: '14',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setLoopAPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setLoopAPointSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'recallAPointSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.LoopBPointRotary = {
+            category: 'Loop Smart',
+            type: 'button',
+            name: 'Loop B Point Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Loop B Point Rotary',
+                size: '14',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 100),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setLoopBPointSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setLoopBPointSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'recallBPointSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
         }
         
 
@@ -4804,8 +5411,14 @@ module.exports = {
         // ####     Loops      ####
         // ########################
         for (let inc = 0; inc < 8; inc++) {
+            presets['Loop' + inc + 'HighLine'] = {
+                category: 'Loops',
+                name: 'Loop ' + inc,
+                type: 'text',
+                text: 'Setup and Recall Buttons for Loop ' + inc
+            },
             presets['increaseLpRunTime' + inc] = {
-                category: 'Loop Timing',
+                category: 'Loops',
                 type: 'button',
                 name: 'Increase RunTime Loop ' + inc,
                 style: {
@@ -4838,42 +5451,8 @@ module.exports = {
                     }
                 ]
             },
-            presets['decreaseLpRunTime' + inc] = {
-                category: 'Loop Timing',
-                type: 'button',
-                name: 'Decrease RunTime Loop ' + inc,
-                style: {
-                    text: '⬇️ ' + inc,
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
-                    // show_topbar: 0          //Hides the Top Bar
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'setLoopRunTime',
-                                options: {
-                                    id_loop: inc,
-                                    direction: -1
-                                }
-                            }
-                        ],
-                        up: [
-                        ]
-                    }
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            },
             presets['increaseLpRampTime' + inc] = {
-                category: 'Loop Timing',
+                category: 'Loops',
                 type: 'button',
                 name: 'Increase RampTime Loop ' + inc,
                 style: {
@@ -4906,108 +5485,6 @@ module.exports = {
                     }
                 ]
             },
-            presets['decreaseLpRampTime' + inc] = {
-                category: 'Loop Timing',
-                type: 'button',
-                name: 'Decrease RampTime Loop ' + inc,
-                style: {
-                    text: '⬇️ ' + inc,
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
-                    // show_topbar: 0          //Hides the Top Bar
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'setLoopRampTime',
-                                options: {
-                                    id_loop: inc,
-                                    direction: -1
-                                }
-                            }
-                        ],
-                        up: [
-                        ]
-                    }
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            },
-            presets['Loop' + inc + 'RunTime'] = {
-                category: 'Loop Timing',
-                type: 'button',
-                name: 'Loop Run Time ' + inc,
-                style: {
-                    text: 'Loop\\nRunT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RunT)',
-                    size: 'auto',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'resetLoopRunTime',
-                                options: {
-                                    id_loop: inc
-                                }
-                            }
-                        ],
-                        up: [
-
-                        ],
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            },
-            presets['Loop' + inc + 'RampTime'] = {
-                category: 'Loop Timing',
-                type: 'button',
-                name: 'Loop Ramp Time ' + inc,
-                style: {
-                    text: 'Loop\\nRampT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RampT)',
-                    size: 'auto',
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 0),
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'resetLoopRampTime',
-                                options: {
-                                    id_loop: inc
-                                }
-                            }
-                        ],
-                        up: [
-
-                        ],
-                    },
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            },
             presets['Loop' + inc + 'APointInc'] = {
                 category: 'Loops',
                 type: 'button',
@@ -5026,40 +5503,6 @@ module.exports = {
                                 options: {
                                     id_loop: inc,
                                     direction: 1
-                                }
-                            }
-                        ],
-                        up: [
-                        ]
-                    }
-                ],
-                feedbacks: [
-                    {
-                        style: {
-                            color: foregroundColor,
-                            bgcolor: backgroundColorRed,
-                        }
-                    }
-                ]
-            },
-            presets['Loop' + inc + 'APointDec'] = {
-                category: 'Loops',
-                type: 'button',
-                name: 'Loop ' + inc + ' A Point Dec',
-                style: {
-                    text: '⬇️ ' + inc,
-                    color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
-                    // show_topbar: 0          //Hides the Top Bar
-                },
-                steps: [
-                    {
-                        down: [
-                            {
-                                actionId: 'setLoopAPoint',
-                                options: {
-                                    id_loop: inc,
-                                    direction: -1
                                 }
                             }
                         ],
@@ -5110,30 +5553,71 @@ module.exports = {
                     }
                 ]
             },
-            presets['Loop' + inc + 'BPointDec'] = {
+            presets['Loop' + inc + 'LineBreak'] = {
+            category: 'Loops',
+            name: '',
+            type: 'text',
+            text: ' '
+            },
+
+            presets['Loop' + inc + 'RunTime'] = {
                 category: 'Loops',
                 type: 'button',
-                name: 'Loop ' + inc + ' B Point Dec',
+                name: 'Loop Run Time ' + inc,
                 style: {
-                    text: '⬇️ ' + inc,
+                    text: 'Loop\\nRunT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RunT)',
+                    size: 'auto',
                     color: '16777215',
-                    bgcolor: combineRgb(0, 0, 100),
-                    // show_topbar: 0          //Hides the Top Bar
+                    bgcolor: combineRgb(0, 0, 0),
                 },
                 steps: [
                     {
                         down: [
                             {
-                                actionId: 'setLoopBPoint',
+                                actionId: 'resetLoopRunTime',
                                 options: {
-                                    id_loop: inc,
-                                    direction: -1
+                                    id_loop: inc
                                 }
                             }
                         ],
                         up: [
-                        ]
+
+                        ],
+                    },
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
                     }
+                ]
+            },
+            presets['Loop' + inc + 'RampTime'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop Ramp Time ' + inc,
+                style: {
+                    text: 'Loop\\nRampT:\\n$(companion-module-emotimo-st4-3:Lp' + inc + 'RampT)',
+                    size: 'auto',
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 0),
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'resetLoopRampTime',
+                                options: {
+                                    id_loop: inc
+                                }
+                            }
+                        ],
+                        up: [
+
+                        ],
+                    },
                 ],
                 feedbacks: [
                     {
@@ -5212,6 +5696,150 @@ module.exports = {
                     }
                 ]
             },
+            presets['Loop' + inc + 'LowLineBreak'] = {
+                category: 'Loops',
+                name: '',
+                type: 'text',
+                text: ' '
+            },
+
+            presets['decreaseLpRunTime' + inc] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Decrease RunTime Loop ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRunTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['decreaseLpRampTime' + inc] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Decrease RampTime Loop ' + inc,
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopRampTime',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },          
+            presets['Loop' + inc + 'APointDec'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' A Point Dec',
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopAPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+            presets['Loop' + inc + 'BPointDec'] = {
+                category: 'Loops',
+                type: 'button',
+                name: 'Loop ' + inc + ' B Point Dec',
+                style: {
+                    text: '⬇️ ' + inc,
+                    color: '16777215',
+                    bgcolor: combineRgb(0, 0, 100),
+                    // show_topbar: 0          //Hides the Top Bar
+                },
+                steps: [
+                    {
+                        down: [
+                            {
+                                actionId: 'setLoopBPoint',
+                                options: {
+                                    id_loop: inc,
+                                    direction: -1
+                                }
+                            }
+                        ],
+                        up: [
+                        ]
+                    }
+                ],
+                feedbacks: [
+                    {
+                        style: {
+                            color: foregroundColor,
+                            bgcolor: backgroundColorRed,
+                        }
+                    }
+                ]
+            },
+
             presets['Loop' + inc + 'Recall'] = {
                 category: 'Loops',
                 type: 'button',
@@ -5247,7 +5875,236 @@ module.exports = {
                     },
                 ]
             }
+            
         }
+
+        // #######################################
+        // ####     Streamdeck+ Encoders      ####
+        // #######################################
+        presets.MotFocusPosocusPositionControl = {
+            category: 'Encoders',
+            type: 'button',
+            name: 'Focus Position Control',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Focus Pos. Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 50),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 5,
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 5,
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'toggleIncrement',
+                            options: {
+                                id_mot: 5
+                            }
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.IrisPositionControl = {
+            category: 'Encoders',
+            type: 'button',
+            name: 'Iris Position Control',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Iris Pos. Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 50),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 6,
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 6,
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'toggleIncrement',
+                            options: {
+                                id_mot: 6
+                            }
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.ZoomPositionControl = {
+            category: 'Encoders',
+            type: 'button',
+            name: 'Zoom Position Control',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Zoom Pos. Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 0, 50),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 7,
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'positionDrive',
+                            options: {
+                                id_mot: 7,
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'toggleIncrement',
+                            options: {
+                                id_mot: 7
+                            }
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        
+        presets.PresetRunTimeRotary = {
+            category: 'Encoders',
+            type: 'button',
+            name: 'Preset Run Time Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Preset Run Time Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 50),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setPresetRunTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setPresetRunTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'resetPresetRunTimeSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        presets.PresetRampTimeRotary = {
+            category: 'Encoders',
+            type: 'button',
+            name: 'Preset Ramp Time Rotary',
+            options: { rotaryActions: true },
+            style: {
+                text: 'Preset Ramp Time Rotary',
+                size: 'auto',
+                color: '16777215',
+                bgcolor: combineRgb(0, 50, 50),
+            },
+            steps: [
+                {
+                    rotate_left: [
+                        {
+                            actionId: 'setPresetRampTimeSmart',
+                            options: {
+                                direction: -1
+                            }
+                        }
+                    ],
+                    rotate_right: [
+                        {
+                            actionId: 'setPresetRampTimeSmart',
+                            options: {
+                                direction: 1
+                            }
+                        }
+                    ],
+                    down: [
+                        {
+                            actionId: 'resetPresetRampTimeSmart'
+                        }
+                    ],
+                    up: [
+
+                    ],
+                },
+            ],
+        },
+        
+        presets.Header = {
+            category: 'Encoders',
+            name: 'Test Header',
+            type: 'text',
+            text: 'Testing a text preset'
+        },
+        
 
 
         // ########################
