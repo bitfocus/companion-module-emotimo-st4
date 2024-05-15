@@ -622,11 +622,20 @@ module.exports = function (self) {
 				}
 
 				if (toggleIncrement.options.id_mot < 3) {
-					if (temp == 1) {
-						temp = 10;
+					if (self.config.model == 'SA2.6 Conductor') {
+						if (temp == 1) {
+							temp = 10;
+						} else {
+							temp = 1;
+						}
 					} else {
-						temp = 1;
+						if (temp == 1000) {
+							temp = 10000;
+						} else {
+							temp = 1000;
+						}
 					}
+
 				} else if (toggleIncrement.options.id_mot < 5) {
 					if (temp == 1000) {
 						temp = 10000;
@@ -647,7 +656,7 @@ module.exports = function (self) {
 					}
 				}
 
-				self.log('debug', 'Motor ID: ' + toggleIncrement.options.id_mot + ' Increment: ' + temp)
+				self.log('debug', 'Model: ' + self.config.model + ' Motor ID: ' + toggleIncrement.options.id_mot + ' Increment: ' + temp)
 
 				if (toggleIncrement.options.id_mot == 1) {
 					temp = self.setVariableValues({ PStep: temp })

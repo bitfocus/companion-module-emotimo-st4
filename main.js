@@ -573,8 +573,13 @@ class eMotimoModuleInstance extends InstanceBase {
 		this.setVariableValues({ IPos: 5000 })
 		this.setVariableValues({ ZPos: 5000 })
 		this.setVariableValues({ RPos: 0 })
-		this.setVariableValues({ PStep: 1 })
-		this.setVariableValues({ TStep: 1 })
+		if (this.config.model == 'SA2.6 Conductor') {
+			this.setVariableValues({ TStep: 1 })
+			this.setVariableValues({ PStep: 1 })
+		} else {
+			this.setVariableValues({ TStep: 1000 })
+			this.setVariableValues({ PStep: 1000 })
+		}
 		this.setVariableValues({ SStep: 1000 })
 		this.setVariableValues({ MStep: 1000 })
 		this.setVariableValues({ FStep: 50 })
