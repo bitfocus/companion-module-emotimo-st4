@@ -49,9 +49,10 @@ class eMotimoModuleInstance extends InstanceBase {
 			delete this.socket
 		}
 
-		this.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
-		this.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
-		this.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		//These aren't visible to user declare in variable.js instead
+		// this.presetRunTimes = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+		// this.presetRampTimes = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+		// this.presetStatus = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 		this.config = config
 
@@ -185,13 +186,6 @@ class eMotimoModuleInstance extends InstanceBase {
 	sendEmotimoAPICommand = function (str) {
 		var self = this;
 
-		// if (self.tcp !== undefined) {
-		// 	var buf = Buffer.from(str, 'binary');
-		// 	self.tcp.send(buf);
-		// 	console.log('Sending: %s', buf);
-		// }
-
-		// var cmd = 'G500/n'
 		const sendBuf = Buffer.from(str, 'latin1')
 
 		if (self.config.prot == 'tcp') {
@@ -541,8 +535,6 @@ class eMotimoModuleInstance extends InstanceBase {
 
 			this.log('debug', "Heartbeat Initialized");
 			this.heartbeatInterval = setInterval(() => {
-				// var cmd = '\x01\xFF';
-				// self.sendVISCACommand(cmd);
 				var cmd = 'G500\n';
 				// var cmd = '\x45\x4D\x07\x00\x00\xC1\xA4';
 				this.sendEmotimoAPICommand(cmd);
