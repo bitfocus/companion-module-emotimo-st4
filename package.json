@@ -11,7 +11,7 @@
 		"url": "git+https://github.com/bitfocus/companion-module-emotimo-st4.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.4.3"
+		"@companion-module/base": "~1.8.0"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^0.5.1"
