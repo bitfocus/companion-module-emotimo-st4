@@ -395,6 +395,8 @@ module.exports = function (self) {
 					// self.log('debug', 'Motor ID' + setMotorPosition.options.id_mot + 'Position' + temp)
 
 
+
+
 					if (setMotorPosition.options.id_mot == 1) {
 						self.setVariableValues({ PPos: temp })
 					} else if (setMotorPosition.options.id_mot == 2) {

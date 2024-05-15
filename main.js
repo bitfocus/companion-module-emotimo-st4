@@ -210,6 +210,18 @@ class eMotimoModuleInstance extends InstanceBase {
 
 		this.log('debug', "Parse:" + tokens[0]);
 		switch (tokens[0]) {
+			case 'Positions':
+				var data = tokens[1].split(',')
+				// this.log('debug', "Position Update:" + data[0] + ":" + data[1]); //Data[0] has movement flags led by a space data[1] is Pan Position
+				this.setVariableValues({ PPos: Number(data[1])})
+				this.setVariableValues({ TPos: Number(data[2])})
+				this.setVariableValues({ SPos: Number(data[3])})
+				this.setVariableValues({ MPos: Number(data[4])})
+				this.setVariableValues({ FPos: Number(data[5])})
+				this.setVariableValues({ IPos: Number(data[6])})
+				this.setVariableValues({ ZPos: Number(data[7])})
+				// this.setVariableValues({ RPos: Number(data[8])})
+				break
 			case 'Preset Set':
 				var data = tokens[1].split(' ')
 				this.log('debug', "ID:" + data[0] + ":" + data[1]); //Data[0] is empty there is a space here
@@ -534,7 +546,7 @@ class eMotimoModuleInstance extends InstanceBase {
 				var cmd = 'G500\n';
 				// var cmd = '\x45\x4D\x07\x00\x00\xC1\xA4';
 				this.sendEmotimoAPICommand(cmd);
-			}, 3000)
+			}, 10000)
 		} else {
 			this.updateStatus(InstanceStatus.BadConfig)
 		}
