@@ -329,9 +329,19 @@ module.exports = function (self) {
 
 					if (actionJogSmart.options.id_mot < 5 || actionJogSmart.options.id_mot == 8) {
 						rawMotorSpeed += actionJogSmart.options.direction * 25
+						if (rawMotorSpeed > 500) {
+							rawMotorSpeed = 500
+						} else if (rawMotorSpeed < -500) {
+							rawMotorSpeed = -500
+						} 
 						motorSpeed = motorInversion * temp / 100.0 * rawMotorSpeed
 					} else {
 						rawMotorSpeed += actionJogSmart.options.direction * 5
+						if (rawMotorSpeed > 100) {
+							rawMotorSpeed = 100
+						} else if (rawMotorSpeed < -100) {
+							rawMotorSpeed = -100
+						} 
 						motorSpeed = motorInversion * temp / 100.0 * rawMotorSpeed
 					}
 
