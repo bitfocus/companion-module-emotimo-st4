@@ -457,6 +457,13 @@ module.exports = function (self) {
 					 */
 					const sendBuf = Buffer.from(cmd + setMotorPosition.options.id_mot + cmd2 + temp + cmd3, 'latin1')
 
+					clearInterval(self.heartbeatInterval)
+					self.heartbeatInterval = setInterval(() => {
+						var cmd = 'G500\n';
+						// var cmd = '\x45\x4D\x07\x00\x00\xC1\xA4';
+						self.sendEmotimoAPICommand(cmd);
+					}, 10000)
+
 					if (self.config.prot == 'tcp') {
 						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
@@ -568,6 +575,13 @@ module.exports = function (self) {
 					 * and destroys the 'binary' content
 					 */
 					const sendBuf = Buffer.from(cmd + cmdParam + temp + cmd2, 'latin1')
+
+					clearInterval(self.heartbeatInterval)
+					self.heartbeatInterval = setInterval(() => {
+						var cmd = 'G500\n';
+						// var cmd = '\x45\x4D\x07\x00\x00\xC1\xA4';
+						self.sendEmotimoAPICommand(cmd);
+					}, 10000)
 
 					if (self.config.prot == 'tcp') {
 						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
