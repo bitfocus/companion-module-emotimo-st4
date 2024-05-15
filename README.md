@@ -1,6 +1,6 @@
 # companion-module-eMotimo
 
-This module lets you control the ST4/S4.3 or the upcoming SA2.6
+This module lets you control the ST4/S4.3 or the new SA2.6
 
 **Current Functionality:**
 - Live Control
@@ -12,9 +12,10 @@ This module lets you control the ST4/S4.3 or the upcoming SA2.6
 - Loop Recall 
 - Motor Range Limits
 - Motor Speed Limits
-- Virtual Button Navigation for ST4/ST4.3
+- Virtual Button Navigation
 - Gimbal Homing
 - Tilta Auto Calibration
+- Encoder Prebuilt Buttons for Streamdeck+
 
 **Future Functionality:**
 - Saving/Loading Presets
