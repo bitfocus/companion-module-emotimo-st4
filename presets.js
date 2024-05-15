@@ -30,7 +30,7 @@ module.exports = {
         let image_down_left =
         'iVBORw0KGgoAAAANSUhEUgAAAEgAAAA6CAMAAAAk2e+/AAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+LUNEtwAAAARnQU1BAACxjwv8YQUAAAABc1JHQgCuzhzpAAABg1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8aT76cAAAAgHRSTlMAafwJfflezc+3WA7Z5Rk6PAvpBNE73kJT89QxZ48czNIv9A1DnI3qKQUaymjT4a7HdVuGf85LR20CVHr+tLBlA0GvYSTYZEnbAcazNPX4yB4GrAgnmL6Bcj4qIVKIe8kdVadIEe27B90bOG/3Er1rYJq1wibyh+4Q5CMzRllMXDo5euMAAAGfSURBVFjD7dblUwJBGAbw5aSlBJRGQERBkLC7u7u7u7veP90jDnaEcdhjP+k9X5h9Zu43O7PLe4eQECH/KGsIaUooOEcLK75LpehH628idSrE+nMANfyQ3MY2BRm0C6mM462tUwJAJtVyUB1WmsoSFZEk46D6TBcYS3UKPpCYawxD5VxHImVD/RHIxMQbGintkGQcppkcOkuutQPYfkDfmjck556ZTSydve2YY5UWk0Mww672VPh+XFqCU8tA+whtL+KOpa+bF3Rh8B4ymDNaSnSzG9IPIpsL34/HTPZfS58auMPYuYNMWcQXOsD3U9ZDOkZkkCvqwSIqUI2WfEDmgiQxRANiIp8GKtDLO6/Znw19oOdXhKoROtEUBr1F5Y9f4dt1XygqKgh6YqcHwMQkQBWICr1H6czTgrpoQde0IGnekJEWNEwLMv/GPDDB/M/fDioVeLYA5GqoYt+xNRY4toJkCiBUG7vTEVxJu2Z549RbqXQuba7uVDZWO66mgw6d7kYaEPvvCb+REIp/srGzLP4aa0n8zKFkKUSIkD+Qb9QrYMvxAbaBAAAAAElFTkSuQmCC'
 
-        let motorNames = ['Pan', 'Tilt', 'Slide', 'M4', 'TN Focus', 'TN Iris', 'TN Zoom', 'Roll']
+        let motorNames = ['Pan', 'Tilt', 'Slide', 'M4', 'TN Focus', 'TN Iris', 'TN Zoom', 'Roll', 'RS Focus']
 
         // ########################
         // #### System Presets ####
@@ -380,7 +380,7 @@ module.exports = {
                 {
                     down: [
                         {
-                            actionId: 'setJogSpeedSmart',
+                            actionId: 'setJogSpeedLimitSmart',
                             options: {
                                 direction: 1
                             }
@@ -516,7 +516,7 @@ module.exports = {
                 {
                     down: [
                         {
-                            actionId: 'resetJogSpeedSmart',
+                            actionId: 'resetJogSpeedLimitSmart',
                         }
                     ],
                     up: [
@@ -567,6 +567,9 @@ module.exports = {
                         actions: [
                             {
                                 actionId: 'recallStopA',
+                                options: {
+                                    id_mot: 0
+                                },
                                 delay: 0,
                             },
                         ],
@@ -650,6 +653,9 @@ module.exports = {
                         actions: [
                             {
                                 actionId: 'recallStopB',
+                                options: {
+                                    id_mot: 0
+                                },
                                 delay: 0,
                             },
                         ],
@@ -680,7 +686,7 @@ module.exports = {
                 {
                     down: [
                         {
-                            actionId: 'setJogSpeedSmart',
+                            actionId: 'setJogSpeedLimitSmart',
                             options: {
                                 direction: -1
                             }
@@ -761,7 +767,7 @@ module.exports = {
                 {
                     rotate_left: [
                         {
-                            actionId: 'setJogSpeedSmart',
+                            actionId: 'setJogSpeedLimitSmart',
                             options: {
                                 direction: -1
                             }
@@ -769,7 +775,7 @@ module.exports = {
                     ],
                     rotate_right: [
                         {
-                            actionId: 'setJogSpeedSmart',
+                            actionId: 'setJogSpeedLimitSmart',
                             options: {
                                 direction: 1
                             }
@@ -777,7 +783,7 @@ module.exports = {
                     ],
                     down: [
                         {
-                            actionId: 'resetJogSpeedSmart'
+                            actionId: 'resetJogSpeedLimitSmart'
                         }
                     ],
                     up: [
@@ -1675,6 +1681,60 @@ module.exports = {
                     },
                 ],
             },
+
+            presets.MotorHeader8 = {
+                category: 'Motors',
+                name: 'Velocity Control',
+                type: 'text',
+                text: 'These can be used to set a cruise control Speed. The motor will not stop until it reaches a Virtual Limit or the cruise speed is cleared. These are only available for Surfaces that support Rotary Encoders (Ex. Streamdeck+)'
+            }
+            for (let inc = 1; inc < 10; inc++) {
+                presets[motorNames[inc-1] + 'CruiseSpeed'] = {
+                    category: 'Motors',
+                    type: 'button',
+                    name: motorNames[inc-1] + ' Velocity Control',
+                    options: { rotaryActions: true },
+                    style: {
+                        text: motorNames[inc-1] + ' Vel. Rotary',
+                        size: 'auto',
+                        color: '16777215',
+                        bgcolor: combineRgb(0, 0, 50),
+                    },
+                    steps: [
+                        {
+                            rotate_left: [
+                                {
+                                    actionId: 'setCruiseSpeed',
+                                    options: {
+                                        id_mot: inc,
+                                        direction: -1
+                                    }
+                                }
+                            ],
+                            rotate_right: [
+                                {
+                                    actionId: 'setCruiseSpeed',
+                                    options: {
+                                        id_mot: inc,
+                                        direction: 1
+                                    }
+                                }
+                            ],
+                            down: [
+                                {
+                                    actionId: 'resetCruiseSpeed',
+                                    options: {
+                                        id_mot: inc
+                                    }
+                                }
+                            ],
+                            up: [
+    
+                            ],
+                        },
+                    ],
+                }
+            }
             
             presets.MotorHeader5 = {
                 category: 'Motors',
@@ -1697,7 +1757,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'setJogSpeed',
+                                actionId: 'setJogSpeedLimit',
                                 options: {
                                     id_mot: inc,
                                     direction: 1
@@ -1733,7 +1793,7 @@ module.exports = {
                 type: 'button',
                 name: 'Pan Speed',
                 style: {
-                    text: 'Pan\\nSpeed:\\n$(companion-module-emotimo-st4-3:PanSpeed)',
+                    text: 'Pan\\nSpeed:\\n$(companion-module-emotimo-st4-3:PanSpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1742,7 +1802,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 1
                                 }
@@ -1767,7 +1827,7 @@ module.exports = {
                 type: 'button',
                 name: 'Tilt Speed',
                 style: {
-                    text: 'Tilt\\nSpeed:\\n$(companion-module-emotimo-st4-3:TiltSpeed)',
+                    text: 'Tilt\\nSpeed:\\n$(companion-module-emotimo-st4-3:TiltSpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1776,7 +1836,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 2
                                 }
@@ -1801,7 +1861,7 @@ module.exports = {
                 type: 'button',
                 name: 'M3 Speed',
                 style: {
-                    text: 'Slide\\nSpeed:\\n$(companion-module-emotimo-st4-3:M3Speed)',
+                    text: 'Slide\\nSpeed:\\n$(companion-module-emotimo-st4-3:M3SpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1810,7 +1870,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 3
                                 }
@@ -1835,7 +1895,7 @@ module.exports = {
                 type: 'button',
                 name: 'M4 Speed',
                 style: {
-                    text: 'M4\\nSpeed:\\n$(companion-module-emotimo-st4-3:M4Speed)',
+                    text: 'M4\\nSpeed:\\n$(companion-module-emotimo-st4-3:M4SpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1844,7 +1904,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 4
                                 }
@@ -1869,7 +1929,7 @@ module.exports = {
                 type: 'button',
                 name: 'Focus Speed',
                 style: {
-                    text: 'Focus\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN1Speed)',
+                    text: 'Focus\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN1SpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1878,7 +1938,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 5
                                 }
@@ -1903,7 +1963,7 @@ module.exports = {
                 type: 'button',
                 name: 'Iris Speed',
                 style: {
-                    text: 'Iris\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN2Speed)',
+                    text: 'Iris\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN2SpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1912,7 +1972,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 6
                                 }
@@ -1937,7 +1997,7 @@ module.exports = {
                 type: 'button',
                 name: 'Zoom Speed',
                 style: {
-                    text: 'Zoom\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN3Speed)',
+                    text: 'Zoom\\nSpeed:\\n$(companion-module-emotimo-st4-3:TN3SpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1946,7 +2006,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 7
                                 }
@@ -1971,7 +2031,7 @@ module.exports = {
                 type: 'button',
                 name: 'Roll Speed',
                 style: {
-                    text: 'Roll\\nSpeed:\\n$(companion-module-emotimo-st4-3:RollSpeed)',
+                    text: 'Roll\\nSpeed:\\n$(companion-module-emotimo-st4-3:RollSpeedLimit)',
                     size: 'auto',
                     color: '16777215',
                     bgcolor: combineRgb(0, 0, 0),
@@ -1980,7 +2040,7 @@ module.exports = {
                     {
                         down: [
                             {
-                                actionId: 'resetJogSpeed',
+                                actionId: 'resetJogSpeedLimit',
                                 options: {
                                     id_mot: 8
                                 }
@@ -2022,7 +2082,7 @@ module.exports = {
                         {
                             down: [
                                 {
-                                    actionId: 'setJogSpeed',
+                                    actionId: 'setJogSpeedLimit',
                                     options: {
                                         id_mot: inc,
                                         direction: -1
@@ -2977,7 +3037,7 @@ module.exports = {
         //         {
         //             down: [
         //                 {
-        //                     actionId: 'setJogSpeed',
+        //                     actionId: 'setJogSpeedLimit',
         //                     options: {
         //                         id_mot: 1,
         //                         direction: 1

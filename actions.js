@@ -19,7 +19,18 @@ const MOTOR_ID = [
 	{ id: 9, label: 'Focus' },
 ]
 
-
+const MOTOR_ID_UNSET = [ //This is used to have a null value so we can pull the CurrentMtrSet value instead
+	{ id: 0, label: 'Unset' },
+	{ id: 1, label: 'Pan' },
+	{ id: 2, label: 'Tilt' },
+	{ id: 3, label: 'Slide' },
+	{ id: 4, label: 'TurnTable' },
+	{ id: 5, label: 'TN 1' },
+	{ id: 6, label: 'TN 2' },
+	{ id: 7, label: 'TN 3' },
+	{ id: 8, label: 'Roll' },
+	{ id: 9, label: 'Focus' },
+]
 
 const TN_MOTOR_ID = [
 	{ id: 5, label: 'TN 1' },
@@ -185,31 +196,31 @@ module.exports = function (self) {
 				if (cmd != '') {
 
 					if (actionJogSmart.options.id_mot == 1) {
-						temp = self.getVariableValue('PanSpeed')
+						temp = self.getVariableValue('PanSpeedLimit')
 						motorInversion = self.getVariableValue('PanInversion')
 					} else if (actionJogSmart.options.id_mot == 2) {
-						temp = self.getVariableValue('TiltSpeed')
+						temp = self.getVariableValue('TiltSpeedLimit')
 						motorInversion = self.getVariableValue('TiltInversion')
 					} else if (actionJogSmart.options.id_mot == 3) {
-						temp = self.getVariableValue('M3Speed')
+						temp = self.getVariableValue('M3SpeedLimit')
 						motorInversion = self.getVariableValue('M3Inversion')
 					} else if (actionJogSmart.options.id_mot == 4) {
-						temp = self.getVariableValue('M4Speed')
+						temp = self.getVariableValue('M4SpeedLimit')
 						motorInversion = self.getVariableValue('M4Inversion')
 					} else if (actionJogSmart.options.id_mot == 5) {
-						temp = self.getVariableValue('TN1Speed')
+						temp = self.getVariableValue('TN1SpeedLimit')
 						motorInversion = self.getVariableValue('TN1Inversion')
 					} else if (actionJogSmart.options.id_mot == 6) {
-						temp = self.getVariableValue('TN2Speed')
+						temp = self.getVariableValue('TN2SpeedLimit')
 						motorInversion = self.getVariableValue('TN2Inversion')
 					} else if (actionJogSmart.options.id_mot == 7) {
-						temp = self.getVariableValue('TN3Speed')
+						temp = self.getVariableValue('TN3SpeedLimit')
 						motorInversion = self.getVariableValue('TN3Inversion')
 					} else if (actionJogSmart.options.id_mot == 8) {
-						temp = self.getVariableValue('RollSpeed')
+						temp = self.getVariableValue('RollSpeedLimit')
 						motorInversion = self.getVariableValue('RollInversion')
 					} else if (actionJogSmart.options.id_mot == 9) {
-						temp = self.getVariableValue('FocusSpeed')
+						temp = self.getVariableValue('FocusSpeedLimit')
 						motorInversion = self.getVariableValue('FocusInversion')
 					}
 
@@ -217,6 +228,131 @@ module.exports = function (self) {
 						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 500.0
 					} else {
 						motorSpeed = motorInversion * actionJogSmart.options.direction * temp / 100.0 * 100.0
+					}
+
+					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
+
+					/*
+					 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+					 * sending a string assumes 'utf8' encoding
+					 * which then escapes character values over 0x7F
+					 * and destroys the 'binary' content
+					 */
+					const sendBuf = Buffer.from(cmd + actionJogSmart.options.id_mot + cmd2 + motorSpeed + cmd3, 'latin1')
+
+					if (self.config.prot == 'tcp') {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						if (self.socket !== undefined && self.socket.isConnected) {
+							self.socket.send(sendBuf)
+						} else {
+							self.log('debug', 'Socket not connected :(')
+						}
+					}
+
+					if (self.config.prot == 'udp') {
+						if (self.udp !== undefined) {
+							self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+							self.udp.send(sendBuf)
+						}
+					}
+				}
+			},
+		},
+		setCruiseSpeed: {
+			name: 'Set Motor Cruise Speed',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 2,
+					choices: MOTOR_ID,
+				},
+				{
+					id: 'direction',
+					type: 'dropdown',
+					label: 'Direction',
+					default: 1,
+					choices: DIRECTION_ID,
+				},
+			],
+			callback: async (actionJogSmart) => {
+				const cmd = 'G301 M'
+				const cmd2 = ' V'
+				const cmd3 = '\n'
+				var motorSpeed = 0
+				var motorInversion = 1
+				var rawMotorSpeed = 0
+				var temp = 0
+
+				if (cmd != '') {
+
+					if (actionJogSmart.options.id_mot == 1) {
+						temp = self.getVariableValue('PanSpeedLimit')
+						rawMotorSpeed = self.getVariableValue('PanCruiseSpeed')
+						motorInversion = self.getVariableValue('PanInversion')
+					} else if (actionJogSmart.options.id_mot == 2) {
+						temp = self.getVariableValue('TiltSpeedLimit')
+						rawMotorSpeed = self.getVariableValue('TiltCruiseSpeed')
+						motorInversion = self.getVariableValue('TiltInversion')
+					} else if (actionJogSmart.options.id_mot == 3) {
+						temp = self.getVariableValue('M3SpeedLimit')
+						rawMotorSpeed = self.getVariableValue('M3CruiseSpeed')
+						motorInversion = self.getVariableValue('M3Inversion')
+					} else if (actionJogSmart.options.id_mot == 4) {
+						temp = self.getVariableValue('M4SpeedLimit')
+						rawMotorSpeed = self.getVariableValue('M4CruiseSpeed')
+						motorInversion = self.getVariableValue('M4Inversion')
+					} else if (actionJogSmart.options.id_mot == 5) {
+						temp = self.getVariableValue('TN1SpeedLimit')
+						rawMotorSpeed = self.getVariableValue('TN1CruiseSpeed')
+						motorInversion = self.getVariableValue('TN1Inversion')
+					} else if (actionJogSmart.options.id_mot == 6) {
+						temp = self.getVariableValue('TN2SpeedLimit')
+						rawMotorSpeed = self.getVariableValue('TN2CruiseSpeed')
+						motorInversion = self.getVariableValue('TN2Inversion')
+					} else if (actionJogSmart.options.id_mot == 7) {
+						temp = self.getVariableValue('TN3SpeedLimit')
+						rawMotorSpeed = self.getVariableValue('TN3CruiseSpeed')
+						motorInversion = self.getVariableValue('TN3Inversion')
+					} else if (actionJogSmart.options.id_mot == 8) {
+						temp = self.getVariableValue('RollSpeedLimit')
+						rawMotorSpeed = self.getVariableValue('RollCruiseSpeed')
+						motorInversion = self.getVariableValue('RollInversion')
+					} else if (actionJogSmart.options.id_mot == 9) {
+						temp = self.getVariableValue('FocusSpeedLimit')
+						rawMotorSpeed = self.getVariableValue('FocusCruiseSpeed')
+						motorInversion = self.getVariableValue('FocusInversion')
+					}
+
+					if (actionJogSmart.options.id_mot < 5 || actionJogSmart.options.id_mot == 8) {
+						rawMotorSpeed += actionJogSmart.options.direction * 25
+						motorSpeed = motorInversion * temp / 100.0 * rawMotorSpeed
+					} else {
+						rawMotorSpeed += actionJogSmart.options.direction * 5
+						motorSpeed = motorInversion * temp / 100.0 * rawMotorSpeed
+					}
+
+					if (actionJogSmart.options.id_mot == 1) {
+						self.setVariableValues({ PanCruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 2) {
+						self.setVariableValues({ TiltCruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 3) {
+						self.setVariableValues({ M3CruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 4) {
+						self.setVariableValues({ M4CruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 5) {
+						self.setVariableValues({ TN1CruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 6) {
+						self.setVariableValues({ TN2CruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 7) {
+						self.setVariableValues({ TN3CruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 8) {
+						self.setVariableValues({ RollCruiseSpeed: rawMotorSpeed })
+					} else if (actionJogSmart.options.id_mot == 9) {
+						self.setVariableValues({ FocusCruiseSpeed: rawMotorSpeed })
 					}
 
 					self.log('debug', 'Temp: ' + temp + ' Motor Speed: ' + motorSpeed)
@@ -523,7 +659,7 @@ module.exports = function (self) {
 
 			}
 		},
-		setJogSpeed: {
+		setJogSpeedLimit: {
 			name: 'Set Motor Jog Speed',
 			options: [
 				{
@@ -545,21 +681,21 @@ module.exports = function (self) {
 				var temp = 0
 
 				if (jogSpeed.options.id_mot == 1) {
-					temp = self.getVariableValue('PanSpeed')
+					temp = self.getVariableValue('PanSpeedLimit')
 				} else if (jogSpeed.options.id_mot == 2) {
-					temp = self.getVariableValue('TiltSpeed')
+					temp = self.getVariableValue('TiltSpeedLimit')
 				} else if (jogSpeed.options.id_mot == 3) {
-					temp = self.getVariableValue('M3Speed')
+					temp = self.getVariableValue('M3SpeedLimit')
 				} else if (jogSpeed.options.id_mot == 4) {
-					temp = self.getVariableValue('M4Speed')
+					temp = self.getVariableValue('M4SpeedLimit')
 				} else if (jogSpeed.options.id_mot == 5) {
-					temp = self.getVariableValue('TN1Speed')
+					temp = self.getVariableValue('TN1SpeedLimit')
 				} else if (jogSpeed.options.id_mot == 6) {
-					temp = self.getVariableValue('TN2Speed')
+					temp = self.getVariableValue('TN2SpeedLimit')
 				} else if (jogSpeed.options.id_mot == 7) {
-					temp = self.getVariableValue('TN3Speed')
+					temp = self.getVariableValue('TN3SpeedLimit')
 				} else if (jogSpeed.options.id_mot == 8) {
-					temp = self.getVariableValue('RollSpeed')
+					temp = self.getVariableValue('RollSpeedLimit')
 				}
 
 				temp += jogSpeed.options.direction
@@ -573,26 +709,26 @@ module.exports = function (self) {
 				self.log('debug', 'Motor ID: ' + jogSpeed.options.id_mot + ' Speed: ' + temp)
 
 				if (jogSpeed.options.id_mot == 1) {
-					self.setVariableValues({ PanSpeed: temp })
+					self.setVariableValues({ PanSpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 2) {
-					self.setVariableValues({ TiltSpeed: temp })
+					self.setVariableValues({ TiltSpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 3) {
-					self.setVariableValues({ M3Speed: temp })
+					self.setVariableValues({ M3SpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 4) {
-					self.setVariableValues({ M4Speed: temp })
+					self.setVariableValues({ M4SpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 5) {
-					self.setVariableValues({ TN1Speed: temp })
+					self.setVariableValues({ TN1SpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 6) {
-					self.setVariableValues({ TN2Speed: temp })
+					self.setVariableValues({ TN2SpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 7) {
-					self.setVariableValues({ TN3Speed: temp })
+					self.setVariableValues({ TN3SpeedLimit: temp })
 				} else if (jogSpeed.options.id_mot == 8) {
-					self.setVariableValues({ RollSpeed: temp })
+					self.setVariableValues({ RollSpeedLimit: temp })
 				}
 
 			}
 		},
-		resetJogSpeed: {
+		resetJogSpeedLimit: {
 			name: 'Reset Motor Jog Speed',
 			options: [
 				{
@@ -606,21 +742,86 @@ module.exports = function (self) {
 			callback: async (resetSpeed) => {
 
 				if (resetSpeed.options.id_mot == 1) {
-					self.setVariableValues({ PanSpeed: 100 })
+					self.setVariableValues({ PanSpeedLimit: 100 })
 				} else if (resetSpeed.options.id_mot == 2) {
-					self.setVariableValues({ TiltSpeed: 100 })
+					self.setVariableValues({ TiltSpeedLimit: 100 })
 				} else if (resetSpeed.options.id_mot == 3) {
-					self.setVariableValues({ M3Speed: 100 })
+					self.setVariableValues({ M3SpeedLimit: 100 })
 				} else if (resetSpeed.options.id_mot == 4) {
-					self.setVariableValues({ M4Speed: 100 })
+					self.setVariableValues({ M4SpeedLimit: 100 })
 				} else if (resetSpeed.options.id_mot == 5) {
-					self.setVariableValues({ TN1Speed: 25 })
+					self.setVariableValues({ TN1SpeedLimit: 25 })
 				} else if (resetSpeed.options.id_mot == 6) {
-					self.setVariableValues({ TN2Speed: 25 })
+					self.setVariableValues({ TN2SpeedLimit: 25 })
 				} else if (resetSpeed.options.id_mot == 7) {
-					self.setVariableValues({ TN3Speed: 25 })
+					self.setVariableValues({ TN3SpeedLimit: 25 })
 				} else if (resetSpeed.options.id_mot == 8) {
-					self.setVariableValues({ RollSpeed: 100 })
+					self.setVariableValues({ RollSpeedLimit: 100 })
+				}
+
+			}
+		},
+		resetCruiseSpeed: {
+			name: 'Reset Motor Cruise Speed',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'id_mot',
+					label: 'Motor ID',
+					default: 1,
+					choices: MOTOR_ID,
+				},
+			],
+			callback: async (resetSpeed) => {
+				const cmd = 'G301 M'
+				const cmd2 = ' V0'
+				const cmd3 = '\n'
+
+				if (resetSpeed.options.id_mot == 1) {
+					self.setVariableValues({ PanCruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 2) {
+					self.setVariableValues({ TiltCruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 3) {
+					self.setVariableValues({ M3CruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 4) {
+					self.setVariableValues({ M4CruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 5) {
+					self.setVariableValues({ TN1CruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 6) {
+					self.setVariableValues({ TN2CruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 7) {
+					self.setVariableValues({ TN3CruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 8) {
+					self.setVariableValues({ RollCruiseSpeed: 0 })
+				} else if (resetSpeed.options.id_mot == 9) {
+					self.setVariableValues({ FocusCruiseSpeed: 0 })
+				}
+
+
+				/*
+				 * create a binary buffer pre-encoded 'latin1' (8bit no change bytes)
+				 * sending a string assumes 'utf8' encoding
+				 * which then escapes character values over 0x7F
+				 * and destroys the 'binary' content
+				 */
+				const sendBuf = Buffer.from(cmd + resetSpeed.options.id_mot + cmd2 + cmd3, 'latin1')
+
+				if (self.config.prot == 'tcp') {
+					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+					if (self.socket !== undefined && self.socket.isConnected) {
+						self.socket.send(sendBuf)
+					} else {
+						self.log('debug', 'Socket not connected :(')
+					}
+				}
+
+				if (self.config.prot == 'udp') {
+					if (self.udp !== undefined) {
+						self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
+
+						self.udp.send(sendBuf)
+					}
 				}
 
 			}
@@ -2890,13 +3091,19 @@ module.exports = function (self) {
 					type: 'dropdown',
 					id: 'id_mot',
 					label: 'Motor ID',
-					default: 1,
-					choices: MOTOR_ID,
+					default: 0,
+					choices: MOTOR_ID_UNSET,
 				},
 			],
 			callback: async (recStopA) => {
-				const cmd = 'G217'
-				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+				const cmd = 'G217 M'
+				var motorID = recStopA.options.id_mot
+
+				if (motorID == 0) {
+					motorID = self.getVariableValue('CurrentMtrSet')
+				}
+
+				const sendBuf = Buffer.from(cmd + motorID  + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2916,13 +3123,19 @@ module.exports = function (self) {
 					type: 'dropdown',
 					id: 'id_mot',
 					label: 'Motor ID',
-					default: 1,
-					choices: MOTOR_ID,
+					default: 0,
+					choices: MOTOR_ID_UNSET,
 				},
 			],
 			callback: async (recStopB) => {
-				const cmd = 'G218'
-				const sendBuf = Buffer.from(cmd + '\n', 'latin1')
+				const cmd = 'G218 M'
+				var motorID = recStopB.options.id_mot
+
+				if (motorID == 0) {
+					motorID = self.getVariableValue('CurrentMtrSet')
+				}
+
+				const sendBuf = Buffer.from(cmd + motorID  + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -3090,55 +3303,55 @@ module.exports = function (self) {
 
 				if (motor == 1) {
 					motorName = 'Pan'
-					motorSpeed = self.getVariableValue('PanSpeed')
+					motorSpeed = self.getVariableValue('PanSpeedLimit')
 					motorInvert = self.getVariableValue('PanInversion')
 					motorPosName = motorName + ' Right'
 					motorNegName = motorName + ' Left'
 				} else if (motor == 2) {
 					motorName = 'Tilt'
-					motorSpeed = self.getVariableValue('TiltSpeed')
+					motorSpeed = self.getVariableValue('TiltSpeedLimit')
 					motorInvert = self.getVariableValue('TiltInversion')
 					motorPosName = motorName + ' Up'
 					motorNegName = motorName + ' Down'
 				} else if (motor == 3) {
 					motorName = 'Slide'
-					motorSpeed = self.getVariableValue('M3Speed')
+					motorSpeed = self.getVariableValue('M3SpeedLimit')
 					motorInvert = self.getVariableValue('M3Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 4) {
 					motorName = 'M4'
-					motorSpeed = self.getVariableValue('M4Speed')
+					motorSpeed = self.getVariableValue('M4SpeedLimit')
 					motorInvert = self.getVariableValue('M4Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 5) {
 					motorName = 'Focus'
-					motorSpeed = self.getVariableValue('TN1Speed')
+					motorSpeed = self.getVariableValue('TN1SpeedLimit')
 					motorInvert = self.getVariableValue('TN1Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 6) {
 					motorName = 'Iris'
-					motorSpeed = self.getVariableValue('TN2Speed')
+					motorSpeed = self.getVariableValue('TN2SpeedLimit')
 					motorInvert = self.getVariableValue('TN2Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 7) {
 					motorName = 'Zoom'
-					motorSpeed = self.getVariableValue('TN3Speed')
+					motorSpeed = self.getVariableValue('TN3SpeedLimit')
 					motorInvert = self.getVariableValue('TN3Inversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
 				} else if (motor == 8) {
 					motorName = 'Roll'
-					motorSpeed = self.getVariableValue('RollSpeed')
+					motorSpeed = self.getVariableValue('RollSpeedLimit')
 					motorInvert = self.getVariableValue('RollInversion')
 					motorPosName = motorName + ' CW'
 					motorNegName = motorName + ' CCW'
 				} else if (motor == 9) {
 					motorName = 'RS Focus'
-					motorSpeed = self.getVariableValue('FocusSpeed')
+					motorSpeed = self.getVariableValue('FocusSpeedLimit')
 					motorInvert = self.getVariableValue('FocusInversion')
 					motorPosName = motorName + ' Pos'
 					motorNegName = motorName + ' Neg'
@@ -3266,7 +3479,7 @@ module.exports = function (self) {
 				}
 			}
 		},
-		setJogSpeedSmart: {
+		setJogSpeedLimitSmart: {
 			name: 'Set Motor Jog Speed Smart',
 			options: [
 				{
@@ -3294,30 +3507,30 @@ module.exports = function (self) {
 				self.log('debug', 'Motor ID: ' + motor + ' Speed: ' + motorSpeed)
 
 				if (motor == 1) {
-					self.setVariableValues({ PanSpeed: motorSpeed })
+					self.setVariableValues({ PanSpeedLimit: motorSpeed })
 				} else if (motor == 2) {
-					self.setVariableValues({ TiltSpeed: motorSpeed })
+					self.setVariableValues({ TiltSpeedLimit: motorSpeed })
 				} else if (motor == 3) {
-					self.setVariableValues({ M3Speed: motorSpeed })
+					self.setVariableValues({ M3SpeedLimit: motorSpeed })
 				} else if (motor == 4) {
-					self.setVariableValues({ M4Speed: motorSpeed })
+					self.setVariableValues({ M4SpeedLimit: motorSpeed })
 				} else if (motor == 5) {
-					self.setVariableValues({ TN1Speed: motorSpeed })
+					self.setVariableValues({ TN1SpeedLimit: motorSpeed })
 				} else if (motor == 6) {
-					self.setVariableValues({ TN2Speed: motorSpeed })
+					self.setVariableValues({ TN2SpeedLimit: motorSpeed })
 				} else if (motor == 7) {
-					self.setVariableValues({ TN3Speed: motorSpeed })
+					self.setVariableValues({ TN3SpeedLimit: motorSpeed })
 				} else if (motor == 8) {
-					self.setVariableValues({ RollSpeed: motorSpeed })
+					self.setVariableValues({ RollSpeedLimit: motorSpeed })
 				} else if (motor == 9) {
-					self.setVariableValues({ FocusSpeed: motorSpeed })
+					self.setVariableValues({ FocusSpeedLimit: motorSpeed })
 				}
 
 				self.setVariableValues({ CurrentMtrSpeed: motorSpeed })
 
 			}
 		},
-		resetJogSpeedSmart: {
+		resetJogSpeedLimitSmart: {
 			name: 'Reset Motor Jog Speed Smart',
 			options: [
 				
@@ -3325,28 +3538,28 @@ module.exports = function (self) {
 			callback: async (resetSpeed) => {
 				var motor = self.getVariableValue('CurrentMtrSet')
 				if (motor == 1) {
-					self.setVariableValues({ PanSpeed: 100 })
+					self.setVariableValues({ PanSpeedLimit: 100 })
 					self.setVariableValues({ CurrentMtrSpeed: 100 })
 				} else if (motor == 2) {
-					self.setVariableValues({ TiltSpeed: 100 })
+					self.setVariableValues({ TiltSpeedLimit: 100 })
 					self.setVariableValues({ CurrentMtrSpeed: 100 })
 				} else if (motor == 3) {
-					self.setVariableValues({ M3Speed: 100 })
+					self.setVariableValues({ M3SpeedLimit: 100 })
 					self.setVariableValues({ CurrentMtrSpeed: 100 })
 				} else if (motor == 4) {
-					self.setVariableValues({ M4Speed: 100 })
+					self.setVariableValues({ M4SpeedLimit: 100 })
 					self.setVariableValues({ CurrentMtrSpeed: 100 })
 				} else if (motor == 5) {
-					self.setVariableValues({ TN1Speed: 25 })
+					self.setVariableValues({ TN1SpeedLimit: 25 })
 					self.setVariableValues({ CurrentMtrSpeed: 25 })
 				} else if (motor == 6) {
-					self.setVariableValues({ TN2Speed: 25 })
+					self.setVariableValues({ TN2SpeedLimit: 25 })
 					self.setVariableValues({ CurrentMtrSpeed: 25 })
 				} else if (motor == 7) {
-					self.setVariableValues({ TN3Speed: 25 })
+					self.setVariableValues({ TN3SpeedLimit: 25 })
 					self.setVariableValues({ CurrentMtrSpeed: 25 })
 				} else if (motor == 8) {
-					self.setVariableValues({ RollSpeed: 100 })
+					self.setVariableValues({ RollSpeedLimit: 100 })
 					self.setVariableValues({ CurrentMtrSpeed: 100 })
 				}
 
@@ -3376,31 +3589,31 @@ module.exports = function (self) {
 				if (cmd != '') {
 
 					if (motor == 1) {
-						temp = self.getVariableValue('PanSpeed')
+						temp = self.getVariableValue('PanSpeedLimit')
 						motorInversion = self.getVariableValue('PanInversion')
 					} else if (motor == 2) {
-						temp = self.getVariableValue('TiltSpeed')
+						temp = self.getVariableValue('TiltSpeedLimit')
 						motorInversion = self.getVariableValue('TiltInversion')
 					} else if (motor == 3) {
-						temp = self.getVariableValue('M3Speed')
+						temp = self.getVariableValue('M3SpeedLimit')
 						motorInversion = self.getVariableValue('M3Inversion')
 					} else if (motor == 4) {
-						temp = self.getVariableValue('M4Speed')
+						temp = self.getVariableValue('M4SpeedLimit')
 						motorInversion = self.getVariableValue('M4Inversion')
 					} else if (motor == 5) {
-						temp = self.getVariableValue('TN1Speed')
+						temp = self.getVariableValue('TN1SpeedLimit')
 						motorInversion = self.getVariableValue('TN1Inversion')
 					} else if (motor == 6) {
-						temp = self.getVariableValue('TN2Speed')
+						temp = self.getVariableValue('TN2SpeedLimit')
 						motorInversion = self.getVariableValue('TN2Inversion')
 					} else if (motor == 7) {
-						temp = self.getVariableValue('TN3Speed')
+						temp = self.getVariableValue('TN3SpeedLimit')
 						motorInversion = self.getVariableValue('TN3Inversion')
 					} else if (motor == 8) {
-						temp = self.getVariableValue('RollSpeed')
+						temp = self.getVariableValue('RollSpeedLimit')
 						motorInversion = self.getVariableValue('RollInversion')
 					} else if (motor == 9) {
-						temp = self.getVariableValue('FocusSpeed')
+						temp = self.getVariableValue('FocusSpeedLimit')
 						motorInversion = self.getVariableValue('FocusInversion')
 					}
 
