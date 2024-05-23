@@ -237,6 +237,7 @@ module.exports = function (self) {
 					 * sending a string assumes 'utf8' encoding
 					 * which then escapes character values over 0x7F
 					 * and destroys the 'binary' content
+					 * new for committestbri
 					 */
 					const sendBuf = Buffer.from(cmd + actionJogSmart.options.id_mot + cmd2 + motorSpeed + cmd3, 'latin1')
 
