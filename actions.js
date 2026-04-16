@@ -901,9 +901,11 @@ module.exports = function (self) {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G21 P'
 
-
+//
 				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num] / 10 + ' A' + self.presetRampTimes[setPreset.options.num] / 10 + '\n', 'latin1')
+				//const sendBuf = Buffer.from(cmd + savePset.options.num + ' T' + self.presetRunTimes[savePset.options.num] / 10 + ' A' + self.presetRampTimes[savePset.options.num] / 10 + '\n', 'latin1')
 
+				
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
@@ -931,6 +933,7 @@ module.exports = function (self) {
 				// console.log('Hello world!', event.options.num)
 				const cmd = 'G20 P'
 				const sendBuf = Buffer.from(cmd + recallPreset.options.num + '\n', 'latin1')
+				
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
