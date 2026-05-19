@@ -113,6 +113,17 @@ const VIRTUAL_BUTTON = [
 
 ]
 
+function snapTime(value) {
+	if (value >= 20) return Math.round(value)
+	if (value >= 10) return Math.round(value * 2) / 2
+	return Math.round(value * 5) / 5
+}
+
+function clampRamp(ramptemp, runtemp) {
+	const rampMax = snapTime(Math.round(runtemp * 0.45 * 10) / 10)
+	return Math.min(ramptemp, rampMax)
+}
+
 module.exports = function (self) {
 	self.setActionDefinitions({
 		jogMotor: {
@@ -903,7 +914,7 @@ module.exports = function (self) {
 				const ramptemp = self.getVariableValue('Pst' + num + 'RampT')
 
 				const cmd = 'G21 P'
-				const sendBuf = Buffer.from(cmd + num + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + num + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1031,13 +1042,11 @@ module.exports = function (self) {
 				// 	temp = self.getVariableValue('Pst29RunT')
 				// }
 
-				runtemp += runTime.options.direction
-
-				if (runtemp > 600) {
-					runtemp = 600;
-				} else if (runtemp < 10) {
-					runtemp = 10;
-				}
+				const runStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				runtemp = snapTime(Math.round((runtemp + runTime.options.direction * runStep) * 10) / 10)
+				if (runtemp > 120.0) runtemp = 120.0
+				if (runtemp < 1.0) runtemp = 1.0
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Preset ID: ' + runTime.options.id_pst + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -1105,9 +1114,10 @@ module.exports = function (self) {
 				} else if (runTime.options.id_pst == 29) {
 					self.setVariableValues({ Pst29RunT: runtemp })
 				}
+				self.setVariableValues({ ['Pst' + runTime.options.id_pst + 'RampT']: ramptemp })
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + runTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + runTime.options.id_pst + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1206,13 +1216,10 @@ module.exports = function (self) {
 				// 	temp = self.getVariableValue('Pst29RampT')
 				// }
 
-				ramptemp += rampTime.options.direction
-
-				if (ramptemp > 250) {
-					ramptemp = 250;
-				} else if (ramptemp < 1) {
-					ramptemp = 1;
-				}
+				const rampStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				ramptemp = snapTime(Math.round((ramptemp + rampTime.options.direction * rampStep) * 10) / 10)
+				if (ramptemp < 0.2) ramptemp = 0.2
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Preset ID: ' + rampTime.options.id_pst + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -1279,7 +1286,7 @@ module.exports = function (self) {
 				}
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + rampTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + rampTime.options.id_pst + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1306,7 +1313,7 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetPresetRunTime) => {
-				var runtemp = 50;
+				var runtemp = 5.0;
 				var ramptemp = self.getVariableValue('Pst' + resetPresetRunTime.options.id_pst + 'RampT')
 
 				if (resetPresetRunTime.options.id_pst == 0) {
@@ -1372,7 +1379,7 @@ module.exports = function (self) {
 				}
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + resetPresetRunTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + resetPresetRunTime.options.id_pst + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1398,7 +1405,7 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetPresetRampTime) => {
-				var ramptemp = 10;
+				var ramptemp = 1.0;
 				var runtemp = self.getVariableValue('Pst' + resetPresetRampTime.options.id_pst + 'RunT')
 
 				if (resetPresetRampTime.options.id_pst == 0) {
@@ -1464,7 +1471,7 @@ module.exports = function (self) {
 				}
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + resetPresetRampTime.options.id_pst + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + resetPresetRampTime.options.id_pst + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1497,13 +1504,11 @@ module.exports = function (self) {
 				runtemp = self.getVariableValue('CurrentPstSetRun')
 				ramptemp = self.getVariableValue('CurrentPstSetRamp')
 
-				runtemp += runTime.options.direction
-
-				if (runtemp > 600) {
-					runtemp = 600;
-				} else if (runtemp < 10) {
-					runtemp = 10;
-				}
+				const runStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				runtemp = snapTime(Math.round((runtemp + runTime.options.direction * runStep) * 10) / 10)
+				if (runtemp > 120.0) runtemp = 120.0
+				if (runtemp < 1.0) runtemp = 1.0
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Preset ID: ' + preset + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -1572,9 +1577,11 @@ module.exports = function (self) {
 					self.setVariableValues({ Pst29RunT: runtemp })
 				}
 				self.setVariableValues({ CurrentPstSetRun: runtemp })
+				self.setVariableValues({ ['Pst' + preset + 'RampT']: ramptemp })
+				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1607,13 +1614,10 @@ module.exports = function (self) {
 				ramptemp = self.getVariableValue('CurrentPstSetRamp')
 				
 
-				ramptemp += rampTime.options.direction
-
-				if (ramptemp > 250) {
-					ramptemp = 250;
-				} else if (ramptemp < 1) {
-					ramptemp = 1;
-				}
+				const rampStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				ramptemp = snapTime(Math.round((ramptemp + rampTime.options.direction * rampStep) * 10) / 10)
+				if (ramptemp < 0.2) ramptemp = 0.2
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Preset ID: ' + preset + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -1681,7 +1685,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1701,7 +1705,7 @@ module.exports = function (self) {
 			],
 			callback: async (resetPresetRunTime) => {
 				var preset = self.getVariableValue('CurrentPstSet')
-				var runtemp = 50;
+				var runtemp = 5.0;
 				var ramptemp = self.getVariableValue('Pst' + preset + 'RampT')
 
 				if (preset == 0) {
@@ -1768,7 +1772,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentPstSetRun: runtemp })
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1788,7 +1792,7 @@ module.exports = function (self) {
 			],
 			callback: async (resetPresetRampTime) => {
 				var preset = self.getVariableValue('CurrentPstSet')
-				var ramptemp = 10;
+				var ramptemp = 1.0;
 				var runtemp = self.getVariableValue('Pst' + preset + 'RunT')
 
 				if (preset == 0) {
@@ -1855,7 +1859,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentPstSetRamp: ramptemp })
 
 				const cmd = 'G21 N1 P'
-				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -1922,7 +1926,7 @@ module.exports = function (self) {
 
 				const cmd = 'G21 P'
 
-				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + preset + ' T' + runtemp + ' A' + ramptemp + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2110,7 +2114,7 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetLpRunTime) => {
-				var temp = 50;
+				var temp = 5.0;
 
 				if (resetLpRunTime.options.id_loop == 0) {
 					self.setVariableValues({ Lp0RunT: temp })
@@ -2143,7 +2147,7 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (resetLpRampTime) => {
-				var temp = 10;
+				var temp = 1.0;
 
 				if (resetLpRampTime.options.id_loop == 0) {
 					self.setVariableValues({ Lp0RampT: temp })
@@ -2510,13 +2514,11 @@ module.exports = function (self) {
 				runtemp = self.getVariableValue('CurrentLpRun')
 				ramptemp = self.getVariableValue('CurrentLpRamp')
 
-				runtemp += runTime.options.direction
-
-				if (runtemp > 600) {
-					runtemp = 600;
-				} else if (runtemp < 10) {
-					runtemp = 10;
-				}
+				const runStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				runtemp = snapTime(Math.round((runtemp + runTime.options.direction * runStep) * 10) / 10)
+				if (runtemp > 120.0) runtemp = 120.0
+				if (runtemp < 1.0) runtemp = 1.0
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Loop ID: ' + loop + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -2543,9 +2545,11 @@ module.exports = function (self) {
 					self.setVariableValues({ Lp8RunT: runtemp })
 				}
 				self.setVariableValues({ CurrentLpRun: runtemp })
+				self.setVariableValues({ ['Lp' + loop + 'RampT']: ramptemp })
+				self.setVariableValues({ CurrentLpRamp: ramptemp })
 
 				const cmd = 'G25 L'
-				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp + ' R' + ramptemp + ' C500 D500' + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2580,13 +2584,10 @@ module.exports = function (self) {
 				ramptemp = self.getVariableValue('CurrentLpRamp')
 				
 
-				ramptemp += rampTime.options.direction
-
-				if (ramptemp > 250) {
-					ramptemp = 250;
-				} else if (ramptemp < 1) {
-					ramptemp = 1;
-				}
+				const rampStep = runtemp < 10 ? 0.2 : runtemp < 20 ? 0.5 : 1.0
+				ramptemp = snapTime(Math.round((ramptemp + rampTime.options.direction * rampStep) * 10) / 10)
+				if (ramptemp < 0.2) ramptemp = 0.2
+				ramptemp = clampRamp(ramptemp, runtemp)
 
 				self.log('debug', 'Loop ID: ' + loop + ' RunT: ' + runtemp + ' RampT: ' + ramptemp)
 
@@ -2612,7 +2613,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentLpRamp: ramptemp })
 
 				const cmd = 'G25 L'
-				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp + ' R' + ramptemp + ' C500 D500' + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2633,7 +2634,7 @@ module.exports = function (self) {
 			callback: async (resetLpRunTime) => {
 				var loop = self.getVariableValue('CurrentLpSet')		
 				
-				var temp = 50;
+				var temp = 5.0;
 
 				if (loop == 0) {
 					self.setVariableValues({ Lp0RunT: temp })
@@ -2663,7 +2664,7 @@ module.exports = function (self) {
 			callback: async (resetLpRampTime) => {
 				var loop = self.getVariableValue('CurrentLpSet')	
 
-				var temp = 10;
+				var temp = 1.0;
 
 				if (loop == 0) {
 					self.setVariableValues({ Lp0RampT: temp })
@@ -2739,7 +2740,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentLpA: lpAPt })
 
 				const cmd = 'G25 L'
-				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp + ' R' + ramptemp + ' C500 D500' + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2806,7 +2807,7 @@ module.exports = function (self) {
 				self.setVariableValues({ CurrentLpB: lpBPt })
 
 				const cmd = 'G25 L'
-				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp + ' R' + ramptemp + ' C500 D500' + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
@@ -2936,7 +2937,7 @@ module.exports = function (self) {
 				ramptemp = self.getVariableValue('CurrentLpRamp')
 
 				const cmd = 'G25 L'
-				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp / 10 + ' R' + ramptemp / 10 + ' C500 D500' + '\n', 'latin1')
+				const sendBuf = Buffer.from(cmd + loop + ' A' + lpAPt + ' B' + lpBPt + ' T' + runtemp + ' R' + ramptemp + ' C500 D500' + '\n', 'latin1')
 
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
