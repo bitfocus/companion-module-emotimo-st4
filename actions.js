@@ -898,14 +898,13 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (setPreset) => {
-				// console.log('Hello world!', event.options.num)
+				const num = setPreset.options.num
+				const runtemp = self.getVariableValue('Pst' + num + 'RunT')
+				const ramptemp = self.getVariableValue('Pst' + num + 'RampT')
+
 				const cmd = 'G21 P'
+				const sendBuf = Buffer.from(cmd + num + ' T' + runtemp / 10 + ' A' + ramptemp / 10 + '\n', 'latin1')
 
-//
-				const sendBuf = Buffer.from(cmd + setPreset.options.num + ' T' + self.presetRunTimes[setPreset.options.num] / 10 + ' A' + self.presetRampTimes[setPreset.options.num] / 10 + '\n', 'latin1')
-				//const sendBuf = Buffer.from(cmd + savePset.options.num + ' T' + self.presetRunTimes[savePset.options.num] / 10 + ' A' + self.presetRampTimes[savePset.options.num] / 10 + '\n', 'latin1')
-
-				
 				if (self.config.prot == 'tcp') {
 					self.log('debug', 'sending to ' + self.config.host + ': ' + sendBuf.toString())
 
